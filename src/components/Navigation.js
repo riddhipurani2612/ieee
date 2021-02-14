@@ -1,18 +1,13 @@
-import React from 'react';
-import { Navbar, Nav } from 'react-bootstrap';
-import logo from '../assets/grss_logo.png';
+import React from "react";
+import { Navbar, Nav } from "react-bootstrap";
+import logo from "../assets/grss_logo.png";
 
 const Navigation = (props) => {
-    
     return (
         <Navbar expand="lg" bg="light" variant="light">
             <Navbar.Brand>
-                <img
-                width="7%"
-                height="7%"
-                src={logo}
-                />
-                <span className="mx-3">IEEE GUJARAT SECTION GRSS CHAPTER</span>
+                <img width="7%" height="7%" src={logo} />
+                <span className="mx-3">IEEE Gujarat Section GRSS Chapter</span>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
@@ -41,7 +36,7 @@ const Navigation = (props) => {
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
-    )
-}
+    );
+};
 
 export default Navigation;
