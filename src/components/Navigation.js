@@ -1,7 +1,6 @@
 import React from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import logo from "../assets/grss_logo.png";
-
 const Navigation = (props) => {
     return (
         <Navbar expand="lg" bg="light" variant="light">
@@ -22,7 +21,7 @@ const Navigation = (props) => {
                         <Nav.Link href="/">Members</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link href="/">Events</Nav.Link>
+                        <Nav.Link href="/events">Events</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
                         <Nav.Link href="/about">About</Nav.Link>
@@ -31,7 +30,7 @@ const Navigation = (props) => {
                         <Nav.Link href="/contact">Contact</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link href="/">Login/SignUp</Nav.Link>
+                        <Nav.Link href="/login_signup">Login/SignUp</Nav.Link>
                     </Nav.Item>
                 </Nav>
             </Navbar.Collapse>

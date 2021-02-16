@@ -1,6 +1,7 @@
-import React from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import {React,useState} from "react";
+import { Card, Col, Container, Row } from "react-bootstrap";
 import styled from "styled-components";
+import FAQ from "./FAQ";
 
 const Styles = styled.div`
     .icon {
@@ -30,7 +31,12 @@ const Footer = (props) => {
                         </Col>
                         <Col className="my-3">
                             <span className="h5">IEEE</span>
-                            <div className="mt-3">Join / Renew</div>
+                            <a
+                                href="https://www.ieee.org/membership-catalog/productdetail/showProductDetailPage.html?product=MEMGRS029"
+                                target="blank"
+                            >
+                                <div className="mt-3">Join / Renew</div>
+                            </a>
                         </Col>
                         <Col className="my-3">
                             <span className="h5">Company</span>
@@ -45,6 +51,10 @@ const Footer = (props) => {
                             <div className="mt-3">
                                 Terms and Conditions<br></br>
                                 Privacy policy<br></br>
+                            </div>
+                            <div class="main_container" id="id_main_container">
+                                <div class="container_inner" id="display_div_id">
+                                </div>
                             </div>
                         </Col>
                     </Row>
