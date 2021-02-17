@@ -16,7 +16,6 @@ function App() {
                 <Route path="/login_signup" component={LoginSignup}/>
                 <Route path="/faq" component={FAQ}/>
             </Switch>
-            <Home />
             <Footer />
         </div>
         </Router>
