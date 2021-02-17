@@ -18,7 +18,7 @@ const Navigation = (props) => {
                         <Nav.Link href="/">Chair's Desk</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link href="/">Members</Nav.Link>
+                        <Nav.Link href="/members">Members</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
                         <Nav.Link href="/events">Events</Nav.Link>
