@@ -22,6 +22,12 @@ const Navigation = (props) => {
                         <NavDropdown.Item href="/professionalMembers">Professional Members</NavDropdown.Item>
                         <NavDropdown.Item href="/studentMembers">Student Members</NavDropdown.Item>
                     </NavDropdown>
+                    <NavDropdown title="Material" id="material_dropdown">
+                        <NavDropdown.Item href="/newsletters">Newsletters</NavDropdown.Item>
+                        <NavDropdown.Item href="/publication">Publications</NavDropdown.Item>
+                        <NavDropdown.Item href="/lecture">Lectures</NavDropdown.Item>
+                        <NavDropdown.Item href="/sar">SAR</NavDropdown.Item>
+                    </NavDropdown>
                     <Nav.Item>
                         <Nav.Link href="/events">Events</Nav.Link>
                     </Nav.Item>

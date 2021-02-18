@@ -10,6 +10,9 @@ import ChairsDesk from './components/ChairsDesk';
 import AboutUs from "./components/About";
 import ContactUs from "./components/Contact";
 import Events from './components/Event';
+import Newsletter from './components/Newsletters';
+import Publication from './components/Publication';
+import Lecture from './components/Lecture';
 function App() {
     return (
         <Router>
@@ -25,6 +28,9 @@ function App() {
                     <Route path="/about" component={AboutUs}/>
                     <Route path="/contact" component={ContactUs}/>
                     <Route path="/events" component={Events} />
+                    <Route path="/newsletters" component={Newsletter}/> 
+                    <Route path="/publication" component={Publication}/>    
+                    <Route path="/lecture" component={Lecture}/> 
                 </Switch>
                 <Footer />
             </div>
