@@ -1,9 +1,9 @@
 import React from "react";
-import { Navbar, Nav } from "react-bootstrap";
+import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import logo from "../assets/grss_logo.png";
 const Navigation = (props) => {
     return (
-        <Navbar expand="lg" bg="light" variant="light">
+        <Navbar expand="lg" bg="light" variant="light" sticky="top">
             <Navbar.Brand>
                 <img width="7%" height="7%" src={logo} />
                 <span className="mx-3">IEEE Gujarat Section GRSS Chapter</span>
@@ -15,11 +15,13 @@ const Navigation = (props) => {
                         <Nav.Link href="/">Home</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link href="/">Chair's Desk</Nav.Link>
+                        <Nav.Link href="/chairs_desk">Chair's Desk</Nav.Link>
                     </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link href="/members">Members</Nav.Link>
-                    </Nav.Item>
+                    <NavDropdown title="Members" id="members_dropdown">
+                        <NavDropdown.Item href="/founderMembers">Founder Members</NavDropdown.Item>
+                        <NavDropdown.Item href="/professionalMembers">Professional Members</NavDropdown.Item>
+                        <NavDropdown.Item href="/studentMembers">Student Members</NavDropdown.Item>
+                    </NavDropdown>
                     <Nav.Item>
                         <Nav.Link href="/events">Events</Nav.Link>
                     </Nav.Item>

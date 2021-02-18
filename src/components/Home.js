@@ -13,9 +13,8 @@ import img10 from "../assets/10.jpg";
 import img11 from "../assets/11.jpg";
 import styled from "styled-components";
 import YouTube from "react-youtube";
-import Feedback from "react-bootstrap/esm/Feedback";
 import FAQ from "./FAQ";
-
+import Feedback from "./Feedback"
 const Styles = styled.div`
     .main-bg {
         background-color: #2e151b;
@@ -51,6 +50,10 @@ const Styles = styled.div`
             transform: scale(1.5);
         }
     }
+    .feedback {
+        position: fixed;
+        right: 0;
+    }
 `;
 
 const Home = (props) => {
@@ -59,13 +62,18 @@ const Home = (props) => {
     };
 
     const [showFAQModal, setFAQModal] = useState(false);
-
+    const [showFeedbackModal, setFeedbackModal] = useState(false);
     return (
         <Styles>
             <FAQ
                 show={showFAQModal}
                 closeModal={() => setFAQModal(false)}
                 onHide={() => setFAQModal(false)}
+            />
+            <Feedback 
+                show={showFeedbackModal}
+                closeModal={() => setFeedbackModal(false)}
+                onHide={() => setFeedbackModal(false)}
             />
             <div className="main-bg">
                 <Carousel autoplay="true">
@@ -108,8 +116,19 @@ const Home = (props) => {
                     variant="outline-light"
                     size="lg"
                     onClick={() => setFAQModal(true)}
+                    title="FAQ"
                 >
                     ?
+                </Button>
+                <Button
+                    className="feedback"
+                    style={{ position: "fixed" }}
+                    variant="outline-light"
+                    size="lg"
+                    onClick={() => setFeedbackModal(true)}
+                    title="Feedback"
+                >
+                    <i class="fa fa-comments-o" aria-hidden="true"></i>
                 </Button>
                 <Container>
                     <div className="text-center display-2 my-3 text">
@@ -182,7 +201,6 @@ const Home = (props) => {
                         </Col>
                     </Row>
                 </Container>
-                <Feedback></Feedback>
             </div>
         </Styles>
     );
