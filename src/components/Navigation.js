@@ -27,6 +27,7 @@ const Navigation = (props) => {
                         <NavDropdown.Item href="/publication">Publications</NavDropdown.Item>
                         <NavDropdown.Item href="/lecture">Lectures</NavDropdown.Item>
                         <NavDropdown.Item href="/sar">SAR</NavDropdown.Item>
+                        <MavDropdown.Item href="https://www.ieee-grss-gujaratsection.org/tarangsoftware">Download Tarang Software</MavDropdown.Item>
                     </NavDropdown>
                     <Nav.Item>
                         <Nav.Link href="/events">Events</Nav.Link>

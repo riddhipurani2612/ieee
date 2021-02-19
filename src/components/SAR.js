@@ -3,9 +3,6 @@ import styled from "styled-components";
 import { Accordion, Card, Button, Container } from "react-bootstrap";
 import YouTube from "react-youtube";
 import PDFViewer from "pdf-viewer-reactjs";
-import mlppt from "../assets/mlppt.pdf";
-import mlbook from "../assets/mlbook.pdf";
-import mlpractice from "../assets/mlpractice.pdf";
 const Styles = styled.div`
 .main-bg {
     background: #2e151b;
@@ -123,32 +120,32 @@ const SAR = () => {
                   during their visit to Ahmedabad in Dec 2019.
                   <PDFViewer
                     document={{
-                      url: { mlppt },
+                      url: "https://drive.google.com/file/d/1ClNpPnZJJa0JvLX9X4-MN-uKzABxv-Gm/view?usp=sharing",
                     }}
                   />
                   <PDFViewer
                     document={{
-                      url: { mlppt },
+                      url: "https://drive.google.com/file/d/1resRVeKhP5MIjoLkdHEEDOcUel9IozJ9/view?usp=sharing",
                     }}
                   />
                   <PDFViewer
                     document={{
-                      url: { mlppt },
+                      url: "https://drive.google.com/file/d/1BJVjOZZXtNceAwDuuf1R5wcRGjSFq_Al/view?usp=sharing",
                     }}
                   />
                   <PDFViewer
                     document={{
-                      url: { mlppt },
+                      url: "https://drive.google.com/file/d/1r-t1U15-ckKUM9aSQPnl9usjSQID_Vfh/view?usp=sharing",
                     }}
                   />
                   <PDFViewer
                     document={{
-                      url: { mlppt },
+                      url: "https://drive.google.com/file/d/13I1HZ_YuM_YisA-ehUjq74jhqzu1tPcS/view?usp=sharing",
                     }}
                   />
                   <PDFViewer
                     document={{
-                      url: { mlppt },
+                      url: "https://drive.google.com/file/d/12u5abW2u8elRMQqvyG34YMrW_WJKjeaV/view?usp=sharing",
                     }}
                   />
                 </Card.Body>
