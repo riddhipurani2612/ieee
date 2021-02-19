@@ -3,9 +3,6 @@ import styled from "styled-components";
 import { Accordion, Card, Button, Container } from "react-bootstrap";
 import YouTube from "react-youtube";
 import PDFViewer from "pdf-viewer-reactjs";
-import mlppt from "../assets/mlppt.pdf";
-import mlbook from "../assets/mlbook.pdf";
-import mlpractice from "../assets/mlpractice.pdf";
 const Styles = styled.div`
 .main-bg {
     background: #2e151b;
@@ -247,17 +244,17 @@ const Lecture = () => {
                   Remote Sensing Data Analysis, CEPT University, May 2019
                   <PDFViewer
                     document={{
-                      url: { mlppt },
+                      url: "https://drive.google.com/file/d/10Bve8QoaTVwg313P-StJwzCJj7_mDKyq/view?usp=sharing",
                     }}
                   />
                   <PDFViewer
                     document={{
-                      url: { mlbook },
+                      url: "https://drive.google.com/file/d/15bBw4gI9sa1WzQ__fHvK6tm2qPYeHiH8/view?usp=sharing",
                     }}
                   />
                   <PDFViewer
                     document={{
-                      url: { mlpractice },
+                      url: "https://drive.google.com/file/d/1oyxA1enpRkl4UE6-iR4Kv-BF68IuNsU4/view?usp=sharing",
                     }}
                   />
                 </Card.Body>

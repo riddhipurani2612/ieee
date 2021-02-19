@@ -3,14 +3,6 @@ import styled from "styled-components";
 import { Accordion, Card, Button, Row, Col, Container } from "react-bootstrap";
 import YouTube from "react-youtube";
 import PDFViewer from "pdf-viewer-reactjs";
-import newsletter2019 from "../assets/newsletter2019.pdf";
-import newsletter2018 from "../assets/newsletter2018.pdf";
-import newsletter2017 from "../assets/newsletter2017.pdf";
-import newsletter2016 from "../assets/newsletter2016.pdf";
-import newsletter2015 from "../assets/newsletter2015.pdf";
-import newsletter2014 from "../assets/newsletter2014.pdf";
-import newsletter2013 from "../assets/newsletter2013.pdf";
-
 
 const Styles = styled.div`
 .main-bg {
@@ -58,7 +50,7 @@ const Newsletter = () => {
                 <Card.Body className="main-bg text">
                   <PDFViewer
                     document={{
-                      url: { newsletter2019 },
+                      url:  "https://drive.google.com/file/d/10ROQXM2vxjaKi1lyykOLOZ0i4Mh2OR8O/view?usp=sharing" ,
                     }}
                   />
                 </Card.Body>
@@ -75,7 +67,7 @@ const Newsletter = () => {
                 <Card.Body className="main-bg text">
                   <PDFViewer
                     document={{
-                      url: { newsletter2018 },
+                      url:  "https://drive.google.com/file/d/1fHdqMWuJ26PubOiNNEUvEX4sAwUb7YS3/view?usp=sharing" ,
                     }}
                   />
                 </Card.Body>
@@ -92,7 +84,7 @@ const Newsletter = () => {
                 <Card.Body className="main-bg text">
                   <PDFViewer
                     document={{
-                      url: { newsletter2017 },
+                      url:  "https://drive.google.com/file/d/1zC8Sc20mo2jDnck1iA7kvuLZJ6ohulQG/view?usp=sharing" ,
                     }}
                   />
                 </Card.Body>
@@ -109,7 +101,7 @@ const Newsletter = () => {
                 <Card.Body className="main-bg text">
                   <PDFViewer
                     document={{
-                      url: { newsletter2016 },
+                      url: "https://drive.google.com/file/d/1J8ikWTbP8LI5_mUTOTN3vELUfll7nUGP/view?usp=sharing" ,
                     }}
                   />
                 </Card.Body>
@@ -126,7 +118,7 @@ const Newsletter = () => {
                 <Card.Body className="main-bg text">
                   <PDFViewer
                     document={{
-                      url: { newsletter2015 },
+                      url:  "https://drive.google.com/file/d/1ubrrAajZt59vMf5T4Gg4bsUcWQ0wPL1p/view?usp=sharing" ,
                     }}
                   />
                 </Card.Body>
@@ -143,7 +135,7 @@ const Newsletter = () => {
                 <Card.Body className="main-bg text">
                   <PDFViewer
                     document={{
-                      url: { newsletter2014 },
+                      url:  "https://drive.google.com/file/d/1ThYD-Fo_xmOB8CXSogpY0SYQUdcnkw3R/view?usp=sharing" ,
                     }}
                   />
                 </Card.Body>
@@ -160,7 +152,7 @@ const Newsletter = () => {
                 <Card.Body className="main-bg text">
                   <PDFViewer
                     document={{
-                      url: { newsletter2013 },
+                      url:  "https://drive.google.com/file/d/19zp-eK2eF38XFLahJ9WdLcmNrKW4FFhF/view?usp=sharing" ,
                     }}
                   />
                 </Card.Body>
