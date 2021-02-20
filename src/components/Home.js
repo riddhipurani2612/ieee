@@ -14,7 +14,7 @@ import img11 from "../assets/11.jpg";
 import styled from "styled-components";
 import YouTube from "react-youtube";
 import FAQ from "./FAQ";
-import Feedback from "./Feedback"
+import Feedback from "./Feedback";
 const Styles = styled.div`
     .main-bg {
         background-color: #2e151b;
@@ -50,10 +50,6 @@ const Styles = styled.div`
             transform: scale(1.5);
         }
     }
-    .feedback {
-        position: fixed;
-        right: 0;
-    }
 `;
 
 const Home = (props) => {
@@ -70,7 +66,7 @@ const Home = (props) => {
                 closeModal={() => setFAQModal(false)}
                 onHide={() => setFAQModal(false)}
             />
-            <Feedback 
+            <Feedback
                 show={showFeedbackModal}
                 closeModal={() => setFeedbackModal(false)}
                 onHide={() => setFeedbackModal(false)}
@@ -121,7 +117,7 @@ const Home = (props) => {
                     ?
                 </Button>
                 <Button
-                    className="feedback"
+                    className="mt-5"
                     style={{ position: "fixed" }}
                     variant="outline-light"
                     size="lg"
