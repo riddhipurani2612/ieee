@@ -27,7 +27,7 @@ const Navigation = (props) => {
                         <NavDropdown.Item href="/publication">Publications</NavDropdown.Item>
                         <NavDropdown.Item href="/lecture">Lectures</NavDropdown.Item>
                         <NavDropdown.Item href="/sar">SAR</NavDropdown.Item>
-                        <MavDropdown.Item href="https://www.ieee-grss-gujaratsection.org/tarangsoftware">Download Tarang Software</MavDropdown.Item>
+                        <NavDropdown.Item href="https://www.ieee-grss-gujaratsection.org/tarangsoftware">Download Tarang Software</NavDropdown.Item>
                     </NavDropdown>
                     <Nav.Item>
                         <Nav.Link href="/events">Events</Nav.Link>
@@ -39,7 +39,7 @@ const Navigation = (props) => {
                         <Nav.Link href="/contact">Contact</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link href="/login_signup">Login/SignUp</Nav.Link>
+                        <Nav.Link href="/login">Login/SignUp</Nav.Link>
                     </Nav.Item>
                 </Nav>
             </Navbar.Collapse>

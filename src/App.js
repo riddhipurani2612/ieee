@@ -1,7 +1,8 @@
 import Footer from "./components/Footer";
 import Home from "./components/Home";
 import Navigation from "./components/Navigation";
-import LoginSignup from "./components/LoginSignupForm";
+import Login from "./components/LoginForm";
+import Signup from './components/SignupForm';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import FounderMembers from './components/FounderMember';
 import ProfessionalMembers from './components/ProfessionalMember';
@@ -13,6 +14,7 @@ import Events from './components/Event';
 import Newsletter from './components/Newsletters';
 import Publication from './components/Publication';
 import Lecture from './components/Lecture';
+import SignUp from "./components/SignupForm";
 function App() {
     return (
         <Router>
@@ -20,7 +22,7 @@ function App() {
                 <Navigation />
                 <Switch>
                     <Route path="/" exact component={Home} />
-                    <Route path="/login_signup" component={LoginSignup} />
+                    <Route path="/login" component={Login} />
                     <Route path="/founderMembers" component={FounderMembers}/>
                     <Route path="/professionalMembers" component={ProfessionalMembers}/>
                     <Route path="/studentMembers" component={StudentMembers}/>
@@ -31,6 +33,7 @@ function App() {
                     <Route path="/newsletters" component={Newsletter}/> 
                     <Route path="/publication" component={Publication}/>    
                     <Route path="/lecture" component={Lecture}/> 
+                    <Route path="/signup" component={SignUp}/>
                 </Switch>
                 <Footer />
             </div>
