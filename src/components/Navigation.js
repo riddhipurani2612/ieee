@@ -18,16 +18,31 @@ const Navigation = (props) => {
                         <Nav.Link href="/chairs_desk">Chair's Desk</Nav.Link>
                     </Nav.Item>
                     <NavDropdown title="Members" id="members_dropdown">
-                        <NavDropdown.Item href="/founderMembers">Founder Members</NavDropdown.Item>
-                        <NavDropdown.Item href="/professionalMembers">Professional Members</NavDropdown.Item>
-                        <NavDropdown.Item href="/studentMembers">Student Members</NavDropdown.Item>
+                        <NavDropdown.Item href="/founderMembers">
+                            Founder Members
+                        </NavDropdown.Item>
+                        <NavDropdown.Item href="/professionalMembers">
+                            Professional Members
+                        </NavDropdown.Item>
+                        <NavDropdown.Item href="/studentMembers">
+                            Student Members
+                        </NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown title="Material" id="material_dropdown">
-                        <NavDropdown.Item href="/newsletters">Newsletters</NavDropdown.Item>
-                        <NavDropdown.Item href="/publication">Publications</NavDropdown.Item>
-                        <NavDropdown.Item href="/lecture">Lectures</NavDropdown.Item>
+                        <NavDropdown.Item href="/newsletters">
+                            Newsletters
+                        </NavDropdown.Item>
+                        <NavDropdown.Item href="/publication">
+                            Publications
+                        </NavDropdown.Item>
+                        <NavDropdown.Item href="/lecture">
+                            Lectures
+                        </NavDropdown.Item>
                         <NavDropdown.Item href="/sar">SAR</NavDropdown.Item>
                         <NavDropdown.Item href="https://www.ieee-grss-gujaratsection.org/tarangsoftware">Download Tarang Software</NavDropdown.Item>
+                        <NavDropdown.Item href="https://www.ieee-grss-gujaratsection.org/tarangsoftware">
+                            Download Tarang Software
+                        </NavDropdown.Item>
                     </NavDropdown>
                     <Nav.Item>
                         <Nav.Link href="/events">Events</Nav.Link>
