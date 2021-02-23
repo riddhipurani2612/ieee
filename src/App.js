@@ -15,6 +15,7 @@ import Newsletter from './components/Newsletters';
 import Publication from './components/Publication';
 import Lecture from './components/Lecture';
 import SignUp from "./components/SignupForm";
+import SAR from "./components/SAR";
 function App() {
     return (
         <Router>
@@ -23,10 +24,10 @@ function App() {
                 <Switch>
                     <Route path="/" exact component={Home} />
                     <Route path="/login" component={Login} />
-                    <Route path="/founderMembers" component={FounderMembers}/>
-                    <Route path="/professionalMembers" component={ProfessionalMembers}/>
-                    <Route path="/studentMembers" component={StudentMembers}/>
-                    <Route path="/chairs_desk" component={ChairsDesk}/>
+                    <Route path="/foundermembers" component={FounderMembers}/>
+                    <Route path="/professionalmembers" component={ProfessionalMembers}/>
+                    <Route path="/studentmembers" component={StudentMembers}/>
+                    <Route path="/chairs-desk" component={ChairsDesk}/>
                     <Route path="/about" component={AboutUs}/>
                     <Route path="/contact" component={ContactUs}/>
                     <Route path="/events" component={Events} />
@@ -34,6 +35,7 @@ function App() {
                     <Route path="/publication" component={Publication}/>    
                     <Route path="/lecture" component={Lecture}/> 
                     <Route path="/signup" component={SignUp}/>
+                    <Route path="/sar" component={SAR}/>
                 </Switch>
                 <Footer />
             </div>

@@ -99,7 +99,7 @@ const SAR = () => {
                   <br></br>
                   <a
                     href="http://step.esa.int/main/download/snap-download/"
-                    target=""
+                    target="blank"
                   >
                     SNAP
                   </a>

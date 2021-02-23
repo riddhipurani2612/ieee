@@ -15,16 +15,16 @@ const Navigation = (props) => {
             <Nav.Link href="/">Home</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link href="/chairs_desk">Chair's Desk</Nav.Link>
+            <Nav.Link href="/chairs-desk">Chair's Desk</Nav.Link>
           </Nav.Item>
           <NavDropdown title="Members" id="members_dropdown">
-            <NavDropdown.Item href="/founderMembers">
+            <NavDropdown.Item href="/foundermembers">
               Founder Members
             </NavDropdown.Item>
-            <NavDropdown.Item href="/professionalMembers">
+            <NavDropdown.Item href="/professionalmembers">
               Professional Members
             </NavDropdown.Item>
-            <NavDropdown.Item href="/studentMembers">
+            <NavDropdown.Item href="/studentmembers">
               Student Members
             </NavDropdown.Item>
           </NavDropdown>

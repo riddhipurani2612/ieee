@@ -26,8 +26,12 @@ const Login = () => {
 
   return (
     <Styles>
-      <div className="main-bg">
+      <div className="main-bg text">
         <Container>
+          <br></br><br></br>
+          <div className="display-4 text-center my-5">
+            Login
+          </div>
           <div>
             <Form>
               <Form.Group controlID="login_username">
