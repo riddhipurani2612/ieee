@@ -17,11 +17,12 @@ import Lecture from "./components/Lecture";
 import SignUp from "./components/SignupForm";
 import SAR from "./components/SAR";
 import { useState } from "react";
+import Profile from "./components/Profile";
+import Members from "./components/Members";
 function App() {
+    console.log("App");               
     const [isLoggedIn, setLoggedIn] = useState(false);
-
     const setLogin = (state) => setLoggedIn(state);
-
     return (
         <Router>
             <div className="App">
@@ -37,12 +38,7 @@ function App() {
                             />
                         )}
                     />
-                    <Route path="/foundermembers" component={FounderMembers} />
-                    <Route
-                        path="/professionalmembers"
-                        component={ProfessionalMembers}
-                    />
-                    <Route path="/studentmembers" component={StudentMembers} />
+                    <Route path="/members" component={Members}/>
                     <Route path="/chairs-desk" component={ChairsDesk} />
                     <Route path="/about" component={AboutUs} />
                     <Route path="/contact" component={ContactUs} />
@@ -52,6 +48,7 @@ function App() {
                     <Route path="/lecture" component={Lecture} />
                     <Route path="/signup" component={SignUp} />
                     <Route path="/sar" component={SAR} />
+                    <Route path="/profile" component={Profile}/>
                 </Switch>
                 <Footer />
             </div>

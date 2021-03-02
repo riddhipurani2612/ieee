@@ -33,7 +33,7 @@ const Styles = styled.div`
     margin: 15px;
   }
 `;
-const FounderMembers = () => {
+const ProfessionalMembers = () => {
   return (
     <Styles>
       <div className="main-bg text">
@@ -499,4 +499,4 @@ const FounderMembers = () => {
     </Styles>
   );
 };
-export default FounderMembers;
+export default ProfessionalMembers;

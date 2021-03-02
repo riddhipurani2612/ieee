@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import styled from "styled-components";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+
 const Styles = styled.div`
   .main-bg {
     background: #2e151b;
@@ -12,40 +15,75 @@ const Styles = styled.div`
 
 const SignUp = () => {
   const [signupData, setSignupData] = useState({});
-
-  const signupValueChanged = (e) => {
+  const history = useHistory();
+  const signupValueChanged =  (e) => {
     setSignupData({ ...signupData, [e.target.name]: e.target.value });
   };
 
   const {
-    fname,
-    lname,
+    first_name,
+    last_name,
     role,
     address,
-    contactno,
+    contact,
     email,
     workplace,
     designation,
+    password,
+    confirmpassword,
   } = signupData;
 
-  const next = (e) => {
-    console.log(signupData);
+  const submit = async(e) => {
+    if(password !== confirmpassword){
+      alert("Password not same");
+    }
+    else{
+      e.preventDefault();
+      let data = {
+        first_name,
+        last_name,
+        role,
+        address,
+        contact,
+        email,
+        workplace,
+        designation,
+        password,
+      };
+      let config = {
+        headers :{
+          "Content-Type": "application/json",
+        },
+      };
+      let response;
+      try{
+        response = await axios.post(
+          "http://localhost:5000/user",
+          data,
+          config
+        );
+        console.log(response.data);
+        history.push("/login");
+      }
+      catch(err){
+          console.log(err);
+      }
+    }
   };
-
   return (
     <Styles>
       <div className="main-bg text">
         <Container>
           <br></br>
-        <div className="display-4 text-center my-5">Sign Up</div>
+          <div className="display-4 text-center my-5">Sign Up</div>
           <div>
             <Form className="text">
               <Form.Group controlId="signup_fisrtname">
                 <Form.Label>First name</Form.Label>
                 <Form.Control
                   type="text"
-                  value={fname}
-                  name="fname"
+                  value={first_name}
+                  name="first_name"
                   placeholder="Enter first name"
                   onChange={signupValueChanged}
                 ></Form.Control>
@@ -54,8 +92,8 @@ const SignUp = () => {
                 <Form.Label>Last name</Form.Label>
                 <Form.Control
                   type="text"
-                  value={lname}
-                  name="lname"
+                  value={last_name}
+                  name="last_name"
                   placeholder="Enter last name"
                   onChange={signupValueChanged}
                 ></Form.Control>
@@ -83,12 +121,12 @@ const SignUp = () => {
                   onChange={signupValueChanged}
                 ></Form.Control>
               </Form.Group>
-              <Form.Group controlId="signup_contactno">
+              <Form.Group controlId="signup_contact">
                 <Form.Label>Contact No</Form.Label>
                 <Form.Control
                   type="text"
-                  value={contactno}
-                  name="contactno"
+                  value={contact}
+                  name="contact"
                   placeholder="+91-**********"
                   onChange={signupValueChanged}
                 ></Form.Control>
@@ -123,8 +161,28 @@ const SignUp = () => {
                   onChange={signupValueChanged}
                 ></Form.Control>
               </Form.Group>
-              <Button onClick={next}>Next</Button>
+              <Form.Group controlId="signup_password">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  value={password}
+                  name="password"
+                  placeholder="Enter Password"
+                  onChange={signupValueChanged}
+                ></Form.Control>
+              </Form.Group>
+              <Form.Group controlId="signup_confirmpassword">
+                <Form.Label>Confirm Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  value={confirmpassword}
+                  name="confirmpassword"
+                  placeholder="Enter Password"
+                  onChange={signupValueChanged}
+                ></Form.Control>
+              </Form.Group>
               
+              <Button onClick={submit}>Submit</Button>
             </Form>
           </div>
           <br></br>

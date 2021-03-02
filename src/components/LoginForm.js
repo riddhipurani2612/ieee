@@ -23,13 +23,13 @@ const Login = (props) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const { username, password } = formData;
+    const { email, password } = formData;
 
     const loginClicked = async (e) => {
         e.preventDefault();
 
         let data = {
-            username,
+            email,
             password,
         };
 
@@ -40,8 +40,8 @@ const Login = (props) => {
         };
         let response;
         try {
-            response = await axios.post(
-                "http://localhost:5000/user/login",
+            response = await axios.put(
+                "http://localhost:5000/user",
                 data,
                 config
             );
@@ -63,13 +63,14 @@ const Login = (props) => {
                     <div className="display-4 text-center my-5">Login</div>
                     <div>
                         <Form>
-                            <Form.Group controlID="login_username">
-                                <Form.Label>Username</Form.Label>
+                            <Form.Group controlID="login_email">
+                                <Form.Label>email</Form.Label>
                                 <Form.Control
+                                className="col-xs-4"
                                     type="text"
-                                    value={username}
-                                    name="username"
-                                    placeholder="Enter UserName"
+                                    value={email}
+                                    name="email"
+                                    placeholder="Enter email"
                                     onChange={valueChange}
                                 ></Form.Control>
                             </Form.Group>
@@ -86,7 +87,7 @@ const Login = (props) => {
                             <Button onClick={loginClicked}>Login</Button>
                         </Form>
                         <div className="text">
-                            Do not have account?{" "}
+                            Do not have account?
                             <a href="/signup">Click here</a> to join!!
                         </div>
                     </div>

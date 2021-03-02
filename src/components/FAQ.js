@@ -2,7 +2,6 @@ import { React } from "react";
 import { Modal, Button } from "react-bootstrap";
 
 const FAQ = (props) => {
-    console.log("FAQ");
     return (
         <Modal
             {...props}
