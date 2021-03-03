@@ -115,19 +115,19 @@ const Home = (props) => {
         <Button
           style={{ position: "fixed" }}
           variant="outline-light"
-          size="lg"
           onClick={() => setFAQModal(true)}
           title="FAQ"
+          width = "20px"
         >
-          ?
+          <i class="fa fa-question-circle" aria-hidden="true"></i>
         </Button>
         <Button
           className="mt-5"
           style={{ position: "fixed" }}
           variant="outline-light"
-          size="lg"
           onClick={() => setFeedbackModal(true)}
           title="Feedback"
+          width = "20px"
         >
           <i class="fa fa-comments-o" aria-hidden="true"></i>
         </Button>
