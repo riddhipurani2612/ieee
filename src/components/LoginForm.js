@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , setState} from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
@@ -16,7 +16,10 @@ const Styles = styled.div`
 
 const Login = (props) => {
     const [formData, setFormData] = useState({});
-
+    let state = {
+        items: [],
+        errorMessage: ''
+      }
     const history = useHistory();
 
     const valueChange = (e) => {
@@ -50,6 +53,7 @@ const Login = (props) => {
             props.setLogin(true);
             history.push("/");
         } catch (error) {
+            setState({errorMessage : error.message});
             console.log(error);
         }
     };

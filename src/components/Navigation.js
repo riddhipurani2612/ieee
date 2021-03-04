@@ -6,34 +6,30 @@ import styled from "styled-components";
 
 const Styles = styled.div`
   .navbar {
-    background-color: #9b6a6c;
+    background-color: #2E151B;
   }
   a,
   .navbar-nav,
   .navbar-light .nav-link {
-    color: #28112b;
+    color: #F8F32B;
     &:hover {
       color: white;
     }
   }
   .navbar-brand {
     font-size: 1.4em;
-    color: #28112b;
+    color: #F8F32B;
+    &:hover {
+      color: white;
+    }
   }
   .navdropdown-item {
-    background-color: red;
-  }
-  .navdropdown:hover {
-    background-color: red;
-  }
-  .form-center {
-    position: absolute !important;
-    left: 25%;
-    right: 25%;
+    background-color: #E3D3E4;
+
   }
   .dropdown-menu {
     color: white;
-    background-color: red;
+    background-color: #2E151B;
   }
 `;
 const Navigation = (props) => {
