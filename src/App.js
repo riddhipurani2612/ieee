@@ -20,6 +20,7 @@ import { useState } from "react";
 import Profile from "./components/Profile";
 import Members from "./components/Members";
 import TechnicalMaterial from "./components/Technicalmaterial";
+import FAQ from "./components/FAQ";
 function App() {
     console.log("App");               
     const [isLoggedIn, setLoggedIn] = useState(false);
@@ -51,6 +52,7 @@ function App() {
                     <Route path="/sar" component={SAR} />
                     <Route path="/profile" component={Profile}/>
                     <Route path="/uploadmaterial" component={TechnicalMaterial}/>
+                    <Route path="/faq" component={FAQ} />
                 </Switch>
                 <Footer />
             </div>

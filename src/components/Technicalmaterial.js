@@ -3,13 +3,13 @@ import { Form, Container, Button } from "react-bootstrap";
 import axios from 'axios';
 import styled from "styled-components";
 const Styles = styled.div`
-  .main-bg {
-    background: #2e151b;
-    height: 100vh;
-  }
-  .text {
-    color: white;
-  }
+.main-bg {
+  background-color: #084C61;
+  margin-top: -23px;
+}
+.text {
+  color: #dbf1fb;
+}
 `;
 
 const TechnicalMaterial = (props) => {

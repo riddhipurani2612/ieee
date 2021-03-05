@@ -6,17 +6,18 @@ import { useHistory } from "react-router-dom";
 
 const Styles = styled.div`
   .main-bg {
-    background: #2e151b;
+    background-color: #084c61;
+    margin-top: -23px;
   }
   .text {
-    color: white;
+    color: #dbf1fb;
   }
 `;
 
 const SignUp = () => {
   const [signupData, setSignupData] = useState({});
   const history = useHistory();
-  const signupValueChanged =  (e) => {
+  const signupValueChanged = (e) => {
     setSignupData({ ...signupData, [e.target.name]: e.target.value });
   };
 
@@ -33,11 +34,10 @@ const SignUp = () => {
     confirmpassword,
   } = signupData;
 
-  const submit = async(e) => {
-    if(password !== confirmpassword){
+  const submit = async (e) => {
+    if (password !== confirmpassword) {
       alert("Password not same");
-    }
-    else{
+    } else {
       e.preventDefault();
       let data = {
         first_name,
@@ -51,22 +51,17 @@ const SignUp = () => {
         password,
       };
       let config = {
-        headers :{
+        headers: {
           "Content-Type": "application/json",
         },
       };
       let response;
-      try{
-        response = await axios.post(
-          "http://localhost:5000/user",
-          data,
-          config
-        );
+      try {
+        response = await axios.post("http://localhost:5000/user", data, config);
         console.log(response.data);
         history.push("/login");
-      }
-      catch(err){
-          console.log(err);
+      } catch (err) {
+        console.log(err);
       }
     }
   };
@@ -181,7 +176,7 @@ const SignUp = () => {
                   onChange={signupValueChanged}
                 ></Form.Control>
               </Form.Group>
-              
+
               <Button onClick={submit}>Submit</Button>
             </Form>
           </div>

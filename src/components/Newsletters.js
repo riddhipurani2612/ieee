@@ -5,11 +5,12 @@ import YouTube from "react-youtube";
 
 const Styles = styled.div`
 .main-bg {
-    background: #2e151b;
-  }
-  .text {
-    color: white;
-  }
+  background-color: #084C61;
+  margin-top: -23px;
+}
+.text {
+  color: #dbf1fb;
+}
   .center{
     paddingBottom: "56.25%";
     width: "100%";

@@ -5,13 +5,14 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 
 const Styles = styled.div`
-    .main-bg {
-        background: #2e151b;
-        height: 100vh;
-    }
-    .text {
-        color: white;
-    }
+.main-bg {
+    background-color: #084C61;
+    margin-top: -23px;
+    height : 36.5vw;
+  }
+  .text {
+    color: #dbf1fb;
+  }
 `;
 
 const Login = (props) => {
@@ -50,6 +51,7 @@ const Login = (props) => {
             );
             console.log(response.data);
             localStorage.setItem("loggedInUserId", response.data._id);
+            localStorage.setItem("loggedInUserName", response.data.first_name + " " + response.data.last_name);
             props.setLogin(true);
             history.push("/");
         } catch (error) {

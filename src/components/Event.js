@@ -6,12 +6,13 @@ import event2 from "../assets/event2.jpg"
 import event3 from "../assets/event3.png"
 
 const Styles = styled.div`
-  .main-bg {
-    background: #2e151b;
-  }
-  .text {
-    color: white;
-  }
+.main-bg {
+  background-color: #084C61;
+  margin-top: 0px;
+}
+.text {
+  color: #dbf1fb;
+}
   .hr {
     border-color: white;
   }
@@ -21,10 +22,10 @@ const Events = () => {
     <Styles>
       <div className="main-bg text">
         <Container>
-          <div className="display-4 text-center">
+          <h5 className="text-center">
             Distinguished Lecture Program on “Satellite Scatterometry: Winds,
             Vegetation, and Ice by Dr David G. Long
-          </div>
+          </h5>
           <div>
             <Figure>
               <Figure.Image src={event1} alt="Image"></Figure.Image>

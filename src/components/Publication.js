@@ -2,12 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import {Container} from 'react-bootstrap';
 const Styles = styled.div`
-  .main-bg {
-    background: #2e151b;
-  }
-  .text {
-    color: white;
-    line-height : 50px;
+.main-bg {
+  background-color: #084C61;
+  margin-top: -23px;
+}
+.text {
+  color: #dbf1fb;
 }
 `;
 const Publication = () => {

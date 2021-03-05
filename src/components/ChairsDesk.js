@@ -4,12 +4,13 @@ import styled from "styled-components";
 import shivmohan from "../assets/shivmohan.jpg";
 
 const Styles = styled.div`
-  .main-bg {
-    background: #2e151b;
-  }
-  .text {
-    color: white;
-  }
+.main-bg {
+  background-color: #084C61;
+  margin-top: -23px;
+}
+.text {
+  color: #dbf1fb;
+}
   .wrap{
     line-height: 1.6; 
     font-family: Helvetica;

@@ -1,36 +1,44 @@
 import React, { useState } from "react";
 import { Navbar, Nav, NavDropdown, Image } from "react-bootstrap";
 import logo from "../assets/grss_logo.png";
-import profile from "../assets/female_profile.jpg";
 import styled from "styled-components";
 
 const Styles = styled.div`
   .navbar {
-    background-color: #2E151B;
+    background-color: #A6D4DE;
   }
   a,
   .navbar-nav,
   .navbar-light .nav-link {
-    color: #F8F32B;
+    color: #020100;
+    
+    padding-left : 20px;
     &:hover {
       color: white;
     }
   }
   .navbar-brand {
     font-size: 1.4em;
-    color: #F8F32B;
-    &:hover {
-      color: white;
-    }
-  }
-  .navdropdown-item {
-    background-color: #E3D3E4;
-
+    color: #020100;
   }
   .dropdown-menu {
-    color: white;
-    background-color: #2E151B;
+    color: #12263A;
+    background-color: #A6D4DE;
+    right: 0 !important;
+    left: auto !important;
   }
+  .dropdown-menu : hover {
+    color : #EFF5FA;
+    background-color : #12263A;
+  }
+  .dropdown-header{
+    color : #463F1A;
+  }
+  .width{
+    width : 100%;
+  }
+
+  
 `;
 const Navigation = (props) => {
   const [showAbout, setShowAbout] = useState(false);
@@ -47,15 +55,22 @@ const Navigation = (props) => {
   const hideDropdownMaterial = (e) => {
     setShowMaterial(false);
   };
-
+  const [showProfile, setShowProfile] = useState(false);
+  const showDropdownProfile = (e) => {
+    setShowProfile(!showProfile);
+  };
+  const hideDropdownProfile = (e) => {
+    setShowProfile(false);
+  };
+  const profile = <i class="fa fa-user" aria-hidden="true"></i>;
   return (
     <Styles>
-      <Navbar expand="lg">
+      <div className="width">
+      <Navbar expand="lg" sticky="top">
         <Navbar.Brand>
-          <img width="7%" height="7%" src={logo} />
-          <span className="mx-1">IEEE Gujarat Section GRSS Chapter</span>
+          <img width="10%" height="10%" src={logo} />
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Toggle/>
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
             <Nav.Item>
@@ -96,6 +111,7 @@ const Navigation = (props) => {
               <NavDropdown.Item href="/chairs-desk">
                 Chair's Address
               </NavDropdown.Item>
+              <NavDropdown.Item href="/faq">FAQs</NavDropdown.Item>
               <NavDropdown.Item href="/about">About Us</NavDropdown.Item>
             </NavDropdown>
             <Nav.Item>
@@ -106,24 +122,23 @@ const Navigation = (props) => {
                 Login/SignUp
               </Nav.Link>
             </Nav.Item>
-
-            <Nav.Item>
-              <Nav.Link
-                href="/profile"
-                hidden={!props.isLoggedIn}
-                title="Profile"
-              >
-                <Image
-                  src={profile}
-                  roundedCircle
-                  height="20px"
-                  weight="20px"
-                ></Image>
-              </Nav.Link>
-            </Nav.Item>
+            <NavDropdown
+              hidden={!props.isLoggedIn}
+              title={profile}
+              menuAlign={{ lg: "right" }}
+              id="dropdown-menu-align-responsive-1"
+              show={showProfile}
+              onMouseEnter={showDropdownProfile}
+              onMouseLeave={hideDropdownProfile}
+            >
+              <NavDropdown.Header>Logged In as : <br></br>{localStorage.getItem("loggedInUserName")}</NavDropdown.Header>
+              <hr></hr>
+              <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+            </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
+      </div>
     </Styles>
   );
 };
