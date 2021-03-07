@@ -8,7 +8,6 @@ const Styles = styled.div`
 .main-bg {
     background-color: #084C61;
     margin-top: -23px;
-    height : 36.5vw;
   }
   .text {
     color: #dbf1fb;
@@ -17,10 +16,6 @@ const Styles = styled.div`
 
 const Login = (props) => {
     const [formData, setFormData] = useState({});
-    let state = {
-        items: [],
-        errorMessage: ''
-      }
     const history = useHistory();
 
     const valueChange = (e) => {
@@ -55,7 +50,6 @@ const Login = (props) => {
             props.setLogin(true);
             history.push("/");
         } catch (error) {
-            setState({errorMessage : error.message});
             console.log(error);
         }
     };
@@ -96,6 +90,11 @@ const Login = (props) => {
                             Do not have account?
                             <a href="/signup">Click here</a> to join!!
                         </div>
+                        <div className="text">
+                            Forgot Password?
+                            <a href="/forgotpassword">Click here</a> to join!!
+                        </div>
+
                     </div>
                 </Container>
             </div>

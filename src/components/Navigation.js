@@ -68,7 +68,7 @@ const Navigation = (props) => {
       <div className="width">
       <Navbar expand="lg" sticky="top">
         <Navbar.Brand>
-          <img width="10%" height="10%" src={logo} />
+          <img width="10%" height="10%" src={logo}/>
         </Navbar.Brand>
         <Navbar.Toggle/>
         <Navbar.Collapse id="basic-navbar-nav">
@@ -125,7 +125,6 @@ const Navigation = (props) => {
             <NavDropdown
               hidden={!props.isLoggedIn}
               title={profile}
-              menuAlign={{ lg: "right" }}
               id="dropdown-menu-align-responsive-1"
               show={showProfile}
               onMouseEnter={showDropdownProfile}
@@ -134,6 +133,7 @@ const Navigation = (props) => {
               <NavDropdown.Header>Logged In as : <br></br>{localStorage.getItem("loggedInUserName")}</NavDropdown.Header>
               <hr></hr>
               <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+              <NavDropdown.Item href="/logout">Log Out</NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

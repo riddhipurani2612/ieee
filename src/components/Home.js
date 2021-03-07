@@ -4,11 +4,10 @@ import styled from "styled-components";
 import YouTube from "react-youtube";
 import Feedback from "./Feedback";
 import { Link } from "react-scroll";
+import satellite from "../assets/setallite.jpg";
 const Styles = styled.div`
   .main-bg {
-    background: url(https://media.giphy.com/media/l378oFRWSogOya3uw/giphy.gif)
-      no-repeat center center fixed;
-    background-size: cover;
+    background-color: #084c61;
   }
   .bg2 {
     background-color: #429eb3;
@@ -18,15 +17,22 @@ const Styles = styled.div`
   }
   .heading {
     color: white;
+    font-size: 4rem;
+    line-height: 5rem;
+    font-weight: 1000%;
+    font-family: Copperplate;
+    transition: 0.2s;
+  }
+  .hovering {
+    color: white;
     font-size: 3rem;
     line-height: 5rem;
     font-weight: 1000%;
     font-family: Copperplate;
     transition: 0.2s;
   }
-  .heading: hover {
+  .hovering: hover {
     font-size: 4rem;
-    line-height: 5.5rem;
   }
   .custom-text {
     font-size: 140%;
@@ -58,52 +64,63 @@ const Styles = styled.div`
     justify-content: center;
     height: 50px;
   }
+  .button {
+    border: 1px solid;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    transition-duration: 0.4s;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
+      0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  .button: hover {
+    border: 2px solid white;
+    color: blue;
+    text-decoration: none;
+  }
 `;
 
 const Home = (props) => {
   const youtubeOptions = {
     width: "100%",
+    height: "400rem",
   };
 
   const [showFeedbackModal, setFeedbackModal] = useState(false);
   return (
     <Styles>
-      <div className="main-bg">
-        <Feedback
-          show={showFeedbackModal}
-          closeModal={() => setFeedbackModal(false)}
-          onHide={() => setFeedbackModal(false)}
-        />
-        <Button
-          className="mt-5"
-          style={{ position: "fixed" }}
-          variant="outline-light"
-          onClick={() => setFeedbackModal(true)}
-          title="Feedback"
-        >
-          <i class="fa fa-comments-o" aria-hidden="true"></i>
-        </Button>
+      <Feedback
+        show={showFeedbackModal}
+        closeModal={() => setFeedbackModal(false)}
+        onHide={() => setFeedbackModal(false)}
+      />
+      <Button
+        className="mt-5"
+        style={{ position: "fixed" }}
+        variant="outline-light"
+        onClick={() => setFeedbackModal(true)}
+        title="Feedback"
+      >
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+      </Button>
 
-        <Container className="main-bg">
-          <div className="main-bg">
-            <Container>
-              <br></br>
-              <h1 className="text-center my-3 heading">
-                <br></br>Welcome To IEEE<br></br>
-                Gujarat Section<br></br> GRSS Chapter
-              </h1>
-              <h1 className="text-center text my-5">
-                Scroll to explore more<br></br>
-                <Link to="who" spy={true} smooth={true}>
-                  <div className="heading">
-                    <i className="fa fa-chevron-down my-5"></i>
-                  </div>
-                </Link>
-              </h1>
-            </Container>
-          </div>
+      <Container className="main-bg">
+        <Container>
+          <br></br>
+          <h1 className="text-center my-3 heading">
+            <br></br>Welcome To IEEE<br></br>
+            Gujarat Section<br></br> GRSS Chapter
+          </h1>
+          <h1 className="text-center text my-5">
+            Scroll to explore more
+            <Link to="who" spy={true} smooth={true}>
+              <div className="heading">
+                <i className="fa fa-chevron-down my-5"></i>
+              </div>
+            </Link>
+          </h1>
         </Container>
-      </div>
+      </Container>
       <div id="who" className="bg2" style={{ marginTop: "-48px" }}>
         <Container className="bg2">
           <br></br>
@@ -154,12 +171,12 @@ const Home = (props) => {
               </Col>
             </Row>
           </div>
-          <div className="vertical-center text heading">Important Links</div>
+          <h1 className="vertical-center text">Important Links</h1>
           <br></br>
           <br></br>
           <div className="vertical-center">
             <a href="https://www.grss-ieee.org/" target="blank">
-              <Button variant="outline-light" size="lg">
+              <Button variant="outline-light button" size="lg">
                 IEEE - GRSS
               </Button>
             </a>
@@ -170,8 +187,8 @@ const Home = (props) => {
               href="https://www.grss-ieee.org/about/membership/benefits-of-membership/"
               target="blank"
             >
-              <Button variant="outline-light" size="lg">
-                Benefits of joining
+              <Button variant="outline-light button" size="lg">
+                Why Join Us?
               </Button>
             </a>
           </div>
@@ -181,7 +198,7 @@ const Home = (props) => {
               href="https://ieeexplore.ieee.org/Xplore/home.jsp"
               target="blank"
             >
-              <Button variant="outline-light" size="lg">
+              <Button variant="outline-light button" size="lg">
                 IEEE Xplore Digital Library
               </Button>
             </a>
@@ -189,11 +206,9 @@ const Home = (props) => {
           <br></br>
           <div className="vertical-center">
             <a href="https://standards.ieee.org/" target="blank">
-              <Button variant="outline-light" size="lg">
+              <Button variant="outline-light button" size="lg">
                 IEEE Standards
               </Button>
-              <br></br>
-              <br></br>
             </a>
           </div>
         </Container>

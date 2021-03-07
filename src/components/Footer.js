@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { Card, Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import styled from "styled-components";
 import FAQ from "./FAQ";
 
@@ -9,6 +9,9 @@ const Styles = styled.div`
   }
   .text {
     font-size: 70%;
+  }
+  .bottom{
+    margin-bottom : 0px;
   }
 `;
 

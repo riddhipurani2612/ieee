@@ -21,6 +21,7 @@ import Profile from "./components/Profile";
 import Members from "./components/Members";
 import TechnicalMaterial from "./components/Technicalmaterial";
 import FAQ from "./components/FAQ";
+import Logout from "./components/Logout";
 function App() {
     console.log("App");               
     const [isLoggedIn, setLoggedIn] = useState(false);
@@ -53,6 +54,7 @@ function App() {
                     <Route path="/profile" component={Profile}/>
                     <Route path="/uploadmaterial" component={TechnicalMaterial}/>
                     <Route path="/faq" component={FAQ} />
+                    <Route path="logout" component={Logout} />
                 </Switch>
                 <Footer />
             </div>
