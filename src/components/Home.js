@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import styled from "styled-components";
 import YouTube from "react-youtube";
 import Feedback from "./Feedback";
 import { Link } from "react-scroll";
+import StudentMembers from "StudentMember";
+import axios from "axios";
 import satellite from "../assets/setallite.jpg";
 const Styles = styled.div`
   .main-bg {
@@ -85,7 +87,26 @@ const Home = (props) => {
     width: "100%",
     height: "400rem",
   };
-
+  const [events, setEvents] = useState([]);
+  const { eventname, date, time, about, hostedby } = events;
+  useEffect(async () => {
+    let response;
+    let config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      response = await axios.get(
+        "http://localhost:5000/event/upcoming",
+        config
+      );
+      setEvents(response.data);
+      console.log(events);
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
   const [showFeedbackModal, setFeedbackModal] = useState(false);
   return (
     <Styles>
@@ -152,6 +173,20 @@ const Home = (props) => {
           <div className="bg2">
             <YouTube videoId="JZrCOuquSN0" opts={youtubeOptions} />
             <br></br>
+            <div>
+              <h1 className="text text-center">Upcoming Events</h1>
+              <div>
+                <ol>
+                  {
+                    events.map((eventObj,index)=>{
+                      <StudentMembers/>
+                      console.log(eventObj.eventname);
+                      console.log(eventObj.date);
+                    })
+                  }
+                </ol>
+              </div>
+            </div>
             <Row className="my-5">
               <Col className="text-center">
                 <a

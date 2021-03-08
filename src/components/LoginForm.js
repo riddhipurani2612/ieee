@@ -16,7 +16,7 @@ const Styles = styled.div`
 
 const Login = (props) => {
     const [formData, setFormData] = useState({});
-    const history = useHistory();
+      const history = useHistory();
 
     const valueChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });

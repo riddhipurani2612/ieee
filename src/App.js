@@ -22,6 +22,7 @@ import Members from "./components/Members";
 import TechnicalMaterial from "./components/Technicalmaterial";
 import FAQ from "./components/FAQ";
 import Logout from "./components/Logout";
+import AddEvent from "./components/AddEvent";
 function App() {
     console.log("App");               
     const [isLoggedIn, setLoggedIn] = useState(false);
@@ -41,6 +42,7 @@ function App() {
                             />
                         )}
                     />
+                    <Route path="/addevent" component={AddEvent} />
                     <Route path="/members" component={Members}/>
                     <Route path="/chairs-desk" component={ChairsDesk} />
                     <Route path="/about" component={AboutUs} />
