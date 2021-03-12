@@ -92,7 +92,7 @@ const Login = (props) => {
                         </div>
                         <div className="text">
                             Forgot Password?
-                            <a href="/forgotpassword">Click here</a> to join!!
+                            <a href="/forgotpassword">Forgot password?</a>
                         </div>
 
                     </div>

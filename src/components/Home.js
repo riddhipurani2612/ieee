@@ -4,9 +4,10 @@ import styled from "styled-components";
 import YouTube from "react-youtube";
 import Feedback from "./Feedback";
 import { Link } from "react-scroll";
-import StudentMembers from "StudentMember";
+import EventView from "./UpcomingEventView";
 import axios from "axios";
-import satellite from "../assets/setallite.jpg";
+import ScrollAnimation from "react-animate-on-scroll";
+import "animate.css/animate.min.css";
 const Styles = styled.div`
   .main-bg {
     background-color: #084c61;
@@ -80,6 +81,26 @@ const Styles = styled.div`
     color: blue;
     text-decoration: none;
   }
+  a:link,
+  a:visited {
+    font-size: 1.5rem;
+    font-weight: 1000%;
+    font-family: Copperplate;
+    background-color: inherit;
+    color: white;
+    border: 2px solid inherit;
+    margin-left: 3rem;
+    padding: 1rem;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  a:hover {
+    background-color: inherit;
+    color: #ecc30b;
+    font-size: 150%;
+  }
 `;
 
 const Home = (props) => {
@@ -102,7 +123,7 @@ const Home = (props) => {
         config
       );
       setEvents(response.data);
-      console.log(events);
+      console.log(response.data);
     } catch (err) {
       console.log(err);
     }
@@ -125,127 +146,149 @@ const Home = (props) => {
         <i class="fa fa-comments-o" aria-hidden="true"></i>
       </Button>
 
-      <Container className="main-bg">
-        <Container>
-          <br></br>
-          <h1 className="text-center my-3 heading">
-            <br></br>Welcome To IEEE<br></br>
-            Gujarat Section<br></br> GRSS Chapter
-          </h1>
-          <h1 className="text-center text my-5">
-            Scroll to explore more
-            <Link to="who" spy={true} smooth={true}>
-              <div className="heading">
-                <i className="fa fa-chevron-down my-5"></i>
-              </div>
-            </Link>
-          </h1>
+      <div className="main-bg">
+        <Container className="main-bg">
+          <ScrollAnimation
+            animateIn="animate__backInDown"
+            animateOut="animate__backOutUp"
+          >
+            <h1 className="text-center heading" style={{ color: "#ECC30B" }}>
+              <br></br>Welcome To IEEE<br></br>
+              Gujarat Section<br></br> GRSS Chapter
+            </h1>
+            <h1 className="text-center text my-5" style={{ color: "#ECC30B" }}>
+              Scroll to explore more
+              <Link to="who" spy={true} smooth={true}>
+                <div className="heading">
+                  <i className="fa fa-chevron-down my-5"></i>
+                </div>
+              </Link>
+              <br></br>
+            </h1>
+          </ScrollAnimation>
         </Container>
-      </Container>
+      </div>
       <div id="who" className="bg2" style={{ marginTop: "-48px" }}>
         <Container className="bg2">
           <br></br>
-          <br></br>
-          <h2 className="my-5 text-center text heading">Who are we?</h2>
-          <div className="text-justify text custom-text">
+          <ScrollAnimation
+            animateIn="animate__pulse"
+            animateOut="animate__fadeOut"
+          >
+            <h2
+              className="my-5 text-center text heading"
+              style={{ color: "#CA054D", textDecoration: "underline" }}
+            >
+              Who are we?
+            </h2>
+          </ScrollAnimation>
+          <div className="text custom-text">
             <Container>
-              The IEEE Geoscience and Remote Sensing Society (GRSS) is a
-              professional society of the IEEE, active in the fields of
-              geoscience and remote sensing. The Geoscience and Remote Sensing
-              Society seeks to advance science and technology in geoscience,
-              remote sensing and related fields using conferences, education,
-              and other resources.The fields of interest of the Society are the
-              theory, concepts, and techniques of science and engineering as
-              they apply to the remote sensing of the earth, oceans, atmosphere,
-              and space, as well as the processing, interpretation and
-              dissemination of this information. Gujarat,one of the most vibrant
-              states of India,houses renowned research and academic institutes
-              which are actively involved in the field of geoscience and remote
-              sensing.This lead to the inception of Gujarat chapter of IEEE GRSS
-              which brings together researchers and academicians under one
-              umbrella where the ideas and vision can be dissipitated in the
-              form of conferences, meetings,lectures,workshops and other
-              activiies.
+              <ScrollAnimation
+                animateIn="animate__fadeIn"
+                animateOut="animate__fadeOut"
+              >
+                The IEEE Geoscience and Remote Sensing Society (GRSS) is a
+                professional society of the IEEE, active in the fields of
+                geoscience and remote sensing. The Geoscience and Remote Sensing
+                Society seeks to advance science and technology in geoscience,
+                remote sensing and related fields using conferences, education,
+                and other resources.The fields of interest of the Society are
+                the theory, concepts, and techniques of science and engineering
+                as they apply to the remote sensing of the earth, oceans,
+                atmosphere, and space, as well as the processing, interpretation
+                and dissemination of this information. Gujarat,one of the most
+                vibrant states of India,houses renowned research and academic
+                institutes which are actively involved in the field of
+                geoscience and remote sensing.This lead to the inception of
+                Gujarat chapter of IEEE GRSS which brings together researchers
+                and academicians under one umbrella where the ideas and vision
+                can be dissipitated in the form of conferences, meetings,
+                lectures, workshops and other activities.
+              </ScrollAnimation>
             </Container>
           </div>
           <br></br>
           <br></br>
           <div className="bg2">
-            <YouTube videoId="JZrCOuquSN0" opts={youtubeOptions} />
+            <ScrollAnimation
+              animateIn="animate__fadeIn"
+              animateOut="animate__fadeOut"
+            >
+              <YouTube videoId="JZrCOuquSN0" opts={youtubeOptions} />
+            </ScrollAnimation>
             <br></br>
-            <div>
-              <h1 className="text text-center">Upcoming Events</h1>
+            <br></br>
+            <br></br>
+            <br></br>
+            <ScrollAnimation
+              animateIn="animate__fadeIn"
+              animateOut="animate__fadeOut"
+            >
               <div>
-                <ol>
-                  {
-                    events.map((eventObj,index)=>{
-                      <StudentMembers/>
-                      console.log(eventObj.eventname);
-                      console.log(eventObj.date);
-                    })
-                  }
-                </ol>
+                <h1
+                  className="text text-center"
+                  style={{ color: "#CA054D", textDecoration: "underline" }}
+                >
+                  Upcoming Events
+                </h1>
+                <br></br>
+                <br></br>
+                <br></br>
+                <div>
+                    {events.map((eventObj, index) => (
+                      <EventView
+                        name={eventObj.eventname}
+                        date={eventObj.date}
+                        time={eventObj.time}
+                        about={eventObj.about}
+                        hostedby={eventObj.hostedby}
+                        registrationlink={eventObj.registrationlink}
+                      />
+                    ))}
+                </div>
               </div>
-            </div>
-            <Row className="my-5">
-              <Col className="text-center">
+            </ScrollAnimation>
+          </div>
+          <Container>
+            <ScrollAnimation
+              animateIn="animate__backInUp"
+              animateOut="animate__backOutDown"
+            >
+              <div className="text">
+                <br></br>
+                <br></br>
+                <br></br>
+                <h1
+                  className="vertical-center text"
+                  style={{ color: "#CA054D", textDecoration: "underline" }}
+                >
+                  Important Links
+                </h1>
+                <br></br>
+                <a href="https://www.grss-ieee.org/" className="">
+                  IEEE - GRSS
+                </a>
                 <a
-                  href="https://www.facebook.com/groups/546023775454229/"
+                  href="https://www.grss-ieee.org/about/membership/benefits-of-membership/"
                   target="blank"
                 >
-                  <i className="fa fa-5x fa-facebook text facebook"></i>
+                  Why Join Us?
                 </a>
-              </Col>
-              <Col className="text-center">
-                <i className="fa fa-5x fa-linkedin text linkedin"></i>
-              </Col>
-              <Col className="text-center">
-                <a href="https://twitter.com/IEEE_GRSS" target="blank">
-                  <i className="fa fa-5x fa-twitter text twitter"></i>
+                <a
+                  href="https://ieeexplore.ieee.org/Xplore/home.jsp"
+                  target="blank"
+                >
+                  IEEE Xplore Digital Library
                 </a>
-              </Col>
-            </Row>
-          </div>
-          <h1 className="vertical-center text">Important Links</h1>
-          <br></br>
-          <br></br>
-          <div className="vertical-center">
-            <a href="https://www.grss-ieee.org/" target="blank">
-              <Button variant="outline-light button" size="lg">
-                IEEE - GRSS
-              </Button>
-            </a>
-          </div>
-          <br></br>
-          <div className="vertical-center">
-            <a
-              href="https://www.grss-ieee.org/about/membership/benefits-of-membership/"
-              target="blank"
-            >
-              <Button variant="outline-light button" size="lg">
-                Why Join Us?
-              </Button>
-            </a>
-          </div>
-          <br></br>
-          <div className="vertical-center">
-            <a
-              href="https://ieeexplore.ieee.org/Xplore/home.jsp"
-              target="blank"
-            >
-              <Button variant="outline-light button" size="lg">
-                IEEE Xplore Digital Library
-              </Button>
-            </a>
-          </div>
-          <br></br>
-          <div className="vertical-center">
-            <a href="https://standards.ieee.org/" target="blank">
-              <Button variant="outline-light button" size="lg">
-                IEEE Standards
-              </Button>
-            </a>
-          </div>
+                <a href="https://standards.ieee.org/" target="blank">
+                  IEEE Standards
+                </a>
+                <br></br>
+                <br></br>
+              </div>
+            </ScrollAnimation>
+          </Container>
         </Container>
       </div>
     </Styles>

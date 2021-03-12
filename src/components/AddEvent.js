@@ -15,7 +15,7 @@ const AddEvent = () => {
   const valueChanged = (e) => {
     setEvents({ ...events, [e.target.name]: e.target.value });
   };
-  const { eventname, date, time, about, hostedby } = events;
+  const { eventname, date, time, about, hostedby, registrationlink } = events;
   const addevent = async (e) => {
     e.preventDefault();
     let data = {
@@ -24,6 +24,7 @@ const AddEvent = () => {
         time,
         about,
         hostedby,
+        registrationlink
       };
       let config = {
         headers: {
@@ -86,6 +87,15 @@ const AddEvent = () => {
               type="text"
               name="hostedby"
               value={hostedby}
+              onChange={valueChanged}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Registration Link : </Form.Label>
+            <Form.Control
+              type="text"
+              name="registrationlink"
+              value={registrationlink}
               onChange={valueChanged}
             ></Form.Control>
           </Form.Group>

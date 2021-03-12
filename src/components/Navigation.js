@@ -2,19 +2,24 @@ import React, { useState } from "react";
 import { Navbar, Nav, NavDropdown, Image } from "react-bootstrap";
 import logo from "../assets/grss_logo.png";
 import styled from "styled-components";
-
 const Styles = styled.div`
   .navbar {
-    background-color: #a6d4de;
+    background: white;
+    justify-content: center;
+    font-size: 1.2rem;
+    position: sticky;
+    justify-content: space-between;
   }
-  a,
-  .navbar-nav,
-  .navbar-light .nav-link {
-    color: #020100;
-
-    padding-left: 20px;
+  .nav-link {
+    color: white;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    font-weight: 1000%;
+    font-family: Copperplate;
+    height: 100%;
     &:hover {
-      color: white;
+      text-decoration: underline 3px red;
+      font-weight: 10000%;
     }
   }
   .navbar-brand {
@@ -23,19 +28,12 @@ const Styles = styled.div`
   }
   .dropdown-menu {
     color: #12263a;
-    background-color: #a6d4de;
+    background-color: white;
     right: 0 !important;
     left: auto !important;
   }
-  .dropdown-menu: hover {
-    color: #eff5fa;
-    background-color: #12263a;
-  }
   .dropdown-header {
     color: #463f1a;
-  }
-  .width {
-    width: 100%;
   }
 `;
 const Navigation = (props) => {
@@ -45,6 +43,13 @@ const Navigation = (props) => {
   };
   const hideDropdownAbout = (e) => {
     setShowAbout(false);
+  };
+  const [showEvent, setShowEvent] = useState(false);
+  const showDropdownEvent = (e) => {
+    setShowEvent(!showEvent);
+  };
+  const hideDropdownEvent = (e) => {
+    setShowEvent(false);
   };
   const [showMaterial, setShowMaterial] = useState(false);
   const showDropdownMaterial = (e) => {
@@ -72,9 +77,6 @@ const Navigation = (props) => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
               <Nav.Item>
-                <Nav.Link href="/addevent">Add Event</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
                 <Nav.Link href="/">Home</Nav.Link>
               </Nav.Item>
               <NavDropdown
@@ -100,9 +102,15 @@ const Navigation = (props) => {
                   Material Upload
                 </NavDropdown.Item>
               </NavDropdown>
-              <Nav.Item>
-                <Nav.Link href="/events">Events</Nav.Link>
-              </Nav.Item>
+              <NavDropdown
+                title="Event"
+                show={showEvent}
+                onMouseEnter={showDropdownEvent}
+                onMouseLeave={hideDropdownEvent}
+              >
+                <NavDropdown.Item href="/events">Events</NavDropdown.Item>
+                <NavDropdown.Item href="/addevent">Add Event</NavDropdown.Item>
+               </NavDropdown>
               <NavDropdown
                 title="About"
                 show={showAbout}
@@ -146,5 +154,4 @@ const Navigation = (props) => {
     </Styles>
   );
 };
-
 export default Navigation;
