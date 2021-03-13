@@ -13,31 +13,32 @@ const Styles = styled.div`
 const AddEvent = () => {
   const [events, setEvents] = useState({});
   const valueChanged = (e) => {
+    console.log(events);
     setEvents({ ...events, [e.target.name]: e.target.value });
   };
-  const { eventname, date, time, about, hostedby, registrationlink } = events;
+  const { eventname, date, time, about, hostedby, registrationlink, file } = events;
   const addevent = async (e) => {
     e.preventDefault();
     let data = {
-        eventname,
-        date,
-        time,
-        about,
-        hostedby,
-        registrationlink
-      };
-      let config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-   let response;
+      eventname,
+      date,
+      time,
+      about,
+      hostedby,
+      registrationlink,
+      file,
+    };
+    let config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    let response;
     try {
-        response = await axios.post("http://localhost:5000/event",data,config);
-        console.log(response.data);
-
+      response = await axios.post("http://localhost:5000/event", data, config);
+      console.log(response.data);
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
   };
   return (

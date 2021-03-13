@@ -65,6 +65,13 @@ const Navigation = (props) => {
   const hideDropdownProfile = (e) => {
     setShowProfile(false);
   };
+  const [showNewsletter, setShowNewsletter] = useState(false);
+  const showDropdownNewsletter = (e) => {
+    setShowNewsletter(!showNewsletter);
+  };
+  const hideDropdownNewsletter = (e) => {
+    setShowNewsletter(false);
+  };
   const profile = <i class="fa fa-user" aria-hidden="true"></i>;
   return (
     <Styles>
@@ -87,9 +94,6 @@ const Navigation = (props) => {
                 onMouseEnter={showDropdownMaterial}
                 onMouseLeave={hideDropdownMaterial}
               >
-                <NavDropdown.Item href="/newsletters">
-                  Newsletters
-                </NavDropdown.Item>
                 <NavDropdown.Item href="/publication">
                   Publications
                 </NavDropdown.Item>
@@ -98,7 +102,7 @@ const Navigation = (props) => {
                 <NavDropdown.Item href="https://16fbc7d9-21b8-46d1-a23a-6d57e5ebf2ea.filesusr.com/archives/f6c427_4a32ef40e06146ff8a9cffb3e9a270e4.rar?dn=TARANG_24Mar2014.rar">
                   Download Tarang Software
                 </NavDropdown.Item>
-                <NavDropdown.Item href="/uploadmaterial">
+                <NavDropdown.Item href="/addmaterial">
                   Material Upload
                 </NavDropdown.Item>
               </NavDropdown>
@@ -110,7 +114,7 @@ const Navigation = (props) => {
               >
                 <NavDropdown.Item href="/events">Events</NavDropdown.Item>
                 <NavDropdown.Item href="/addevent">Add Event</NavDropdown.Item>
-               </NavDropdown>
+              </NavDropdown>
               <NavDropdown
                 title="About"
                 show={showAbout}
@@ -123,6 +127,14 @@ const Navigation = (props) => {
                 <NavDropdown.Item href="/faq">FAQs</NavDropdown.Item>
                 <NavDropdown.Item href="/about">About Us</NavDropdown.Item>
               </NavDropdown>
+              <NavDropdown 
+                title="News Letters"
+                show={showNewsletter}
+                onMouseEnter={showDropdownNewsletter}
+                onMouseLeave={hideDropdownNewsletter}>
+                  <NavDropdown.Item href="/newsletter">Newsletters</NavDropdown.Item>
+                  <NavDropdown.Item href="/addnewsletter">Add Newsletters</NavDropdown.Item>
+                </NavDropdown>
               <Nav.Item>
                 <Nav.Link href="/contact">Contact</Nav.Link>
               </Nav.Item>

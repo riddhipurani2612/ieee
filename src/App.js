@@ -23,6 +23,7 @@ import TechnicalMaterial from "./components/Technicalmaterial";
 import FAQ from "./components/FAQ";
 import Logout from "./components/Logout";
 import AddEvent from "./components/AddEvent";
+import AddMaterial from "./components/AddMaterial";
 function App() {
     console.log("App");               
     const [isLoggedIn, setLoggedIn] = useState(false);
@@ -42,13 +43,14 @@ function App() {
                             />
                         )}
                     />
+                    <Route path="/addmaterial" component={AddMaterial}/>
                     <Route path="/addevent" component={AddEvent} />
                     <Route path="/members" component={Members}/>
                     <Route path="/chairs-desk" component={ChairsDesk} />
                     <Route path="/about" component={AboutUs} />
                     <Route path="/contact" component={ContactUs} />
                     <Route path="/events" component={Events} />
-                    <Route path="/newsletters" component={Newsletter} />
+                    <Route path="/newsletter" component={Newsletter} />
                     <Route path="/publication" component={Publication} />
                     <Route path="/lecture" component={Lecture} />
                     <Route path="/signup" component={SignUp} />
@@ -56,7 +58,7 @@ function App() {
                     <Route path="/profile" component={Profile}/>
                     <Route path="/uploadmaterial" component={TechnicalMaterial}/>
                     <Route path="/faq" component={FAQ} />
-                    <Route path="logout" component={Logout} />
+                    <Route path="logout" compnent={Logout} />
                 </Switch>
                 <Footer />
             </div>
