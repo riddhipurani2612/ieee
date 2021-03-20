@@ -4,9 +4,6 @@ import {
   Container,
   Row,
   Col,
-  Card,
-  Accordion,
-  Button,
 } from "react-bootstrap";
 import styled from "styled-components";
 import shivmohan from "../assets/shivmohan.jpg";
@@ -29,7 +26,6 @@ import panjabrao from "../assets/panjabrao.png";
 const Styles = styled.div`
 .main-bg {
   background-color: #084C61;
-  margin-top: -23px;
 }
 .text {
   color: #dbf1fb;
@@ -39,6 +35,7 @@ const Styles = styled.div`
   }
 `;
 const FounderMembers = () => {
+  
   return (
     <Styles>
       <div className="main-bg text">
@@ -319,69 +316,7 @@ const FounderMembers = () => {
           </ListGroup>
         </Container>
 
-        <Accordion defaultActiveKey="1">
-          <Card width="500px">
-            <Card.Header width="500px">
-              <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                <Row>
-                  <Col>
-                    <img src={shivmohan} height="150px" width="150px" />
-                  </Col>
-                  <Col>
-                    Dr. Shiv Mohan<br></br>
-                    Visiting Scientist <br></br>
-                  </Col>
-                </Row>
-              </Accordion.Toggle>
-            </Card.Header>
-            <Accordion.Collapse eventKey="0">
-              <Card.Body className="main-bg text">
-                PLANEX, Physical Research Laboratory <br></br>
-                Thaltej Campus, Ahmedabad – 380059 (Gujarat), India <br></br>
-                Former Scientist, Space Applications Centre (ISRO), Ahmedabad{" "}
-                <br></br>
-                Ph: +91-79-26850454; Mobile: 0-9712128524 <br></br>
-                Email: shivmohan.isro@gmail.com <br></br>
-                Shiv Mohan (Member, 2012; Senior Member, 2013) received the
-                M.Sc. degree from Aligarh Muslim University in 1972 and the
-                Ph.D. degree from Agra University in 1985. He joined Space
-                Applications Centre in 1978 and was associated with microwave
-                remote sensing programme of ISRO since early eighties. He has
-                contributed towards development of various applications using
-                microwave sensors in India. He initiated multi-frequency
-                experiment using ground based scatterometer, X/C-band Airborne
-                SAR, DM SAR, DLR E-SAR. He was also PI of several AO projects
-                from ESA, JAXA, and ASI. He has conducted a large number of
-                applications of SAR for hydrology, forestry, agriculture,
-                disaster management. He also initiated SAR quality parameters
-                and SAR calibration studies in ISRO. More recently, he initiated
-                applications of SAR polarimetry and interferometry for land
-                applications. He also initiated SAR applications for lunar
-                surface using Chandrayaan-1 Mini-SAR related to lunar scattering
-                properties, damaged crater detection and polar water ice
-                detection under PLANEX programme. He has contributed
-                significantly towards the definition of payload for Mini-SAR in
-                Chandrayaan-2 and SAR payload for RISAT-1 and RISAT-3. He has
-                served as Chief Scientist, Haryana Space Applications Centre
-                during 1998-2001. He has also worked as Project Director, RISAT
-                utilization programme of ISRO during 2009-2011. Presently he is
-                a Visiting Scientist at PLANEX, Physical Research Laboratory and
-                Visiting Faculty at CEPT University, Ahmedabad. He is also PI of
-                ALOS-AO-2 PALSAR project on SAR polarimetry and interferometry
-                along with JAXA and Niigata University, Japan. He is a recipient
-                of ISRS National Remote Sensing Award (1995) for his pioneering
-                efforts in the area of microwave remote sensing applications. He
-                is also a recipient certificate of special services from
-                Government of Haryana (2003). He has about 260 publications and
-                reports to his credit. He is life member of five Indian
-                Scientific/Professional Societies and Fellow of Society of Earth
-                Scientist, India. He is also founder Chair of IEEE Geosciences
-                and Remote Sensing Society- Gujarat Chapter.
-              </Card.Body>
-            </Accordion.Collapse>
-          </Card>
-        </Accordion>
-      </div>
+              </div>
     </Styles>
   );
 };

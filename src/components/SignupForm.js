@@ -30,6 +30,7 @@ const SignUp = () => {
     email,
     workplace,
     designation,
+    about,
     password,
     confirmpassword,
   } = signupData;
@@ -49,7 +50,9 @@ const SignUp = () => {
         workplace,
         designation,
         password,
+        about,
       };
+      console.log(data);
       let config = {
         headers: {
           "Content-Type": "application/json",
@@ -153,6 +156,17 @@ const SignUp = () => {
                   value={designation}
                   name="designation"
                   placeholder="Enter designation"
+                  onChange={signupValueChanged}
+                ></Form.Control>
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>More about you</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  row="4"
+                  name="about"
+                  value={about}
+                  placeholder="Tell us more about you"
                   onChange={signupValueChanged}
                 ></Form.Control>
               </Form.Group>

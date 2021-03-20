@@ -29,7 +29,7 @@ const AddMaterial = () => {
     formData.append("file",file);
     formData.append("uploadedby",_id);
     let config = {
-      "Content-Type" : "multipart/form-data",
+      "encType" : "multipart/form-data",
     };
     console.log(formData);
     let response;

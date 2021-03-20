@@ -1,4 +1,4 @@
-import React, { useState , setState} from "react";
+import React, { useState , useEffect} from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
@@ -45,8 +45,7 @@ const Login = (props) => {
                 config
             );
             console.log(response.data);
-            localStorage.setItem("loggedInUserId", response.data._id);
-            localStorage.setItem("loggedInUserName", response.data.first_name + " " + response.data.last_name);
+            localStorage.setItem("token", response.data.token);
             props.setLogin(true);
             history.push("/");
         } catch (error) {
@@ -91,7 +90,6 @@ const Login = (props) => {
                             <a href="/signup">Click here</a> to join!!
                         </div>
                         <div className="text">
-                            Forgot Password?
                             <a href="/forgotpassword">Forgot password?</a>
                         </div>
 

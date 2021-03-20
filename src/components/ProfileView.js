@@ -15,27 +15,25 @@ const Styles = styled.div`
 const ProfileView = (e) => {
   const [user, setUser] = useState({});
   const {
-    _id,
     first_name,
     last_name,
-    role,
     address,
     contact,
     email,
     workplace,
     designation,
-    password,
   } = user;
   let response;
-  const id = localStorage.getItem("loggedInUserId");
+  const token = localStorage.getItem("token");
   let config = {
     headers: {
       "Content-Type": "application/json",
+      "x-auth-token" : token,
     },
   };
   useEffect(async () => {
     try {
-      response = await axios.get(`http://localhost:5000/user/${id}`, config);
+      response = await axios.get(`http://localhost:5000/user/`, config);
       setUser(response.data);
       console.log("USER");
       console.log(response.data);

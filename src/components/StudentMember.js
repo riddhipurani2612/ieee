@@ -4,7 +4,6 @@ import styled from "styled-components";
 const Styles = styled.div`
 .main-bg {
   background-color: #084C61;
-  margin-top: -23px;
 }
 .text {
   color: #dbf1fb;

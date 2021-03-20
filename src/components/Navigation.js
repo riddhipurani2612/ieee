@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Navbar, Nav, NavDropdown, Image } from "react-bootstrap";
 import logo from "../assets/grss_logo.png";
 import styled from "styled-components";
@@ -37,6 +37,14 @@ const Styles = styled.div`
   }
 `;
 const Navigation = (props) => {
+  useEffect(() => {
+    if (localStorage.getItem("token") === null) {
+      props.setLogin(false);
+    }
+    else{
+      props.setLogin(true);
+    }
+  }, []);
   const [showAbout, setShowAbout] = useState(false);
   const showDropdownAbout = (e) => {
     setShowAbout(!showAbout);
@@ -86,6 +94,12 @@ const Navigation = (props) => {
               <Nav.Item>
                 <Nav.Link href="/">Home</Nav.Link>
               </Nav.Item>
+              <Nav.Item>
+                <Nav.Link href="/meetings">Meetings</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link href="/members">Members</Nav.Link>
+              </Nav.Item>
               <NavDropdown
                 hidden={!props.isLoggedIn}
                 title="Material"
@@ -127,14 +141,19 @@ const Navigation = (props) => {
                 <NavDropdown.Item href="/faq">FAQs</NavDropdown.Item>
                 <NavDropdown.Item href="/about">About Us</NavDropdown.Item>
               </NavDropdown>
-              <NavDropdown 
+              <NavDropdown
                 title="News Letters"
                 show={showNewsletter}
                 onMouseEnter={showDropdownNewsletter}
-                onMouseLeave={hideDropdownNewsletter}>
-                  <NavDropdown.Item href="/newsletter">Newsletters</NavDropdown.Item>
-                  <NavDropdown.Item href="/addnewsletter">Add Newsletters</NavDropdown.Item>
-                </NavDropdown>
+                onMouseLeave={hideDropdownNewsletter}
+              >
+                <NavDropdown.Item href="/newsletter">
+                  Newsletters
+                </NavDropdown.Item>
+                <NavDropdown.Item href="/addnewsletter">
+                  Add Newsletters
+                </NavDropdown.Item>
+              </NavDropdown>
               <Nav.Item>
                 <Nav.Link href="/contact">Contact</Nav.Link>
               </Nav.Item>
@@ -153,7 +172,6 @@ const Navigation = (props) => {
               >
                 <NavDropdown.Header>
                   Logged In as : <br></br>
-                  {localStorage.getItem("loggedInUserName")}
                 </NavDropdown.Header>
                 <hr></hr>
                 <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>

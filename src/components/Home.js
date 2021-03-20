@@ -102,7 +102,6 @@ const Styles = styled.div`
     font-size: 150%;
   }
 `;
-
 const Home = (props) => {
   const youtubeOptions = {
     width: "100%",

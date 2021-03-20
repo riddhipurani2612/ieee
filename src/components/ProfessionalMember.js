@@ -25,7 +25,6 @@ import female_profile from "../assets/female_profile.jpg";
 const Styles = styled.div`
 .main-bg {
   background-color: #084C61;
-  margin-top: -23px;
 }
 .text {
   color: #dbf1fb;
