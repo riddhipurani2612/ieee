@@ -21,6 +21,7 @@ import AddEvent from "./components/AddEvent";
 import AddMaterial from "./components/AddMaterial";
 import LogoutComp from "./components/LogoutComp";
 import Meetings from "./components/Meetings";
+import FileUpload from "./components/FileUpload";
 function App() {
   console.log("App");
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -64,6 +65,7 @@ function App() {
           <Route path="/uploadmaterial" component={TechnicalMaterial} />
           <Route path="/faq" component={FAQ} />
           <Route path="/meetings" component={Meetings}/>
+          <Route path="/file" component={FileUpload} />
           <Route
             path="/logout"
             component={LogoutComp}

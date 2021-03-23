@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
@@ -18,30 +18,36 @@ const Meetings = () => {
   };
 
   const { date, place, attendees, summary, purpose, minutes } = meetingData;
-
+  const [file, setFile] = useState("");
+  const [progress, setProgess] = useState(0);
+  const el = useRef(); // accesing input element
+  const handleChange = (e) => {
+    setProgess(0);
+    const file = e.target.files[0]; // accesing file
+    console.log(file);
+    setFile(file); // storing file
+  };
   const addMeeting = async (e) => {
     e.preventDefault();
-    let data = {
-      date,
-      place,
-      attendees,
-      summary,
-      purpose,
-      minutes,
-    };
-    console.log(data);
-    let config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+    const data = new FormData();
+    data.append("date",date);
+    data.append("place", place);
+    data.append("attendees",attendees);
+    data.append("summary",summary);
+    data.append("purpose",purpose);
+    data.append("minutes",minutes);
+    data.append("file", file);
+
     let response;
     try {
-      response = await axios.post(
-        "http://localhost:5000/meeting",
-        data,
-        config
-      );
+      response = await axios.post("http://localhost:5000/meeting", data, {
+        onUploadProgress: (ProgressEvent) => {
+          let progress =
+            Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +
+            "%";
+          setProgess(progress);
+        },
+      });
       console.log(response.data);
     } catch (err) {
       console.log(err);
@@ -110,6 +116,13 @@ const Meetings = () => {
               row={30}
             ></Form.Control>
           </Form.Group>
+          <Form.Group>
+            <Form.Label>Upload Sign File</Form.Label>
+            <input type="file" ref={el} onChange={handleChange} />
+          </Form.Group>
+          <div className="progessBar" style={{ width: progress }}>
+            {progress}
+          </div>
           <Button onClick={addMeeting}>Add Meeting</Button>
         </Form>
       </Container>

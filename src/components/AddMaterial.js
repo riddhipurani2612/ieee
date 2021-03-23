@@ -16,7 +16,7 @@ const AddMaterial = () => {
     setMaterial({ ...material, [e.target.name]: e.target.value });
   };
 
-  const { title, about, youtubelink, file } = material;
+  const { title, about, youtubelink, materialfile } = material;
   const [message, setMessage] = useState("");
   const uploadMaterial = async (e) => {
     let _id = localStorage.getItem("loggedInUserId");
@@ -26,10 +26,12 @@ const AddMaterial = () => {
     formData.append("title",title);
     formData.append("about",about);
     formData.append("youtubelink",youtubelink);
-    formData.append("file",file);
+    formData.append("materialfile",materialfile);
     formData.append("uploadedby",_id);
     let config = {
-      "encType" : "multipart/form-data",
+      headers:{
+        'content-type': 'multipart/form-data'
+      }
     };
     console.log(formData);
     let response;
@@ -41,18 +43,14 @@ const AddMaterial = () => {
       );
       console.log(response);
     } catch (err) {
-      if (err.response.status === 500) {
-        setMessage("There was a problem with the server");
-      } else {
-        setMessage(err.response.data.msg);
-      }
+      console.log(err);
     }
+    
   };
   return (
     <Styles>
       <div className="main-bg text">
         <Container>
-          <div>{message}</div>
           <Form>
             <Form.Group>
               <Form.Label>Title : </Form.Label>
@@ -85,8 +83,8 @@ const AddMaterial = () => {
               <Form.Label>Upload File : </Form.Label>
               <Form.Control
                 type="file"
-                name="file"
-                value={file}
+                name="materialfile"
+                value={materialfile}
                 onChange={valueChanged}
               ></Form.Control>
             </Form.Group>
