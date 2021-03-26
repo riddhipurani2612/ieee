@@ -103,6 +103,7 @@ const Styles = styled.div`
   }
 `;
 const Home = (props) => {
+  const [eventValues,setEventValues] = useState(false);
   const youtubeOptions = {
     width: "100%",
     height: "400rem",
@@ -121,7 +122,10 @@ const Home = (props) => {
         "http://localhost:5000/event/upcoming",
         config
       );
-      setEvents(response.data);
+      if(response.data.length){
+        setEvents(response.data);
+        setEventValues(true);
+      }
       console.log(response.data);
     } catch (err) {
       console.log(err);
@@ -218,8 +222,7 @@ const Home = (props) => {
             </ScrollAnimation>
             <br></br>
             <br></br>
-            <br></br>
-            <br></br>
+            {eventValues && 
             <ScrollAnimation
               animateIn="animate__fadeIn"
               animateOut="animate__fadeOut"
@@ -247,7 +250,7 @@ const Home = (props) => {
                     ))}
                 </div>
               </div>
-            </ScrollAnimation>
+            </ScrollAnimation>}
           </div>
           <Container>
             <ScrollAnimation

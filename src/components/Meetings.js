@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Container, Form, Button } from "react-bootstrap";
+import { Container, Form, Button, ProgressBar } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
+import { useHistory } from "react-router";
 const Styles = styled.div`
   .main-bg {
     background-color: #084c61;
@@ -12,6 +13,29 @@ const Styles = styled.div`
 `;
 
 const Meetings = () => {
+  const history= useHistory();
+  const token = localStorage.getItem("token");
+  let config = {
+    headers: {
+      "Content-Type": "application/json",
+      "x-auth-token": token,
+    },
+  };
+  useEffect(async () => {
+    console.log(token);
+    if(token === null){
+      history.push("/");
+    }
+    try {
+      let response = await axios.get(`http://localhost:5000/user/getrole`, config);
+      console.log(response.data);
+      if (response.data != "Admin") {
+        history.push("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
   const [meetingData, setMeetingData] = useState({});
   const meetingValueChanged = (e) => {
     setMeetingData({ ...meetingData, [e.target.name]: e.target.value });
@@ -30,12 +54,12 @@ const Meetings = () => {
   const addMeeting = async (e) => {
     e.preventDefault();
     const data = new FormData();
-    data.append("date",date);
+    data.append("date", date);
     data.append("place", place);
-    data.append("attendees",attendees);
-    data.append("summary",summary);
-    data.append("purpose",purpose);
-    data.append("minutes",minutes);
+    data.append("attendees", attendees);
+    data.append("summary", summary);
+    data.append("purpose", purpose);
+    data.append("minutes", minutes);
     data.append("file", file);
 
     let response;
@@ -117,12 +141,15 @@ const Meetings = () => {
             ></Form.Control>
           </Form.Group>
           <Form.Group>
-            <Form.Label>Upload Sign File</Form.Label>
-            <input type="file" ref={el} onChange={handleChange} />
+            <Form.Label>Upload Sign File</Form.Label><br></br>
+            <input
+              type="file"
+              accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, image/*"
+              ref={el}
+              onChange={handleChange}
+            />
           </Form.Group>
-          <div className="progessBar" style={{ width: progress }}>
-            {progress}
-          </div>
+          <ProgressBar now={progress} label={`${progress}%`}/>
           <Button onClick={addMeeting}>Add Meeting</Button>
         </Form>
       </Container>

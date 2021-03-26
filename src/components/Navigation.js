@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Navbar, Nav, NavDropdown, Image } from "react-bootstrap";
 import logo from "../assets/grss_logo.png";
 import styled from "styled-components";
+import axios from "axios";
 const Styles = styled.div`
   .navbar {
     background: white;
@@ -37,14 +38,39 @@ const Styles = styled.div`
   }
 `;
 const Navigation = (props) => {
-  useEffect(() => {
+  const [admin, setAdmin] = useState(false);
+  const [member, setMember] = useState(false);
+  const [student, setStudent] = useState(false);
+  let response;
+  const token = localStorage.getItem("token");
+  let config = {
+    headers: {
+      "Content-Type": "application/json",
+      "x-auth-token": token,
+    },
+  };
+  useEffect(async () => {
+    try {
+      response = await axios.get(`http://localhost:5000/user/getrole`, config);
+      console.log(response.data);
+      if(response.data === "Student"){
+        setStudent(true);
+      }
+      else if(response.data === "Admin"){
+        setAdmin(true);
+      }
+      else{
+        setMember(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
     if (localStorage.getItem("token") === null) {
       props.setLogin(false);
-    }
-    else{
+    } else {
       props.setLogin(true);
     }
-  }, []);
+  }, [props.isLoggedIn]);
   const [showAbout, setShowAbout] = useState(false);
   const showDropdownAbout = (e) => {
     setShowAbout(!showAbout);
@@ -95,7 +121,7 @@ const Navigation = (props) => {
                 <Nav.Link href="/">Home</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link href="/meetings">Meetings</Nav.Link>
+                <Nav.Link href="/meetings" hidden={!admin}>Meetings</Nav.Link>
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link href="/members">Members</Nav.Link>
@@ -116,19 +142,23 @@ const Navigation = (props) => {
                 <NavDropdown.Item href="https://16fbc7d9-21b8-46d1-a23a-6d57e5ebf2ea.filesusr.com/archives/f6c427_4a32ef40e06146ff8a9cffb3e9a270e4.rar?dn=TARANG_24Mar2014.rar">
                   Download Tarang Software
                 </NavDropdown.Item>
-                <NavDropdown.Item href="/addmaterial">
+                <NavDropdown.Item href="/addmaterial" hidden={!member}>
                   Material Upload
                 </NavDropdown.Item>
               </NavDropdown>
               <NavDropdown
+                hidden={!admin}
                 title="Event"
                 show={showEvent}
                 onMouseEnter={showDropdownEvent}
                 onMouseLeave={hideDropdownEvent}
               >
                 <NavDropdown.Item href="/events">Events</NavDropdown.Item>
-                <NavDropdown.Item href="/addevent">Add Event</NavDropdown.Item>
+                <NavDropdown.Item href="/addevent" hidden={!admin}>Add Event</NavDropdown.Item>
               </NavDropdown>
+              <Nav.Item>
+                <Nav.Link href="/events" hidden={admin}>Events</Nav.Link>
+              </Nav.Item>
               <NavDropdown
                 title="About"
                 show={showAbout}
@@ -146,14 +176,18 @@ const Navigation = (props) => {
                 show={showNewsletter}
                 onMouseEnter={showDropdownNewsletter}
                 onMouseLeave={hideDropdownNewsletter}
+                hidden={!admin}
               >
                 <NavDropdown.Item href="/newsletter">
                   Newsletters
                 </NavDropdown.Item>
-                <NavDropdown.Item href="/addnewsletter">
+                <NavDropdown.Item href="/addnewsletter" >
                   Add Newsletters
                 </NavDropdown.Item>
               </NavDropdown>
+              <Nav.Item>
+                <Nav.Link href="/newsletter" hidden={admin}>Newsletters</Nav.Link>
+              </Nav.Item>
               <Nav.Item>
                 <Nav.Link href="/contact">Contact</Nav.Link>
               </Nav.Item>

@@ -30,7 +30,7 @@ function App() {
     if (localStorage.getItem("token") === null) {
       setLoggedIn(false);
     }
-  }, []);
+  }, [isLoggedIn]);
   return (
     <Router>
       <div className="App">

@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
-import { Form, Button, Container } from "react-bootstrap";
+import { Form, Button, Container, ProgressBar } from "react-bootstrap";
 const Styles = styled.div`
   .main-bg {
     background-color: #084c61;
@@ -11,34 +12,76 @@ const Styles = styled.div`
   }
 `;
 const AddEvent = () => {
+  let response;
+  const history = useHistory();
+  const token = localStorage.getItem("token");
+  let config = {
+    headers: {
+      "Content-Type": "application/json",
+      "x-auth-token": token,
+    },
+  };
+  useEffect(async () => {
+    if(token === null){
+      history.push("/");
+    }
+    try {
+      response = await axios.get(`http://localhost:5000/user/getrole`, config);
+      console.log(response.data);
+      if (response.data != "Admin") {
+        history.push("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+  const [file, setFile] = useState("");
+  const [progress, setProgess] = useState(0);
+  const el = useRef(); // accesing input element
+  const handleChange = (e) => {
+    setProgess(0);
+    const file = e.target.files[0]; // accesing file
+    console.log(file);
+    setFile(file); // storing file
+  };
   const [events, setEvents] = useState({});
   const valueChanged = (e) => {
-    console.log(events);
     setEvents({ ...events, [e.target.name]: e.target.value });
   };
-  const { eventname, date, time, about, hostedby, registrationlink, file } = events;
+  const { eventname, date, time, about, hostedby, registrationlink } = events;
   const addevent = async (e) => {
     e.preventDefault();
-    let data = {
-      eventname,
-      date,
-      time,
-      about,
-      hostedby,
-      registrationlink,
-      file,
-    };
+    let formData = new FormData();
+    formData.append("eventname", eventname);
+    formData.append("date", date);
+    formData.append("time", time);
+    formData.append("about", about);
+    formData.append("registrationlink", registrationlink);
+    formData.append("hostedby", hostedby);
+    formData.append("file", file);
     let config = {
       headers: {
-        "Content-Type": "application/json",
+        "content-type": "multipart/form-data",
       },
     };
     let response;
     try {
-      response = await axios.post("http://localhost:5000/event", data, config);
+      response = await axios.post("http://localhost:5000/event", formData, {
+        onUploadProgress: (ProgressEvent) => {
+          let progress =
+            Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +
+            "%";
+          setProgess(progress);
+        },
+      });
+      console.log(response.status);
+      if(response.status == 200){
+        alert("Event Added");
+        history.push("/");
+      }
       console.log(response.data);
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.log(err);
     }
   };
   return (
@@ -100,6 +143,16 @@ const AddEvent = () => {
               onChange={valueChanged}
             ></Form.Control>
           </Form.Group>
+          <Form.Group>
+            <Form.Label>Upload Event Image : </Form.Label>
+            <input
+              type="file"
+              accept="application/pdf"
+              ref={el}
+              onChange={handleChange}
+            />
+          </Form.Group>
+          <ProgressBar now={progress} label={`${progress}%`} />
           <Button onClick={addevent}>Add Event</Button>
         </Form>
       </Container>

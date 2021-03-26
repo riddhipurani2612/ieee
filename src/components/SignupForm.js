@@ -3,7 +3,6 @@ import { Button, Container, Form } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-
 const Styles = styled.div`
   .main-bg {
     background-color: #084c61;
@@ -70,6 +69,7 @@ const SignUp = () => {
   };
   return (
     <Styles>
+
       <div className="main-bg text">
         <Container>
           <br></br>
