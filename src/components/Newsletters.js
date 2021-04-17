@@ -8,8 +8,9 @@ const Styles = styled.div`
   background-color: #084C61;
   margin-top: -23px;
 }
-.text {
-  color: #dbf1fb;
+.text, a {
+  font-size: 140%;
+  line-height: 2rem;
 }
   .center{
     paddingBottom: "56.25%";
@@ -24,13 +25,13 @@ const Newsletter = () => {
   };
   return (
     <Styles>
-      <Container>
+      <Container className="main-bg">
         <div className="main-bg text">
-          <div className="display-3 text-center">News Letters</div>
-          <Row>
+        <div className="display-3 text-center" style={{ color: "white", textDecoration: "underline" }}>News Letters</div>
+          <Row className="my-3">
             <Col>
-              <div className="display-4 my-5 text-center">
-                Need of a GRSS Chapter Newsletter
+              <div className="display-4 my-5 text-center" style={{ color: "white"}}>
+                <br></br>Need of a GRSS Chapter Newsletter
               </div>
             </Col>
             <Col>
@@ -46,7 +47,7 @@ const Newsletter = () => {
                 Download IEEE Gujarat Section Geoscience and Remote Sensing
                 Society- Chapter Newsletter-Volume7|Issue 1| December 2019
               </a>
-            </div>
+            </div><br></br>
             <div>
               <a
                 href="https://drive.google.com/file/d/1fHdqMWuJ26PubOiNNEUvEX4sAwUb7YS3/view?usp=sharing"
@@ -55,7 +56,7 @@ const Newsletter = () => {
                 Download IEEE Gujarat Section Geoscience and Remote Sensing Society-
           Chapter Newsletter-Volume6|Issue 1| December 2018
               </a>
-            </div>
+            </div><br></br>
             <div>
               <a
                 href="https://drive.google.com/file/d/1zC8Sc20mo2jDnck1iA7kvuLZJ6ohulQG/view?usp=sharing"
@@ -64,7 +65,7 @@ const Newsletter = () => {
                Download IEEE Gujarat Section Geoscience and Remote Sensing Society-
           Chapter Newsletter-Volume5|Issue 1| December 2017
               </a>
-            </div>
+            </div><br></br>
             <div>
               <a
                 href="https://drive.google.com/file/d/1J8ikWTbP8LI5_mUTOTN3vELUfll7nUGP/view?usp=sharing"
@@ -73,7 +74,7 @@ const Newsletter = () => {
                 Download IEEE Gujarat Section Geoscience and Remote Sensing Society-
           Chapter Newsletter-Volume4|Issue 1| December 2016
               </a>
-            </div>
+            </div><br></br>
             <div>
               <a
                 href="https://drive.google.com/file/d/1ubrrAajZt59vMf5T4Gg4bsUcWQ0wPL1p/view?usp=sharing"
@@ -82,7 +83,7 @@ const Newsletter = () => {
                 Download IEEE Gujarat Section Geoscience and Remote Sensing Society-
           Chapter Newsletter-Volume3|Issue 1| December 2015
               </a>
-            </div>
+            </div><br></br>
             <div>
               <a
                 href="https://drive.google.com/file/d/1ThYD-Fo_xmOB8CXSogpY0SYQUdcnkw3R/view?usp=sharing"
@@ -91,7 +92,7 @@ const Newsletter = () => {
                 Download IEEE Gujarat Section Geoscience and Remote Sensing Society-
           Chapter Newsletter-Volume2|Issue 1| December 2014
               </a>
-            </div>
+            </div><br></br>
             <div>
               <a
                 href="https://drive.google.com/file/d/19zp-eK2eF38XFLahJ9WdLcmNrKW4FFhF/view?usp=sharing"
@@ -100,7 +101,7 @@ const Newsletter = () => {
                 Download IEEE Gujarat Section Geoscience and Remote Sensing Society-
           Chapter Newsletter-Volume1|Issue 1| December 2013
               </a>
-            </div>
+            </div><br></br>
         </div>
         </div>
       </Container>

@@ -12,8 +12,9 @@ const Styles = styled.div`
     color: #dbf1fb;
   }
 `;
-const UpcomingEventView = (props) => {
+const MemberView = (props) => {
   const [viewReadMode, setViewReadMore] = useState(false);
+  let name = props.first_name + " " + props.last_name;
   useEffect(() => {
     if (props.about != null) {
       setViewReadMore(true);
@@ -21,30 +22,31 @@ const UpcomingEventView = (props) => {
   });
   const [showModal, setModal] = useState(false);
   return (
-    <Styles className="my-5 mx-3">
+    <Styles>
       <AboutView
         show={showModal}
         closeModal={() => setModal(false)}
         onHide={() => setModal(false)}
-        name={props.name}
+        name={name}
         about={props.about}
       ></AboutView>
-      <b>{props.name}</b>
+      <b>
+        {props.first_name} {props.last_name}
+      </b>
       <br></br>
-      By {props.hostedby} <br></br>
-      {props.date}
+      {props.designation} <br></br>
+      {props.workplace}
       <br></br>
-      {viewReadMode && (
-        <Button
-          variant="outline-light"
-          onClick={() => setModal(true)}
-          title="Feedback"
-        >
-          Know More
-        </Button>
-      )}
-      <hr></hr>
+      {props.contact} <br></br>
+      {props.email}<br></br>
+      {viewReadMode && <Button
+        variant="outline-light"
+        onClick={() => setModal(true)}
+        title="Feedback"
+      >Know More</Button>}
+      <br></br>
+      <br></br>
     </Styles>
   );
 };
-export default UpcomingEventView;
+export default MemberView;

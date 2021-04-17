@@ -17,11 +17,11 @@ const ProfileView = (e) => {
   const {
     first_name,
     last_name,
-    address,
     contact,
     email,
     workplace,
     designation,
+    about,
   } = user;
   let response;
   const token = localStorage.getItem("token");
@@ -54,9 +54,6 @@ const ProfileView = (e) => {
                 <Form.Label>Last Name : {last_name}</Form.Label>
             </Form.Group>
             <Form.Group>
-              <Form.Label>Address : {address}</Form.Label>
-            </Form.Group>
-            <Form.Group>
               <Form.Label>Contact : {contact}</Form.Label>
             </Form.Group>
             <Form.Group>
@@ -67,6 +64,9 @@ const ProfileView = (e) => {
             </Form.Group>
             <Form.Group>
               <Form.Label>Designation : {designation}</Form.Label>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>About : {about}</Form.Label>
             </Form.Group>
           </Form>
         </Container>

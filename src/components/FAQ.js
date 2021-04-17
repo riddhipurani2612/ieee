@@ -1,22 +1,30 @@
 import { React } from "react";
-import {Container } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import styled from "styled-components";
 
 const Styles = styled.div`
   .main-bg {
-    background-color: #084C61;
+    background-color: #084c61;
     margin-top: -23px;
   }
   .text {
     color: #dbf1fb;
+    font-size: 140%;
+    line-height: 2rem;
   }
-`
+`;
 const FAQ = (props) => {
   return (
     <Styles>
       <Container className="main-bg">
-          <br></br><br></br>
-        <div className="text-center display-3 my-3 text main-bg text">FAQs</div>
+        <br></br>
+        <br></br>
+        <div
+          className="display-3 text-center"
+          style={{ color: "white", textDecoration: "underline" }}
+        >
+          FAQs
+        </div>
         <ul>
           <div className="text-left display-5 my-2 mx-2 text">
             <li>Why should I become a IEEE GRSS memeber?</li>
@@ -27,6 +35,7 @@ const FAQ = (props) => {
             the GRS society is to be the leading society in the science,
             engineering, application and education of remote sensing.
           </div>
+          <br></br>
           <div className="text-left display-5 my-2 mx-2 text">
             <li>Which resources can I have access to ?</li>
           </div>
@@ -42,6 +51,7 @@ const FAQ = (props) => {
             factor. Members can access the latest issues either on-line or via
             hard copies in the mail.
           </div>
+          <br></br>
           <div className="text-left display-5 my-2 mx-2 text">
             <li>What are the technical commitees of IEEE GRSS?</li>
           </div>
@@ -56,6 +66,7 @@ const FAQ = (props) => {
             of remote sensing technologies. As a GRSS member, you can take a
             leadership role in this process.
           </div>
+          <br></br>
           <div className="text-left display-5 my-2 mx-2 text">
             <li>What are the additional benefits?</li>
           </div>
@@ -76,6 +87,7 @@ const FAQ = (props) => {
             e-mail alias, network with others in the local member community
             (chapters), career and employment resources, etc.
           </div>
+          <br></br>
           <div className="text-left display-5 my-2 mx-2 text">
             <li>How do I become a member ?</li>
           </div>
@@ -92,6 +104,7 @@ const FAQ = (props) => {
             renew your membership or add GRSS membership to your existing IEEE
             membership. Students and affiliate members can use the same link.
           </div>
+          <br></br>
         </ul>
       </Container>
     </Styles>

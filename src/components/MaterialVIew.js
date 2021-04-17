@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import YouTube from "react-youtube";
-import { Container } from "react-bootstrap";
-import getVideoId from "get-video-id";
+import { Container, Button } from "react-bootstrap";
+import { useHistory } from "react-router";
 const Styles = styled.div`
   .main-bg {
     background-color: #084c61;
@@ -11,20 +10,29 @@ const Styles = styled.div`
   .text {
     color: #dbf1fb;
   }
+  .youtubeOptions {
+    width: "100%";
+    height: "400rem";
+  }
 `;
 const MaterialView = (props) => {
-  const id = props.youtubelink;
+  const history = useHistory();
+  const youtubeOptions = {
+    width: "100%",
+    height: "400rem",
+  };
+  const viewdetails = () =>{
+    localStorage.setItem("materialId",props._id);
+    history.push("/detailedview");
+  }
   return (
     <Styles>
-      <ScrollAnimation animateIn="animate__lightSpeedInRight">
-        <Container className="main-bg text">
-          <div>{props.title}</div>
-          <div>{props.about}</div>
-          <div>
-            <YouTube videoId={getVideoId({ id })} opts={youtubeOptions} />
-          </div>
+        <Container className="main-bg text my-5">
+          {props.title}
+          <Button onClick={viewdetails}>View &gt;&gt;</Button>
+          <hr color="grey"></hr>
         </Container>
-      </ScrollAnimation>
     </Styles>
   );
 };
+export default MaterialView;

@@ -13,6 +13,17 @@ const Styles = styled.div`
   .text {
     color: #dbf1fb;
   }
+  .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: orangered;
+        background-color: #fff;
+            border-color: none;
+            }
+.nav-tabs {
+    border-bottom: none;
+    }
+.nav-tabs .nav-link:hover{
+    color: color:gray
+    }
 `;
 const Profile = (e) => {
   return (

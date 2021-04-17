@@ -22,7 +22,7 @@ const Login = (props) => {
     if (localStorage.getItem("token") != null) {
       history.push("/");
     }
-  }, [props.setLogin]);
+  }, []);
 
   const valueChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -86,7 +86,7 @@ const Login = (props) => {
                   onChange={valueChange}
                 ></Form.Control>
               </Form.Group>
-              <Button onClick={loginClicked}>Login</Button>
+              <Button variant="outline-light" onClick={loginClicked}>Login</Button>
             </Form>
             <div className="text">
               Do not have account?

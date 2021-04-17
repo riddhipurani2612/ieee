@@ -1,162 +1,79 @@
-import React from "react";
-import { Container, ListGroup } from "react-bootstrap";
+import React,{useEffect, useState} from "react";
+import { Container, ListGroup, Row, Col } from "react-bootstrap";
 import styled from "styled-components";
+import axios from "axios";
+import MemberView from "../components/MemberView";
 const Styles = styled.div`
-.main-bg {
-  background-color: #084C61;
-}
-.text {
-  color: #dbf1fb;
-}
+  .main-bg {
+    background-color: #084c61;
+  }
+  .text {
+    color: #dbf1fb;
+  }
 `;
 const StudentMember = () => {
+  const [members, setMembers] = useState([]);
+  const {
+    first_name,
+    last_name,
+    role,
+    address,
+    contact,
+    email,
+    workplace,
+    designation,
+    about,
+  } = members;
+  useEffect(async () => {
+    let response;
+    let config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const role = "Student";
+    try {
+      response = await axios.get(
+        `http://localhost:5000/user/getmembers/${role}`,
+        config
+      );
+      setMembers(response.data);
+      console.log(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
   return (
     <Styles>
-      <div className="main-bg text">
-        <Container>
-          <ListGroup className="main-bg text">
-            <div className="display-3">CEPT University</div>
+    <div className="main-bg text">
+      <Container>
+        <div className="display-3 main-bg text">Student Members</div>
+        <ListGroup>
+          {members.map((memberObj, index) => (
             <ListGroup.Item className="main-bg text">
-              Kushal Chandrakant Shah
-              <br />
-              kushal.pg190490@cept.ac.in
+              <Row className="py-3">
+                <Col>
+                </Col>
+                <Col>
+                  <MemberView
+                    first_name={memberObj.first_name}
+                    last_name={memberObj.last_name}
+                    address={memberObj.address}
+                    workplace={memberObj.workplace}
+                    contact={memberObj.contact}
+                    email={memberObj.email}
+                    about={memberObj.about}
+                    ></MemberView>
+                </Col>
+              </Row>
             </ListGroup.Item>
-            <ListGroup.Item className="main-bg text">
-              Megh Bharatbhai Shah
-              <br /> shahmegh1313@gmail.com
-            </ListGroup.Item>
-            <ListGroup.Item className="main-bg text">
-              Zeel Samir Shah <br />
-              shahzeel999@gmail.com
-            </ListGroup.Item>
-            <ListGroup.Item className="main-bg text">
-              Jignesh R Patel <br />
-              jignnesh@gmail.com
-            </ListGroup.Item>
-            <ListGroup.Item className="main-bg text">
-              Gaurang Mahendrabhai Patel <br />
-              patelgaurang1995@gmail.com
-            </ListGroup.Item>
-            <ListGroup.Item className="main-bg text">
-              Het Thakkar <br />
-              het.pg190379@cept.ac.in
-            </ListGroup.Item>
-            <ListGroup.Item className="main-bg text">
-              Urvi Shroff <br />
-              urvi.shroff.mgeo17@cept.ac.in
-            </ListGroup.Item>
-            <ListGroup.Item className="main-bg text">
-              Aseem Ahmad Shaikh
-              <br />
-              aseemshaikh1496@gmail.com
-            </ListGroup.Item>
-            <ListGroup.Item className="main-bg text">
-              Aagam Shah
-              <br />
-              artistaagam@gmail.com
-            </ListGroup.Item>
-            <ListGroup.Item className="main-bg text">
-              Vrutti Bhatt <br />
-              vruttibhatt.vb@gmail.com
-            </ListGroup.Item>
-            <ListGroup.Item className="main-bg text">
-              Ashish Upadhyay <br />
-              ashishbu@yahoo.com
-            </ListGroup.Item>
-            <ListGroup.Item className="main-bg text">
-              Neha Sharma
-              <br />
-              neha.pg180592@cept.ac.in
-            </ListGroup.Item>
-            <ListGroup.Item className="main-bg text">
-              Tej Dilipbhai Chavda
-              <br />
-              tejp400@gmail.com
-            </ListGroup.Item>
-            <ListGroup.Item className="main-bg text">
-              Aditya Sanjay Saraswat <br />
-              aditya.pg190040@cept.ac.in
-            </ListGroup.Item>
-            <ListGroup.Item className="main-bg text">
-              Disha Patel
-              <br />
-              disha.pg190295@cept.ac.in
-            </ListGroup.Item>
-            <ListGroup.Item className="main-bg text">
-              Shubham Vinod Raut
-              <br />
-              ar.shubhamraut@gmail.com
-            </ListGroup.Item>
-            <ListGroup.Item className="main-bg text">
-              Virat Divyangbhai Desai
-              <br />
-              viratdesai1426@gmail.com
-            </ListGroup.Item>
-            <ListGroup.Item className="main-bg text">
-              Sindhuja Ranganath
-              <br />
-              sindhuja.pg190943@cept.ac.in
-            </ListGroup.Item>
-            <ListGroup.Item className="main-bg text">
-              Shivani Kharra
-              <br />
-              shivanikharra@gmail.com
-            </ListGroup.Item>
-            <ListGroup.Item className="main-bg text">
-              Medhini Heeramaglore
-              <br />
-              medhs.iyengar@gmail.com
-            </ListGroup.Item>
+          ))}
+        </ListGroup>
+      </Container>
+    </div>
+  </Styles>
 
-            <div className="display-3">IIT</div>
-
-            <ListGroup.Item className="main-bg text">
-              Vikas Kumar Jain
-              <br />
-              vikasjain.cse@gmail.com
-            </ListGroup.Item>
-            <ListGroup.Item className="main-bg text">
-              Vijayashekhar S Sankannanavar
-              <br />
-              201671003@iiitvadodara.ac.in
-            </ListGroup.Item>
-            <ListGroup.Item className="main-bg text">
-              Tushar Gadhiya
-              <br />
-              tushky.exe@gmail.com
-            </ListGroup.Item>
-
-            <div className="display-3">Nirma University</div>
-
-            <ListGroup.Item className="main-bg text">
-              Dhwanilnath Gharekhan
-              <br />
-              dhwanilnath@gmail.com
-            </ListGroup.Item>
-            <ListGroup.Item className="main-bg text">
-              Jayachandra Ravi
-              <br />
-              jayachandra.ravi50@gmail.com
-            </ListGroup.Item>
-            <ListGroup.Item className="main-bg text">
-              Kinjal Dave
-              <br />
-              kjdave.27@gmail.com
-            </ListGroup.Item>
-            <ListGroup.Item className="main-bg text">
-              Pooja Bhavesh Shah
-              <br />
-              poojabshah2512@gmail.com
-            </ListGroup.Item>
-            <ListGroup.Item className="main-bg text">
-              Nimra Mohamed Husain Memon
-              <br />
-              nimra3091@gmail.com
-            </ListGroup.Item>
-          </ListGroup>
-        </Container>
-      </div>
-    </Styles>
   );
 };
 

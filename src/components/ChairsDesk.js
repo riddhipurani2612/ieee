@@ -4,32 +4,44 @@ import styled from "styled-components";
 import shivmohan from "../assets/shivmohan.jpg";
 
 const Styles = styled.div`
-.main-bg {
-  background-color: #084C61;
-  margin-top: -23px;
-}
-.text {
-  color: #dbf1fb;
-}
-  .wrap{
-    line-height: 1.6; 
-    font-family: Helvetica;
-    text-align: justify;
-    margin: 0;
-    font-size: 14px;
+  .main-bg {
+    background-color: #084c61;
+  }
+  .text {
+    color: #dbf1fb;
+  }
+  img {
+    float: left;
+    margin: 5px;
+  }
+  .wrap {
+    overflow-wrap: break-word;
+    spacing: 2rem;
+  }
+  .custom-text {
+    font-size: 140%;
+    line-height: 2rem;
   }
 `;
 const ChairsDesk = () => {
   return (
     <Styles>
-      <div className="main-bg text">
-        <Container>
-          <div className="display-3 text-center"> CHAIR'S ADDRESS</div>
-          <div className="display-5 text-justify col-md-12">
+        <Container className="main-bg text">
+          <div
+            className="display-3 text-center"
+            style={{ color: "white", textDecoration: "underline" }}
+          >
+            Chair's Address
+          </div>
+          <div className="display-5 text-justify col-md-12 my-5">
             <div class="wrap">
-              <img src={shivmohan} height="300px" />
+              <img
+                src={shivmohan}
+                style={{ marginRight: "2rem", marginBottom: "2rem" }}
+                height="300rem"
+              />
             </div>
-            <div class="wrap">
+            <p className="wrap custom-text ">
               Remote sensing of Earth and planetary surface in India was started
               in Ahmedabad more than 40 years back. Space Applications Centre
               and Physical Research laboratory are two main government
@@ -120,11 +132,10 @@ const ChairsDesk = () => {
               newsletter is the first of our efforts in popularizing the space
               Science and applications. I congratulate all our members for their
               significant contribution towards excellent activities and growth
-              of Chapter..
-            </div>
+              of Chapter.
+            </p>
           </div>
         </Container>
-      </div>
     </Styles>
   );
 };

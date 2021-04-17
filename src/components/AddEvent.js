@@ -87,7 +87,7 @@ const AddEvent = () => {
   return (
     <Styles>
       <Container className="main-bg text">
-        <div className="display-3 text text-center">Add Event</div>
+      <div className="display-3 text-center" style={{ color: "#ECC30B", textDecoration: "underline" }}>Add Event</div>
         <Form>
           <Form.Group>
             <Form.Label>Event Name : </Form.Label>

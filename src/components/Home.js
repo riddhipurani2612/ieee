@@ -10,13 +10,13 @@ import ScrollAnimation from "react-animate-on-scroll";
 import "animate.css/animate.min.css";
 const Styles = styled.div`
   .main-bg {
-    background-color: #084c61;
+    background-color: #084C61;
   }
   .bg2 {
-    background-color: #429eb3;
+    background-color: #022F40;
   }
   .text {
-    color: #dbf1fb;
+    color: white;
   }
   .heading {
     color: white;
@@ -134,6 +134,7 @@ const Home = (props) => {
   const [showFeedbackModal, setFeedbackModal] = useState(false);
   return (
     <Styles>
+      <ScrollAnimation animateIn="animate__fadeIn" animateOut="animate__fadeOut">
       <Feedback
         show={showFeedbackModal}
         closeModal={() => setFeedbackModal(false)}
@@ -149,17 +150,16 @@ const Home = (props) => {
         <i class="fa fa-comments-o" aria-hidden="true"></i>
       </Button>
 
-      <div className="main-bg">
         <Container className="main-bg">
           <ScrollAnimation
             animateIn="animate__backInDown"
             animateOut="animate__backOutUp"
           >
-            <h1 className="text-center heading" style={{ color: "#ECC30B" }}>
+            <h1 className="text-center heading" style={{ color: "white" }}>
               <br></br>Welcome To IEEE<br></br>
               Gujarat Section<br></br> GRSS Chapter
             </h1>
-            <h1 className="text-center text my-5" style={{ color: "#ECC30B" }}>
+            <h1 className="text-center text my-5" style={{ color: "white" }}>
               Scroll to explore more
               <Link to="who" spy={true} smooth={true}>
                 <div className="heading">
@@ -170,8 +170,7 @@ const Home = (props) => {
             </h1>
           </ScrollAnimation>
         </Container>
-      </div>
-      <div id="who" className="bg2" style={{ marginTop: "-48px" }}>
+      <div id="who" style={{ marginTop: "-48px" }}>
         <Container className="bg2">
           <br></br>
           <ScrollAnimation
@@ -180,7 +179,7 @@ const Home = (props) => {
           >
             <h2
               className="my-5 text-center text heading"
-              style={{ color: "#CA054D", textDecoration: "underline" }}
+              style={{ color: "white", textDecoration: "underline" }}
             >
               Who are we?
             </h2>
@@ -258,9 +257,6 @@ const Home = (props) => {
               animateOut="animate__backOutDown"
             >
               <div className="text">
-                <br></br>
-                <br></br>
-                <br></br>
                 <h1
                   className="vertical-center text"
                   style={{ color: "#CA054D", textDecoration: "underline" }}
@@ -293,6 +289,8 @@ const Home = (props) => {
           </Container>
         </Container>
       </div>
+
+      </ScrollAnimation>
     </Styles>
   );
 };

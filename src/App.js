@@ -9,19 +9,21 @@ import ContactUs from "./components/Contact";
 import Events from "./components/Event";
 import Newsletter from "./components/Newsletters";
 import Publication from "./components/Publication";
-import Lecture from "./components/Lecture";
+import DLP from "./components/DLP";
 import SignUp from "./components/SignupForm";
 import SAR from "./components/SAR";
 import { useState, useEffect } from "react";
 import Profile from "./components/Profile";
 import Members from "./components/Members";
-import TechnicalMaterial from "./components/Technicalmaterial";
 import FAQ from "./components/FAQ";
 import AddEvent from "./components/AddEvent";
 import AddMaterial from "./components/AddMaterial";
 import LogoutComp from "./components/LogoutComp";
 import Meetings from "./components/Meetings";
 import FileUpload from "./components/FileUpload";
+import AddNewsletter from "./components/AddNewsletter";
+import ExpertLecture from "./components/ExpertLecture";
+import DetailedView from "./components/DetailedView";
 function App() {
   console.log("App");
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -58,14 +60,16 @@ function App() {
           <Route path="/events" component={Events} />
           <Route path="/newsletter" component={Newsletter} />
           <Route path="/publication" component={Publication} />
-          <Route path="/lecture" component={Lecture} />
+          <Route path="/dlp" component={DLP} />
           <Route path="/signup" component={SignUp} />
           <Route path="/sar" component={SAR} />
           <Route path="/profile" component={Profile} />
-          <Route path="/uploadmaterial" component={TechnicalMaterial} />
           <Route path="/faq" component={FAQ} />
           <Route path="/meetings" component={Meetings}/>
           <Route path="/file" component={FileUpload} />
+          <Route path="/addnewsletter" component={AddNewsletter} />
+          <Route path="/expertlecture" component={ExpertLecture}/> 
+          <Route path="/detailedview" component={DetailedView}/>
           <Route
             path="/logout"
             component={LogoutComp}

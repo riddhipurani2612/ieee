@@ -35,9 +35,13 @@ const Events = () => {
   }, []);
   return (
     <Styles>
-      <div className="main-bg text">
-        <Container>
-        <div className="display-3 text text-center">Events</div>
+        <Container className="main-bg text">
+        <div
+            className="display-3 text-center"
+            style={{ color: "white", textDecoration: "underline" }}
+          >
+            Events
+          </div>
 
           {events.map((eventObj, index) => (
             <EventView
@@ -48,7 +52,6 @@ const Events = () => {
             />
           ))}
         </Container>
-      </div>
     </Styles>
   );
 };

@@ -41,6 +41,12 @@ const Navigation = (props) => {
   const [admin, setAdmin] = useState(false);
   const [member, setMember] = useState(false);
   const [student, setStudent] = useState(false);
+  const [user,setUser] = useState({});
+  const {
+    first_name,
+    last_name,
+    role
+  } = user;
   let response;
   const token = localStorage.getItem("token");
   let config = {
@@ -53,10 +59,11 @@ const Navigation = (props) => {
     try {
       response = await axios.get(`http://localhost:5000/user/getrole`, config);
       console.log(response.data);
-      if(response.data === "Student"){
+      setUser(response.data);
+      if(role === "Student"){
         setStudent(true);
       }
-      else if(response.data === "Admin"){
+      else if(role === "Admin"){
         setAdmin(true);
       }
       else{
@@ -106,26 +113,27 @@ const Navigation = (props) => {
   const hideDropdownNewsletter = (e) => {
     setShowNewsletter(false);
   };
+  const [showLecture, setShowLecture] = useState(false);
+  const showDropdownLecture = (e) => {
+    setShowLecture(!showLecture);
+  };
+  const hideDropdownLecture = (e) => {
+    setShowLecture(false);
+  };
   const profile = <i class="fa fa-user" aria-hidden="true"></i>;
   return (
     <Styles>
       <div className="width">
-        <Navbar expand="lg" sticky="top">
+        <Navbar collapseOnSelect expand="lg" sticky="top">
           <Navbar.Brand>
             <img width="10%" height="10%" src={logo} />
           </Navbar.Brand>
-          <Navbar.Toggle />
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
-              <Nav.Item>
                 <Nav.Link href="/">Home</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
                 <Nav.Link href="/meetings" hidden={!admin}>Meetings</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
                 <Nav.Link href="/members">Members</Nav.Link>
-              </Nav.Item>
               <NavDropdown
                 hidden={!props.isLoggedIn}
                 title="Material"
@@ -137,7 +145,14 @@ const Navigation = (props) => {
                 <NavDropdown.Item href="/publication">
                   Publications
                 </NavDropdown.Item>
-                <NavDropdown.Item href="/lecture">Lectures</NavDropdown.Item>
+                <NavDropdown
+                  title="Lectures"
+                  show={showLecture}
+                  onMouseEnter={showDropdownLecture}
+                  onMouseLeave={hideDropdownLecture}>
+                    <NavDropdown.Item href="/dlp">Distiguished lecture Program</NavDropdown.Item>
+                    <NavDropdown.Item href="/expertlecture">Expert Lectures</NavDropdown.Item>    
+                  </NavDropdown>
                 <NavDropdown.Item href="/sar">SAR</NavDropdown.Item>
                 <NavDropdown.Item href="https://16fbc7d9-21b8-46d1-a23a-6d57e5ebf2ea.filesusr.com/archives/f6c427_4a32ef40e06146ff8a9cffb3e9a270e4.rar?dn=TARANG_24Mar2014.rar">
                   Download Tarang Software
@@ -156,9 +171,7 @@ const Navigation = (props) => {
                 <NavDropdown.Item href="/events">Events</NavDropdown.Item>
                 <NavDropdown.Item href="/addevent" hidden={!admin}>Add Event</NavDropdown.Item>
               </NavDropdown>
-              <Nav.Item>
                 <Nav.Link href="/events" hidden={admin}>Events</Nav.Link>
-              </Nav.Item>
               <NavDropdown
                 title="About"
                 show={showAbout}
@@ -185,17 +198,11 @@ const Navigation = (props) => {
                   Add Newsletters
                 </NavDropdown.Item>
               </NavDropdown>
-              <Nav.Item>
                 <Nav.Link href="/newsletter" hidden={admin}>Newsletters</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
                 <Nav.Link href="/contact">Contact</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
                 <Nav.Link href="/login" hidden={props.isLoggedIn}>
                   Login/SignUp
                 </Nav.Link>
-              </Nav.Item>
               <NavDropdown
                 hidden={!props.isLoggedIn}
                 title={profile}
@@ -205,7 +212,7 @@ const Navigation = (props) => {
                 onMouseLeave={hideDropdownProfile}
               >
                 <NavDropdown.Header>
-                  Logged In as : <br></br>
+                  <b>Logged In as : </b><br></br>{first_name} {last_name}<br></br>({role})
                 </NavDropdown.Header>
                 <hr></hr>
                 <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>

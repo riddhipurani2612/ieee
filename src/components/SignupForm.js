@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Button, Container, Form } from "react-bootstrap";
+import React, { useState, useRef } from "react";
+import { Button, Container, Form, ProgressBar } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
@@ -14,6 +14,17 @@ const Styles = styled.div`
 `;
 
 const SignUp = () => {
+  const [file, setFile] = useState("");
+  const [checkFile, setCheckFile] = useState(false);
+  const [progress, setProgess] = useState(0);
+  const el = useRef(); // accesing input element
+  const handleChange = (e) => {
+    setProgess(0);
+    const file = e.target.files[0]; // accesing file
+    console.log(file);
+    setFile(file); // storing file
+    setCheckFile(true);
+  };
   const [signupData, setSignupData] = useState({});
   const history = useHistory();
   const signupValueChanged = (e) => {
@@ -38,38 +49,79 @@ const SignUp = () => {
     if (password !== confirmpassword) {
       alert("Password not same");
     } else {
-      e.preventDefault();
-      let data = {
-        first_name,
-        last_name,
-        role,
-        address,
-        contact,
-        email,
-        workplace,
-        designation,
-        password,
-        about,
-      };
-      console.log(data);
-      let config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      let response;
-      try {
-        response = await axios.post("http://localhost:5000/user", data, config);
-        console.log(response.data);
-        history.push("/login");
-      } catch (err) {
-        console.log(err);
+      if (checkFile) {
+        e.preventDefault();
+        let formData = new FormData();
+        formData.append("first_name", first_name);
+        formData.append("last_name", last_name);
+        formData.append("role", role);
+        formData.append("about", about);
+        formData.append("password", password);
+        formData.append("designation", designation);
+        formData.append("workplace", workplace);
+        formData.append("email", email);
+        formData.append("contact", contact);
+        formData.append("file", file);
+        const config = {
+          headers: {
+            "content-type": "multipart/form-data",
+          },
+        };
+        let response;
+        try {
+          response = await axios.post("http://localhost:5000/user", formData, {
+            onUploadProgress: (ProgressEvent) => {
+              let progress =
+                Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +
+                "%";
+              setProgess(progress);
+            },
+          });
+          console.log(response.data);
+          if (response.status === "200") {
+            history.push("/login");
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      } else {
+        e.preventDefault();
+        let data = {
+          first_name,
+          last_name,
+          role,
+          contact,
+          email,
+          workplace,
+          designation,
+          password,
+          about,
+        };
+        console.log(data);
+        let config = {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        let response;
+        try {
+          response = await axios.post(
+            "http://localhost:5000/user",
+            data,
+            config
+          );
+          console.log(response.data);
+          if (response.status === "200") {
+            history.push("/login");
+          }
+        } catch (err) {
+          console.log(err);
+        }
       }
     }
   };
   return (
     <Styles>
-
       <div className="main-bg text">
         <Container>
           <br></br>
@@ -107,17 +159,8 @@ const SignUp = () => {
                   <option selected="true">--Select--</option>
                   <option>Student</option>
                   <option>Professional Member</option>
+                  <option>Founder Member</option>
                 </Form.Control>
-              </Form.Group>
-              <Form.Group controlId="signup_address">
-                <Form.Label>Address</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={address}
-                  name="address"
-                  placeholder="Enter Address"
-                  onChange={signupValueChanged}
-                ></Form.Control>
               </Form.Group>
               <Form.Group controlId="signup_contact">
                 <Form.Label>Contact No</Form.Label>
@@ -190,7 +233,19 @@ const SignUp = () => {
                   onChange={signupValueChanged}
                 ></Form.Control>
               </Form.Group>
-
+              <Form.Group>
+                <Form.Label>Upload Profile Picture : </Form.Label>
+                <br></br>
+                <input
+                  type="file"
+                  accept="image*"
+                  ref={el}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+              {checkFile && (
+                <ProgressBar now={progress} label={`${progress}%`} />
+              )}
               <Button onClick={submit}>Submit</Button>
             </Form>
           </div>

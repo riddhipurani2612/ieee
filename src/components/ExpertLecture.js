@@ -1,7 +1,8 @@
-import React from "react";
+import React,{useState, useEffect} from "react";
 import styled from "styled-components";
 import { Accordion, Card, Button, Container } from "react-bootstrap";
 import YouTube from "react-youtube";
+import axios from "axios";
 const Styles = styled.div`
 .main-bg {
   background-color: #084C61;
@@ -17,7 +18,28 @@ const Styles = styled.div`
   }
 `;
 
-const Lecture = () => {
+const ExpertLecture = () => {
+  const [material, setMaterial] = useState({});
+  const { title, about, youtubelink, materialtype } = material;
+  useEffect(async()=>{
+    let response;
+    let config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const materialtype = "Expert Lecture";
+    try {
+      response = await axios.get(
+        `http://localhost:5000/techMaterial/materials/${materialtype}`,
+        config
+      );
+      setMaterial(response.data);
+      console.log(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  },[]);
   const youtubeOptions = {
     width: "95%",
   };
@@ -255,4 +277,4 @@ const Lecture = () => {
   );
 };
 
-export default Lecture;
+export default ExpertLecture;
