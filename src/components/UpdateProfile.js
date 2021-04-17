@@ -24,6 +24,14 @@ const UpdateProfile = (e) => {
     setFile(file); // storing file
     setCheckFile(true);
   };
+  const [editable, setEditable] = useState(true);
+  const clicked = () => {
+    if (editable) {
+      setEditable(false);
+    } else {
+      setEditable(true);
+    }
+  };
   const [user, setUser] = useState({});
   const {
     _id,
@@ -63,17 +71,25 @@ const UpdateProfile = (e) => {
       formData.append("email", email);
       formData.append("contact", contact);
       formData.append("file", file);
-      
+
       try {
-        response = await axios.patch(`http://localhost:5000/user`, formData,config, {
-          onUploadProgress: (ProgressEvent) => {
-            let progress =
-              Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +
-              "%";
-            setProgess(progress);
-          },
-        });
+        response = await axios.patch(
+          `http://localhost:5000/user`,
+          formData,
+          config,
+          {
+            onUploadProgress: (ProgressEvent) => {
+              let progress =
+                Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +
+                "%";
+              setProgess(progress);
+            },
+          }
+        );
         console.log(response.data);
+        if(response.status==200){
+          setEditable(false);
+        }
       } catch (err) {
         console.log(err.request);
         console.log(err.response);
@@ -123,7 +139,12 @@ const UpdateProfile = (e) => {
     <Styles>
       <div className="main-bg text">
         <Container>
-          <div className="display-4 text-center my-5">Profile</div>
+          <div className="display-4 text-center my-5">
+            Profile
+            <Button onClick={clicked} variant="outline-light">
+              <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+            </Button>
+          </div>
           <Form>
             <Form.Group>
               <Form.Label>About</Form.Label>
@@ -131,6 +152,7 @@ const UpdateProfile = (e) => {
                 type="text"
                 name="about"
                 value={about}
+                disabled={editable}
                 onChange={(e) => {
                   setUser({ ...user, address: e.target.value });
                 }}
@@ -140,7 +162,9 @@ const UpdateProfile = (e) => {
               <Form.Label>Contact</Form.Label>
               <Form.Control
                 type="text"
+                disable="true"
                 name="contact"
+                disabled={editable}
                 value={contact}
                 onChange={(e) => {
                   setUser({ ...user, contact: e.target.value });
@@ -152,6 +176,7 @@ const UpdateProfile = (e) => {
               <Form.Control
                 type="text"
                 name="email"
+                disabled={editable}
                 value={email}
                 onChange={(e) => {
                   setUser({ ...user, email: e.target.value });
@@ -163,6 +188,7 @@ const UpdateProfile = (e) => {
               <Form.Control
                 type="text"
                 name="workplace"
+                disabled={editable}
                 value={workplace}
                 onChange={(e) => {
                   setUser({ ...user, workplace: e.target.value });
@@ -174,6 +200,7 @@ const UpdateProfile = (e) => {
               <Form.Control
                 type="text"
                 name="designation"
+                disabled={editable}
                 value={designation}
                 onChange={(e) => {
                   setUser({ ...user, designation: e.target.value });
@@ -186,6 +213,7 @@ const UpdateProfile = (e) => {
               <input
                 type="file"
                 accept="image*"
+                disabled={editable}
                 ref={el}
                 onChange={handleChange}
               />

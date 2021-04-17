@@ -35,7 +35,6 @@ const ProfileView = (e) => {
     try {
       response = await axios.get(`http://localhost:5000/user/`, config);
       setUser(response.data);
-      console.log("USER");
       console.log(response.data);
     } catch (error) {
       console.log(error);
@@ -43,8 +42,7 @@ const ProfileView = (e) => {
   }, []);
   return (
     <Styles>
-      <div className="main-bg text">
-        <Container>
+      <Container className="main-bg text">
           <div className="display-4 text-center my-5">Profile</div>
           <Form>
             <Form.Group>
@@ -69,8 +67,7 @@ const ProfileView = (e) => {
               <Form.Label>About : {about}</Form.Label>
             </Form.Group>
           </Form>
-        </Container>
-      </div>
+      </Container>
     </Styles>
   );
 };

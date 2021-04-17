@@ -5,7 +5,6 @@ import { useHistory } from "react-router";
 const Styles = styled.div`
   .main-bg {
     background-color: #084c61;
-    border: 1px solid white;
   }
   .text {
     color: #dbf1fb;
@@ -14,6 +13,7 @@ const Styles = styled.div`
     width: "100%";
     height: "400rem";
   }
+
 `;
 const MaterialView = (props) => {
   const history = useHistory();
@@ -27,9 +27,9 @@ const MaterialView = (props) => {
   }
   return (
     <Styles>
-        <Container className="main-bg text my-5">
+        <Container className="main-bg text my-5" style={{ color: "white"}}>
           {props.title}
-          <Button onClick={viewdetails}>View &gt;&gt;</Button>
+          <Button onClick={viewdetails} variant="outline-light" className="mx-5">View &gt;&gt;</Button>
           <hr color="grey"></hr>
         </Container>
     </Styles>

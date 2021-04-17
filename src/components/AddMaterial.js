@@ -127,7 +127,7 @@ const AddMaterial = () => {
       <div className="main-bg text">
         <Container>
           <br></br>
-          <div className="display-3 text-center" style={{ color: "#ECC30B", textDecoration: "underline" }}>Upload Lectures</div>
+          <div className="display-3 text-center" style={{ color: "white", textDecoration: "underline" }}>Upload Lectures</div>
           <div>
             <Form>
               <Form.Group>
