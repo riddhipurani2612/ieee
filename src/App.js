@@ -24,6 +24,7 @@ import FileUpload from "./components/FileUpload";
 import AddNewsletter from "./components/AddNewsletter";
 import ExpertLecture from "./components/ExpertLecture";
 import DetailedView from "./components/DetailedView";
+import UpdateMaterial from "./components/UpdateMaterial";
 function App() {
   console.log("App");
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -52,6 +53,7 @@ function App() {
             )}
           />
           <Route path="/addmaterial" component={AddMaterial} />
+          <Route path="/updatematerial" component={UpdateMaterial}/>
           <Route path="/addevent" component={AddEvent} />
           <Route path="/members" component={Members} />
           <Route path="/chairs-desk" component={ChairsDesk} />

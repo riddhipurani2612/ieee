@@ -294,5 +294,4 @@ const Home = (props) => {
     </Styles>
   );
 };
-
 export default Home;

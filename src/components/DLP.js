@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Accordion, Card, Button, Container } from "react-bootstrap";
 import YouTube from "react-youtube";
@@ -21,16 +21,25 @@ const Styles = styled.div`
 
 const DLP = () => {
   const [material, setMaterial] = useState([]);
-  const { title, about, youtubelink, materialtype,uploadedby, materialfile } = material;
-  useEffect(async()=>{
-    let response;
-    let config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+  const {
+    title,
+    about,
+    youtubelink,
+    materialtype,
+    uploadedby,
+    materialfile,
+  } = material;
+  
+  useEffect(async () => {
     const materialtype = "Distinguished Lecture Program";
+
     try {
+      let response;
+      let config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
       response = await axios.get(
         `http://localhost:5000/techMaterial/materials/${materialtype}`,
         config
@@ -39,7 +48,7 @@ const DLP = () => {
     } catch (err) {
       console.log(err);
     }
-  },[]);
+  }, []);
   const youtubeOptions = {
     width: "95%",
   };
@@ -48,15 +57,15 @@ const DLP = () => {
       <Container>
         <div className="main-bg text">
           <div className="display-3 text-center">Lectures</div>
-          {material.map((materialObj,index)=>(
-            <MaterialView 
+          {material.map((materialObj, index) => (
+            <MaterialView
               _id={materialObj._id}
               title={materialObj.title}
-              about = {materialObj.about}
-              youtubelink = {materialObj.youtubelink}
-              publicationlink = {materialObj.publicationlink}
-              materialfile = {materialObj.materialfile}
-              uploadedby = {materialObj.uploadedby}
+              about={materialObj.about}
+              youtubelink={materialObj.youtubelink}
+              publicationlink={materialObj.publicationlink}
+              materialfile={materialObj.materialfile}
+              uploadedby={materialObj.uploadedby}
             />
           ))}
         </div>

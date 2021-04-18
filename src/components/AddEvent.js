@@ -75,11 +75,8 @@ const AddEvent = () => {
         },
       });
       console.log(response.status);
-      if(response.status == 200){
-        alert("Event Added");
-        history.push("/");
-      }
       console.log(response.data);
+      history.push("/events");
     } catch (err) {
       console.log(err);
     }

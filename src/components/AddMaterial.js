@@ -89,6 +89,8 @@ const AddMaterial = () => {
           }
         );
         console.log(response.data);
+        localStorage.setItem("materialId",response.data._id);
+        history.push("/detailedview");
       } catch (err) {
         console.log(err.response);
         console.log(err.request);
@@ -117,6 +119,8 @@ const AddMaterial = () => {
           config
         );
         console.log(response.data);
+        localStorage.setItem("materialId",response.data._id);
+        history.push("/detailedview");
       } catch (err) {
         console.log(err.response);
       }

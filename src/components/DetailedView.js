@@ -71,9 +71,7 @@ const DetailedView = () => {
     } else {
       history.goBack();
     }
-
-    localStorage.removeItem("materialId");
-  }, [material.title]);
+  }, []);
   return (
     <Styles>
       <Container className="main-bg text">
