@@ -2,7 +2,7 @@ import React,{useState, useEffect} from "react";
 import styled from "styled-components";
 import { Accordion, Card, Button, Container } from "react-bootstrap";
 import axios from "axios";
-import MaterialView from "./MaterialView";
+import MaterialView from "./ViewMaterial";
 const Styles = styled.div`
 .main-bg {
   background-color: #084C61;

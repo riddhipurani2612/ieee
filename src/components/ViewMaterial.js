@@ -16,7 +16,7 @@ const Styles = styled.div`
     height: "400rem";
   }
 `;
-const MaterialView = (props) => {
+const ViewMaterial = (props) => {
   const history = useHistory();
   const [admin, setAdmin] = useState(false);
   const [member, setMember] = useState(false);
@@ -111,4 +111,4 @@ const MaterialView = (props) => {
     </Styles>
   );
 };
-export default MaterialView;
+export default ViewMaterial;

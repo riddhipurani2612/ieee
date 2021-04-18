@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Accordion, Card, Button, Container } from "react-bootstrap";
 import YouTube from "react-youtube";
 import axios from "axios";
-import MaterialView from "./MaterialView";
+import ViewMaterial from "./ViewMaterial";
 const Styles = styled.div`
 .main-bg {
   background-color: #084C61;
@@ -58,7 +58,7 @@ const DLP = () => {
         <div className="main-bg text">
           <div className="display-3 text-center">Lectures</div>
           {material.map((materialObj, index) => (
-            <MaterialView
+            <ViewMaterial
               _id={materialObj._id}
               title={materialObj.title}
               about={materialObj.about}
