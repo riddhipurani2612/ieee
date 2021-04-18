@@ -1,7 +1,6 @@
 import React,{useState, useEffect} from "react";
 import styled from "styled-components";
 import { Accordion, Card, Button, Container } from "react-bootstrap";
-import YouTube from "react-youtube";
 import axios from "axios";
 import MaterialView from "./MaterialView";
 const Styles = styled.div`
