@@ -27,7 +27,7 @@ const Feedback = (props) => {
     };
     let response;
     try {
-      response = await axios.post("http://localhost:5000/feedback", data, config);
+      response = await axios.post("https://grssprojectserver.herokuapp.com/feedback", data, config);
       console.log(response.data);
     } catch (error) {
       console.log(error);

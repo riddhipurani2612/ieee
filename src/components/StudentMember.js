@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Container, ListGroup, Row, Col } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
@@ -34,7 +34,7 @@ const StudentMember = () => {
     const role = "Student";
     try {
       response = await axios.get(
-        `http://localhost:5000/user/getmembers/${role}`,
+        `https://grssprojectserver.herokuapp.com/user/getmembers/${role}`,
         config
       );
       setMembers(response.data);
@@ -44,36 +44,30 @@ const StudentMember = () => {
     }
   }, []);
 
+  const links = (temp) => {
+    if (temp === undefined) {
+      return "undefined";
+    } else {
+      return "https://grssprojectserver.herokuapp.com/" + temp;
+    }
+  };
+
   return (
     <Styles>
-    <div className="main-bg text">
-      <Container>
-        <div className="display-3 main-bg text">Student Members</div>
-        <ListGroup>
+      <Container className="main-bg text">
           {members.map((memberObj, index) => (
-            <ListGroup.Item className="main-bg text">
-              <Row className="py-3">
-                <Col>
-                </Col>
-                <Col>
-                  <MemberView
-                    first_name={memberObj.first_name}
-                    last_name={memberObj.last_name}
-                    address={memberObj.address}
-                    workplace={memberObj.workplace}
-                    contact={memberObj.contact}
-                    email={memberObj.email}
-                    about={memberObj.about}
-                    ></MemberView>
-                </Col>
-              </Row>
-            </ListGroup.Item>
+            <MemberView
+              first_name={memberObj.first_name}
+              last_name={memberObj.last_name}
+              workplace={memberObj.workplace}
+              contact={memberObj.contact}
+              email={memberObj.email}
+              about={memberObj.about}
+              profile={links(memberObj.profile)}
+            ></MemberView>
           ))}
-        </ListGroup>
       </Container>
-    </div>
-  </Styles>
-
+    </Styles>
   );
 };
 

@@ -2,7 +2,7 @@ import React,{useState, useEffect} from "react";
 import styled from "styled-components";
 import { Accordion, Card, Button, Container } from "react-bootstrap";
 import axios from "axios";
-import MaterialView from "./ViewMaterial";
+import ViewMaterial from "./ViewMaterial";
 const Styles = styled.div`
 .main-bg {
   background-color: #084C61;
@@ -30,7 +30,7 @@ const ExpertLecture = () => {
     const materialtype = "Expert Lecture Program";
     try {
       response = await axios.get(
-        `http://localhost:5000/techMaterial/materials/${materialtype}`,
+        `https://grssprojectserver.herokuapp.com/techMaterial/materials/${materialtype}`,
         config
       );
       setMaterial(response.data);
@@ -41,26 +41,40 @@ const ExpertLecture = () => {
   const youtubeOptions = {
     width: "95%",
   };
+  const links = (temp) => {
+    if (temp === undefined) {
+      return "undefined";
+    } else {
+      return "https://grssprojectserver.herokuapp.com/" + temp;
+    }
+  };
   return (
     <Styles>
-      <Container>
-        <div className="main-bg text">
-        <div className="display-3 text-center" style={{ color: "white", textDecoration: "underline" }}>Expert Lectures</div>
-          {material.map((materialObj,index)=>(
-            <MaterialView 
+      <Container className="main-bg text">
+        <br></br>
+        <div className="w3-panel w3-border w3-border-white">
+          <div
+            className="display-3 text-center"
+            style={{ color: "white", textDecoration: "underline" }}
+          >
+            Expert Lecture Program
+          </div>
+
+          {material.map((materialObj, index) => (
+            <ViewMaterial
               _id={materialObj._id}
               title={materialObj.title}
-              about = {materialObj.about}
-              youtubelink = {materialObj.youtubelink}
-              publicationlink = {materialObj.publicationlink}
-              materialfile = {materialObj.materialfile}
-              uploadedby = {materialObj.uploadedby}
+              about={materialObj.about}
+              youtubelink={materialObj.youtubelink}
+              publicationlink={materialObj.publicationlink}
+              materialfile={links(materialObj.materialfile)}
+              uploadedby={materialObj.uploadedby}
             />
           ))}
         </div>
+        <br></br>
       </Container>
     </Styles>
   );
 };
-
 export default ExpertLecture;

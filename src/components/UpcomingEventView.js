@@ -26,18 +26,13 @@ const UpcomingEventView = (props) => {
         animateIn="animate__lightSpeedInRight"
         animateOut="animate__lightSpeedOutRight"
       >
-        <div className="text main-bg text-justify">
-          <Row className="my-3">
+        <div className="text">
+          <Row>
             <Col>
-              {props.date} <br></br>
-              {props.time}
-            </Col>
-            <Col xs={6}>
-              <h3>
-                <b>{props.name}</b>
-              </h3>
-              By<br></br>
-              {props.hostedby}
+              <h5>{props.name}</h5>
+              By {props.hostedby}
+              on {props.date}
+              at {props.time}
               <br></br>
               <a
                 className="read-more-link text"
@@ -49,13 +44,26 @@ const UpcomingEventView = (props) => {
               </a>
               {readMore && extraContent}
             </Col>
-            <Col xs lg="2">
-              <a href={props.registrationlink} target="blank">
-                Register here
-              </a>
+            <Col>
+              {props.registrationlink != "undefined" ? 
+                <a href={props.registrationlink} target="blank">
+                  <Button
+                    variant="outline-light"
+                    onClick={props.registrationlink}
+                  >
+                    Register Here!
+                  </Button>
+                </a>
+               : (
+                "Not Defined"
+              )}
+              {props.registrationlink != "undefined"
+                ? props.registrationlink
+                : "Not Defined"}
             </Col>
           </Row>
         </div>
+        <hr color="grey"></hr>
       </ScrollAnimation>
     </Styles>
   );

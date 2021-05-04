@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Container, Button } from "react-bootstrap";
+import { Container, Button, Row, Col } from "react-bootstrap";
 import { useHistory } from "react-router";
 import axios from "axios";
 import UpdateMaterial from "./UpdateMaterial";
@@ -32,10 +32,10 @@ const ViewMaterial = (props) => {
     localStorage.setItem("materialId", props._id);
     history.push("/detailedview");
   };
-  const updatedetails = () =>{
+  const updatedetails = () => {
     localStorage.setItem("materialIdUpdate", props._id);
     history.push("/updatematerial");
-  }
+  };
   const deletedetails = async () => {
     try {
       let config = {
@@ -44,7 +44,7 @@ const ViewMaterial = (props) => {
         },
       };
       let response = axios.delete(
-        `http://localhost:5000/techMaterial/${props._id}`,
+        `https://grssprojectserver.herokuapp.com/techMaterial/${props._id}`,
         config
       );
       console.log(response.data);
@@ -65,7 +65,7 @@ const ViewMaterial = (props) => {
         },
       };
       let response = await axios.get(
-        `http://localhost:5000/user/getrole`,
+        `https://grssprojectserver.herokuapp.com/user/getrole`,
         config
       );
       setUser(response.data);
@@ -82,32 +82,37 @@ const ViewMaterial = (props) => {
   }, []);
   return (
     <Styles>
-      <Container className="main-bg text my-5" style={{ color: "white" }}>
-        {props.title}
-        <Button onClick={viewdetails} variant="outline-light" className="mx-5">
-          View &gt;&gt;
-        </Button>
-        {member && (
-          <Button
-            className="mt-5"
-            variant="outline-light"
-            onClick={updatedetails}
-            title="Feedback"
-          >
-            Update
-          </Button>
-        )}
-        {
-          <Button
-            onClick={deletedetails}
-            variant="outline-light"
-            className="mx-5"
-          >
-            Delete &gt;&gt;
-          </Button>
-        }
-        <hr color="grey"></hr>
-      </Container>
+      <div>
+        <Row>
+          <Col> {props.title}</Col>
+          <Col xs lg="3">
+            {member && (
+              <Button
+                variant="outline-light"
+                onClick={updatedetails}
+                title="Feedback"
+              >
+                Update
+              </Button>
+            )}
+            {member &&
+              <Button
+                onClick={deletedetails}
+                variant="outline-light"
+              >
+                Delete
+              </Button>
+            }
+            <Button
+              onClick={viewdetails}
+              variant="outline-light"
+            >
+              View
+            </Button>
+          </Col>
+        </Row>
+      </div>
+      <hr color="grey"></hr>
     </Styles>
   );
 };

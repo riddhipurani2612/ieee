@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { ListGroup, Container, Row, Col } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
@@ -27,7 +27,7 @@ const ProfessionalMembers = () => {
     designation,
     about,
   } = members;
-  const [userabout,setAbout] = useState(false);
+  const [userabout, setAbout] = useState(false);
   useEffect(async () => {
     let response;
     let config = {
@@ -38,51 +38,46 @@ const ProfessionalMembers = () => {
     const role = "Professional Member";
     try {
       response = await axios.get(
-        `http://localhost:5000/user/getmembers/${role}`,
+        `https://grssprojectserver.herokuapp.com/user/getmembers/${role}`,
         config
       );
       setMembers(response.data);
-      if(response.data.about != null){
+      if (response.data.about != null) {
         setAbout(true);
-        console.log(`About ${about}`)
-      }
-      else{
+        console.log(`About ${about}`);
+      } else {
         console.log(`About null`);
       }
     } catch (err) {
       console.log(err);
     }
   }, []);
+  const links = (temp) => {
+    if (temp === undefined) {
+      return "undefined";
+    } else {
+      return "https://grssprojectserver.herokuapp.com/" + temp;
+    }
+  };
+
   return (
     <Styles>
-    <div className="main-bg text">
-      <Container>
-        <div className="display-3 main-bg text">Professional Members</div>
-        <ListGroup>
+      <Container className="main-bg text">
+        <Row className="py-3">
           {members.map((memberObj, index) => (
-            <ListGroup.Item className="main-bg text">
-              <Row className="py-3">
-                <Col>
-                </Col>
-                <Col>
-                  <MemberView
-                    first_name={memberObj.first_name}
-                    last_name={memberObj.last_name}
-                    address={memberObj.address}
-                    workplace={memberObj.workplace}
-                    contact={memberObj.contact}
-                    email={memberObj.email}
-                    about={memberObj.about}
-                    ></MemberView>
-                </Col>
-              </Row>
-            </ListGroup.Item>
+            <MemberView
+              first_name={memberObj.first_name}
+              last_name={memberObj.last_name}
+              workplace={memberObj.workplace}
+              contact={memberObj.contact}
+              email={memberObj.email}
+              about={memberObj.about}
+              profile={links(memberObj.profile)}
+            ></MemberView>
           ))}
-        </ListGroup>
+        </Row>
       </Container>
-    </div>
-  </Styles>
-
+    </Styles>
   );
 };
 export default ProfessionalMembers;

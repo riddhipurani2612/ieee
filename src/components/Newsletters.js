@@ -1,17 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Accordion, Card, Button, Row, Col, Container } from "react-bootstrap";
 import YouTube from "react-youtube";
-
+import axios from "axios";
 const Styles = styled.div`
 .main-bg {
   background-color: #084C61;
-  margin-top: -23px;
 }
 .text, a {
   font-size: 140%;
   line-height: 2rem;
 }
+a:link {
+  color: white;
+}
+
+/* visited link */
+a:visited {
+  color: white;
+}
+
+/* mouse over link */
+a:hover {
+  color: grey;
+}
+
   .center{
     paddingBottom: "56.25%";
     width: "100%";
@@ -23,14 +36,54 @@ const Newsletter = () => {
   const youtubeOptions = {
     width: "95%",
   };
+  const [material, setMaterial] = useState([]);
+  const {
+    title,
+    about,
+    youtubelink,
+    publicationlink,
+    materialtype,
+    uploadedby,
+    materialfile,
+  } = material;
+
+  useEffect(async () => {
+    const materialtype1 = "Newsletter";
+
+    try {
+      let response;
+      let config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      response = await axios.get(
+        `https://grssprojectserver.herokuapp.com/techMaterial/materials/${materialtype1}`,
+        config
+      );
+      setMaterial(response.data);
+      console.log(material);
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
   return (
     <Styles>
       <Container className="main-bg">
-        <div className="main-bg text">
-        <div className="display-3 text-center" style={{ color: "white", textDecoration: "underline" }}>News Letters</div>
+        <br></br>
+        <div className="main-bg text w3-panel w3-border w3-border-white">
+          <div
+            className="display-3 text-center"
+            style={{ color: "white", textDecoration: "underline" }}
+          >
+            News Letters
+          </div>
           <Row className="my-3">
             <Col>
-              <div className="display-4 my-5 text-center" style={{ color: "white"}}>
+              <div
+                className="display-4 my-5 text-center"
+                style={{ color: "white" }}
+              >
                 <br></br>Need of a GRSS Chapter Newsletter
               </div>
             </Col>
@@ -39,71 +92,21 @@ const Newsletter = () => {
             </Col>
           </Row>
           <div>
-            <div>
-              <a
-                href="https://drive.google.com/file/d/10ROQXM2vxjaKi1lyykOLOZ0i4Mh2OR8O/view?usp=sharing"
-                target="blank"
-              >
-                Download IEEE Gujarat Section Geoscience and Remote Sensing
-                Society- Chapter Newsletter-Volume7|Issue 1| December 2019
-              </a>
-            </div><br></br>
-            <div>
-              <a
-                href="https://drive.google.com/file/d/1fHdqMWuJ26PubOiNNEUvEX4sAwUb7YS3/view?usp=sharing"
-                target="blank"
-              >
-                Download IEEE Gujarat Section Geoscience and Remote Sensing Society-
-          Chapter Newsletter-Volume6|Issue 1| December 2018
-              </a>
-            </div><br></br>
-            <div>
-              <a
-                href="https://drive.google.com/file/d/1zC8Sc20mo2jDnck1iA7kvuLZJ6ohulQG/view?usp=sharing"
-                target="blank"
-              >
-               Download IEEE Gujarat Section Geoscience and Remote Sensing Society-
-          Chapter Newsletter-Volume5|Issue 1| December 2017
-              </a>
-            </div><br></br>
-            <div>
-              <a
-                href="https://drive.google.com/file/d/1J8ikWTbP8LI5_mUTOTN3vELUfll7nUGP/view?usp=sharing"
-                target="blank"
-              >
-                Download IEEE Gujarat Section Geoscience and Remote Sensing Society-
-          Chapter Newsletter-Volume4|Issue 1| December 2016
-              </a>
-            </div><br></br>
-            <div>
-              <a
-                href="https://drive.google.com/file/d/1ubrrAajZt59vMf5T4Gg4bsUcWQ0wPL1p/view?usp=sharing"
-                target="blank"
-              >
-                Download IEEE Gujarat Section Geoscience and Remote Sensing Society-
-          Chapter Newsletter-Volume3|Issue 1| December 2015
-              </a>
-            </div><br></br>
-            <div>
-              <a
-                href="https://drive.google.com/file/d/1ThYD-Fo_xmOB8CXSogpY0SYQUdcnkw3R/view?usp=sharing"
-                target="blank"
-              >
-                Download IEEE Gujarat Section Geoscience and Remote Sensing Society-
-          Chapter Newsletter-Volume2|Issue 1| December 2014
-              </a>
-            </div><br></br>
-            <div>
-              <a
-                href="https://drive.google.com/file/d/19zp-eK2eF38XFLahJ9WdLcmNrKW4FFhF/view?usp=sharing"
-                target="blank"
-              >
-                Download IEEE Gujarat Section Geoscience and Remote Sensing Society-
-          Chapter Newsletter-Volume1|Issue 1| December 2013
-              </a>
-            </div><br></br>
+            <ul>
+              {material.map((materialObj, index) => (
+                <div>
+                  <li>
+                    <a href={materialObj.materialfile} target="blank">
+                      {materialObj.title}
+                    </a>
+                  </li>
+                  <br></br>
+                </div>
+              ))}
+            </ul>
+          </div>
         </div>
-        </div>
+        <br></br>
       </Container>
     </Styles>
   );

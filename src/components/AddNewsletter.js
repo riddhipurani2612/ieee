@@ -10,6 +10,11 @@ const Styles = styled.div`
   .text {
     color: #dbf1fb;
   }
+  .content {
+    max-width: 500px;
+    margin: auto;
+    padding: 50px;
+  }
 `;
 const AddMaterial = () => {
   let response;
@@ -26,7 +31,7 @@ const AddMaterial = () => {
       history.push("/");
     }
     try {
-      response = await axios.get(`http://localhost:5000/user/getrole`, config);
+      response = await axios.get(`https://grssprojectserver.herokuapp.com/user/getrole`, config);
       console.log(response.data);
       if (response.data === "Student") {
         history.push("/");
@@ -59,7 +64,7 @@ const AddMaterial = () => {
     formData.append("title", title);
     formData.append("about", about);
     formData.append("publicationlink", publicationlink);
-    formData.append("materialtype",materialtype);
+    formData.append("materialtype", materialtype);
     if (checkFile) {
       formData.append("file", file);
       const config = {
@@ -71,8 +76,9 @@ const AddMaterial = () => {
       let response;
       try {
         response = await axios.post(
-          "http://localhost:5000/techMaterial",
+          "https://grssprojectserver.herokuapp.com/techMaterial",
           formData,
+          config,
           {
             onUploadProgress: (ProgressEvent) => {
               let progress =
@@ -103,7 +109,7 @@ const AddMaterial = () => {
       let response;
       try {
         response = await axios.post(
-          "http://localhost:5000/techMaterial",
+          "https://grssprojectserver.herokuapp.com/techMaterial",
           data,
           config
         );
@@ -115,44 +121,53 @@ const AddMaterial = () => {
   };
   return (
     <Styles>
-      <div className="main-bg text">
-        <Container>
-
-          <div className="display-3 text-center" style={{ color: "#ECC30B", textDecoration: "underline" }}>Upload Newsletter/Publication Details</div>
+      <Container className="main-bg text">
+        <br></br>
+        <div className="content w3-panel w3-border w3-border-white">
+          <div
+            style={{ color: "white", textDecoration: "underline", textAlign : "center", fontSize : "1.5rem" }}
+          >
+            Add Newsletter/Publication
+          </div>
+          <br></br>
           <Form>
             <Form.Group>
               <Form.Label>Material Type : </Form.Label>
               <Form.Control
+                class="w3-input w3-animate-input"
                 as="select"
                 name="materialtype"
                 value={materialtype}
                 onChange={valueChanged}
-                >
-                  <option>-- Select --</option>
-                  <option>Publications</option>
-                  <option>Newsletters</option>
-                </Form.Control>
+              >
+                <option>-- Select --</option>
+                <option>Publication</option>
+                <option>Newsletter</option>
+              </Form.Control>
             </Form.Group>
             <Form.Group>
               <Form.Label>Title : </Form.Label>
-              <Form.Control
+              <input
+                class="w3-input w3-animate-input"
                 type="text"
                 name="title"
                 value={title}
                 onChange={valueChanged}
-              ></Form.Control>
+              ></input>
             </Form.Group>
             <Form.Group>
               <Form.Label>Publication Link : </Form.Label>
-              <Form.Control
+              <input
+                class="w3-input w3-animate-input"
                 type="text"
                 name="publicationlink"
                 value={publicationlink}
                 onChange={valueChanged}
-              ></Form.Control>
+              ></input>
             </Form.Group>
             <Form.Group>
-              <Form.Label>Upload File : </Form.Label><br></br>
+              <Form.Label>Upload File : </Form.Label>
+              <br></br>
               <input
                 type="file"
                 accept="application/pdf"
@@ -161,10 +176,25 @@ const AddMaterial = () => {
               />
             </Form.Group>
             {checkFile && <ProgressBar now={progress} label={`${progress}%`} />}
-            <center><Button onClick={uploadMaterial}>Upload</Button></center><br></br><br></br>
+            <center>
+              <Button
+                variant="outline-light"
+                style={{
+                  width: "100%",
+                  padding: "14px 28px",
+                  "font-size": "16px",
+                  cursor: "pointer",
+                }}
+                onClick={uploadMaterial}
+              >
+                Upload
+              </Button>
+            </center>
           </Form>
-        </Container>
-      </div>
+          <br></br>
+        </div>
+        <br></br>
+      </Container>
     </Styles>
   );
 };

@@ -51,11 +51,6 @@ const AboutView = (props) => {
             <p className="wrap custom-text ">{props.about}</p>
           </div>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={props.closeModal}>
-            Cancel
-          </Button>
-        </Modal.Footer>
       </Modal>
     </Styles>
   );

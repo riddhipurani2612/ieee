@@ -6,7 +6,6 @@ import EventView from "./EventView";
 const Styles = styled.div`
   .main-bg {
     background-color: #084c61;
-    margin-top: 0px;
   }
   .text {
     color: #dbf1fb;
@@ -26,18 +25,28 @@ const Events = () => {
       },
     };
     try {
-      response = await axios.get("http://localhost:5000/event", config);
+      response = await axios.get("https://grssprojectserver.herokuapp.com/event", config);
       setEvents(response.data);
       console.log(response.data);
     } catch (err) {
       console.log(err);
     }
   }, []);
+  const links = (temp) => {
+    if (temp === undefined) {
+      return "undefined";
+    } else {
+      return "https://grssprojectserver.herokuapp.com/" + temp;
+    }
+  };
+
   return (
     <Styles>
-        <Container className="main-bg text">
-        <div
-            className="display-3 text-center"
+      <Container className="main-bg text">
+        <br></br>
+        <div className="w3-panel w3-border w3-border-white">
+          <div
+            className="display-3 text-center "
             style={{ color: "white", textDecoration: "underline" }}
           >
             Events
@@ -49,9 +58,12 @@ const Events = () => {
               date={eventObj.date}
               about={eventObj.about}
               hostedby={eventObj.hostedby}
+              eventimage={links(eventObj.eventimage)}
             />
           ))}
-        </Container>
+        </div>
+        <br></br>
+      </Container>
     </Styles>
   );
 };

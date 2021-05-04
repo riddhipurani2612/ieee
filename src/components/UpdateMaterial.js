@@ -6,10 +6,14 @@ import { useHistory } from "react-router-dom";
 const Styles = styled.div`
   .main-bg {
     background-color: #084c61;
-    margin-top: -48px;
   }
   .text {
     color: #dbf1fb;
+  }
+  .content {
+    max-width: 500px;
+    margin: auto;
+    padding: 50px;
   }
 `;
 const UpdateMaterial = (props) => {
@@ -49,7 +53,7 @@ const UpdateMaterial = (props) => {
         let response;
         try {
           response = await axios.patch(
-            `http://localhost:5000/techMaterial/${localStorage.getItem(
+            `https://grssprojectserver.herokuapp.com/techMaterial/${localStorage.getItem(
               "materialIdUpdate"
             )}`,
             formData,
@@ -65,10 +69,6 @@ const UpdateMaterial = (props) => {
             }
           );
           console.log(response.data);
-          localStorage.setItem("materialId", response.data._id);
-          localStorage.removeItem("materialIdUpdate");
-          history.push("/detailedview");
-          window.location.replace("/detailedview");
         } catch (err) {
           console.log(err.response);
           console.log(err.request);
@@ -92,7 +92,7 @@ const UpdateMaterial = (props) => {
         let response;
         try {
           response = await axios.patch(
-            `http://localhost:5000/techMaterial/${localStorage.getItem(
+            `https://grssprojectserver.herokuapp.com/techMaterial/${localStorage.getItem(
               "materialIdUpdate"
             )}`,
             data,
@@ -122,14 +122,13 @@ const UpdateMaterial = (props) => {
       };
       try {
         response = await axios.get(
-          `http://localhost:5000/techMaterial/${localStorage.getItem(
+          `https://grssprojectserver.herokuapp.com/techMaterial/${localStorage.getItem(
             "materialIdUpdate"
           )}`,
           config
         );
         setMaterial(response.data);
         console.log(response.data);
-
       } catch (err) {
         console.log(err);
       }
@@ -138,74 +137,90 @@ const UpdateMaterial = (props) => {
   return (
     <Styles>
       <Container className="main-bg text">
-        Update Material
-        <Form>
-          <Form.Group>
-            <Form.Label>Lecture Type : </Form.Label>
-            <Form.Control
-              as="select"
-              name="materialtype"
-              value={materialtype}
-              onChange={(e) => {
-                setMaterial({ ...material, materialtype: e.target.value });
+        <br></br>
+        <div className="content w3-panel w3-border w3-border-white">
+          <div
+            className="display-3 text-center"
+            style={{ color: "white", textDecoration: "underline" }}
+          >
+            Update Material
+          </div>
+          <br></br>
+          <Form>
+            <Form.Group>
+              <Form.Label>Lecture Type : </Form.Label>
+              <Form.Control
+                as="select"
+                name="materialtype"
+                value={materialtype}
+                onChange={(e) => {
+                  setMaterial({ ...material, materialtype: e.target.value });
+                }}
+              >
+                <option>-- Select --</option>
+                <option>Distinguished Lecture Program</option>
+                <option>Expert Lecture Program</option>
+              </Form.Control>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Title : </Form.Label>
+              <Form.Control
+                type="text"
+                name="title"
+                value={title}
+                onChange={(e) => {
+                  setMaterial({ ...material, title: e.target.value });
+                }}
+              ></Form.Control>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>About : </Form.Label>
+              <Form.Control
+                as="textarea"
+                name="about"
+                value={about}
+                onChange={(e) => {
+                  setMaterial({ ...material, about: e.target.value });
+                }}
+              ></Form.Control>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>YouTube Link : </Form.Label>
+              <Form.Control
+                type="text"
+                name="youtubelink"
+                value={youtubelink}
+                onChange={(e) => {
+                  setMaterial({ ...material, youtubelink: e.target.value });
+                }}
+              ></Form.Control>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Upload File : </Form.Label>
+              <br></br>
+              <input
+                type="file"
+                accept="application/pdf"
+                ref={el}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            {checkFile && <ProgressBar now={progress} label={`${progress}%`} />}
+            <Button
+              variant="outline-light"
+              style={{
+                width: "100%",
+                padding: "14px 28px",
+                "font-size": "16px",
+                cursor: "pointer",
               }}
+              onClick={updatedetails}
             >
-              <option>-- Select --</option>
-              <option>Distinguished Lecture Program</option>
-              <option>Expert Lecture Program</option>
-            </Form.Control>
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Title : </Form.Label>
-            <Form.Control
-              type="text"
-              name="title"
-              value={title}
-              onChange={(e) => {
-                setMaterial({ ...material, title: e.target.value });
-              }}
-            ></Form.Control>
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>About : </Form.Label>
-            <Form.Control
-              as="textarea"
-              name="about"
-              value={about}
-              onChange={(e) => {
-                setMaterial({ ...material, about: e.target.value });
-              }}
-            ></Form.Control>
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>YouTube Link : </Form.Label>
-            <Form.Control
-              type="text"
-              name="youtubelink"
-              value={youtubelink}
-              onChange={(e) => {
-                setMaterial({ ...material, youtubelink: e.target.value });
-              }}
-            ></Form.Control>
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Upload File : </Form.Label>
-            <br></br>
-            <input
-              type="file"
-              accept="application/pdf"
-              ref={el}
-              onChange={handleChange}
-            />
-          </Form.Group>
-          {checkFile && <ProgressBar now={progress} label={`${progress}%`} />}
-          <Button variant="primary" onClick={updatedetails}>
-            Update
-          </Button>
-        </Form>
-        <Button variant="primary" onClick={props.closeModal}>
-          Cancel
-        </Button>
+              Update
+            </Button>
+          </Form>
+        </div>
+        <br></br>
       </Container>
     </Styles>
   );

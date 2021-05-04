@@ -7,7 +7,6 @@ import ViewMaterial from "./ViewMaterial";
 const Styles = styled.div`
 .main-bg {
   background-color: #084C61;
-  margin-top: -23px;
 }
 .text {
   color: #dbf1fb;
@@ -29,7 +28,7 @@ const DLP = () => {
     uploadedby,
     materialfile,
   } = material;
-  
+
   useEffect(async () => {
     const materialtype = "Distinguished Lecture Program";
 
@@ -41,7 +40,7 @@ const DLP = () => {
         },
       };
       response = await axios.get(
-        `http://localhost:5000/techMaterial/materials/${materialtype}`,
+        `https://grssprojectserver.herokuapp.com/techMaterial/materials/${materialtype}`,
         config
       );
       setMaterial(response.data);
@@ -52,11 +51,25 @@ const DLP = () => {
   const youtubeOptions = {
     width: "95%",
   };
+  const links = (temp) => {
+    if (temp === undefined) {
+      return "undefined";
+    } else {
+      return "https://grssprojectserver.herokuapp.com/" + temp;
+    }
+  };
   return (
     <Styles>
-      <Container>
-        <div className="main-bg text">
-          <div className="display-3 text-center">Lectures</div>
+      <Container className="main-bg text">
+        <br></br>
+        <div className="w3-panel w3-border w3-border-white">
+          <div
+            className="display-4 text-center"
+            style={{ color: "white", textDecoration: "underline" }}
+          >
+            Distinguished Lecture Program
+          </div>
+          <br></br>
           {material.map((materialObj, index) => (
             <ViewMaterial
               _id={materialObj._id}
@@ -64,11 +77,12 @@ const DLP = () => {
               about={materialObj.about}
               youtubelink={materialObj.youtubelink}
               publicationlink={materialObj.publicationlink}
-              materialfile={materialObj.materialfile}
+              materialfile={links(materialObj.materialfile)}
               uploadedby={materialObj.uploadedby}
             />
           ))}
         </div>
+        <br></br>
       </Container>
     </Styles>
   );

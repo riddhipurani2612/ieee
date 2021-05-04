@@ -37,7 +37,7 @@ const PasswordChange = (props) => {
       };
       try {
         response = await axios.post(
-          `http://localhost:5000/user/changepassword`,
+          `https://grssprojectserver.herokuapp.com/user/changepassword`,
           data,
           config
         );
@@ -62,30 +62,30 @@ const PasswordChange = (props) => {
         <Form>
           <Form.Group>
             <Form.Label>Enter Current Password : </Form.Label>
-            <Form.Control
+            <input
               type="password"
               name="password"
               value={password}
               onChange={valueChanged}
-            ></Form.Control>
+            ></input>
           </Form.Group>
           <Form.Group>
             <Form.Label>New Password : </Form.Label>
-            <Form.Control
+            <input
               type="password"
               name="newpassword"
               value={newpassword}
               onChange={valueChanged}
-            ></Form.Control>
+            ></input>
           </Form.Group>
           <Form.Group>
             <Form.Label>Confirm New Password : </Form.Label>
-            <Form.Control
+            <input
               type="password"
               name="confirmnew"
               value={confirmnew}
               onChange={valueChanged}
-            ></Form.Control>
+            ></input>
           </Form.Group>
         </Form>
       </Modal.Body>

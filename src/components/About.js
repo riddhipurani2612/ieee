@@ -11,6 +11,19 @@ const Styles = styled.div`
     font-size: 140%;
     line-height: 2rem;
   }
+  .wrap {
+    overflow-wrap: break-word;
+    spacing: 2rem;
+  }
+  .custom-text {
+    font-size: 140%;
+    line-height: 2rem;
+  }
+  .content {
+    max-width: 500px;
+    margin: auto;
+    padding: 50px;
+  }
 `;
 const AboutUs = () => {
   return (
@@ -19,9 +32,16 @@ const AboutUs = () => {
         animateIn="animate__fadeIn"
         animateOut="animate__fadeOut"
       >
-          <Container className="main-bg text">
-            <div className="display-3 text-center" style={{ color: "white", textDecoration: "underline" }}> About Us</div>
-            <div className="display-5 text-justify my-5 mx-5">
+        <Container className="main-bg text w3-panel w3-border w3-border-white">
+          <div className="w3-panel w3-border w3-border-white">
+            <div
+              className="display-3 text-center"
+              style={{ color: "white", textDecoration: "underline" }}
+            >
+              About Us
+            </div>
+
+            <div className="display-5 text-justify my-5 mx-5 wrap">
               Worldwide, IEEE membership is divided into geographic units called
               Sections. Chapters are technical subunits of a Region, one or more
               Sections, or a Geographic Council, and is constituted by a minimum
@@ -60,9 +80,9 @@ const AboutUs = () => {
               Science College, Nascent Info technology and independent
               professionals. Thus, a large number of community’s representations
               make the Chapter most lively in its performance<br></br>
-              <br></br>
             </div>
-          </Container>
+          </div>
+        </Container>
       </ScrollAnimation>
     </Styles>
   );

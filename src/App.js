@@ -19,12 +19,14 @@ import FAQ from "./components/FAQ";
 import AddEvent from "./components/AddEvent";
 import AddMaterial from "./components/AddMaterial";
 import LogoutComp from "./components/LogoutComp";
-import Meetings from "./components/Meetings";
+import AddMeeting from "./components/AddMeeting";
 import FileUpload from "./components/FileUpload";
 import AddNewsletter from "./components/AddNewsletter";
 import ExpertLecture from "./components/ExpertLecture";
 import DetailedView from "./components/DetailedView";
 import UpdateMaterial from "./components/UpdateMaterial";
+import MeetingView from "./components/MeetingView";
+import UpdateMeeting from "./components/UpdateMeeting";
 function App() {
   console.log("App");
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -67,7 +69,7 @@ function App() {
           <Route path="/sar" component={SAR} />
           <Route path="/profile" component={Profile} />
           <Route path="/faq" component={FAQ} />
-          <Route path="/meetings" component={Meetings}/>
+          <Route path="/addmeeting" component={AddMeeting}/>
           <Route path="/file" component={FileUpload} />
           <Route path="/addnewsletter" component={AddNewsletter} />
           <Route path="/expertlecture" component={ExpertLecture}/> 
@@ -77,11 +79,12 @@ function App() {
             component={LogoutComp}
             setLogin={(state) => setLogin(state)}
           />
+          <Route path="/viewmeeting" component={MeetingView}/>
+          <Route path="/updatemeeting" component={UpdateMeeting}/>
         </Switch>
         <Footer />
       </div>
     </Router>
   );
 }
-
 export default App;

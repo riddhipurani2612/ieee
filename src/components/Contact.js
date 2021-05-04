@@ -24,72 +24,73 @@ const Styles = styled.div`
     font-size: 140%;
     line-height: 2rem;
   }
+  
 `;
 const ContactUs = () => {
   return (
     <Styles>
-      <div className="main-bg text py-5">
-        <Container>
+      <Container className="main-bg text">
+        <br></br>
+        <div className="w3-panel w3-border w3-border-white">
           <div
             className="display-3 text-center"
             style={{ color: "white", textDecoration: "underline" }}
           >
             Contact Us
           </div>
+          <div className="my-5">
+          <Row>
+            <Col xs={{ span: 6, order: 1 }} md={{ span: 6, order: 2}} class="col-sm-4">
+              <img
+                src={shivmohan}
+                style={{ marginRight: "2rem", marginBottom: "2rem" }}
+                height="250rem"
+                width="200rem"
+                class="center"
+              />
+            </Col>
+            <Col xs={{ span: 12, order: 2 }} md={{ span: 6, order: 1 }} class="col-sm-8">
+              <p className="wrap custom-text ">
+                Dr. Shiv Mohan<br></br>
+                Visiting Scientist <br></br>
+                PLANEX, Physical Research Laboratory <br></br>
+                Thaltej Campus, Ahmedabad – 380059 (Gujarat), India <br></br>
+                Former Scientist, Space Applicatio0ns Centre (ISRO), Ahmedabad{" "}
+                <br></br>
+                Ph: +91-79-26850454; Mobile: 0-9712128524 <br></br>
+                Email: shivmohan.isro@gmail.com <br></br>
+              </p>
+            </Col>
+          </Row>
 
-          <Row className="py-3">
-            <Col>
-              <div className="display-5 text-justify col-md-12 my-5">
-                <div class="wrap">
-                  <img
-                    src={shivmohan}
-                    style={{ marginRight: "2rem", marginBottom: "2rem" }}
-                    height="250rem"
-                    width="200rem"
-                  />
-                </div>
-                <p className="wrap custom-text ">
-                  Dr. Shiv Mohan<br></br>
-                  Visiting Scientist <br></br>
-                  PLANEX, Physical Research Laboratory <br></br>
-                  Thaltej Campus, Ahmedabad – 380059 (Gujarat), India <br></br>
-                  Former Scientist, Space Applications Centre (ISRO), Ahmedabad{" "}
-                  <br></br>
-                  Ph: +91-79-26850454; Mobile: 0-9712128524 <br></br>
-                  Email: shivmohan.isro@gmail.com <br></br>
-                </p>
-              </div>
+          <Row>
+            <Col xs={{ span: 12, order: 1 }} md={{ span: 6, order: 2 }}>
+              <img
+                src={suchit}
+                style={{ marginRight: "2rem", marginBottom: "2rem" }}
+                height="250rem"
+                width="200rem"
+              />
+            </Col>
+            <Col xs={{ span: 12, order: 2 }} md={{ span: 6, order: 1 }}>
+              <p className="wrap custom-text ">
+                Dr. Suchit Purohit<br></br>
+                Lecturer<br></br>
+                Department of Computer Science<br></br>
+                Gujarat University,<br></br>
+                Navrangpura<br></br>
+                Ahmedabad -380009 (Gujarat)<br></br>
+                Ph: +91-79-26300877;<br></br>
+                Mobile:+919913419959<br></br>
+                Email: suchitpurohit@yahoo.com<br></br>
+              </p>
             </Col>
           </Row>
-          <br></br>
-          <br></br>
-          <Row className="py-3">
-            <Col>
-              <div className="display-5 text-justify col-md-12 my-5">
-                <div class="wrap">
-                  <img
-                    src={suchit}
-                    style={{ marginRight: "2rem", marginBottom: "2rem" }}
-                    height="250rem"
-                    width="200rem"
-                  />
-                </div>
-                <p className="wrap custom-text ">
-                  Dr. Suchit Purohit<br></br>
-                  Lecturer<br></br>
-                  Department of Computer Science<br></br>
-                  Gujarat University,<br></br>
-                  Navrangpura<br></br>
-                  Ahmedabad -380009 (Gujarat)<br></br>
-                  Ph: +91-79-26300877;<br></br>
-                  Mobile:+919913419959<br></br>
-                  Email: suchitpurohit@yahoo.com<br></br>
-                </p>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </div>
+
+          </div>
+        </div>
+        <br></br>
+      </Container>
     </Styles>
   );
 };

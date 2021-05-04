@@ -31,6 +31,13 @@ const DetailedView = () => {
   const [publication, setPublicationlink] = useState(false);
   const [materialFile, setMaterialfile] = useState(false);
   let filetype, file;
+  const links = (temp) => {
+    if (temp === undefined) {
+      return "undefined";
+    } else {
+      return "https://grssprojectserver.herokuapp.com/" + temp;
+    }
+  };
   useEffect(async () => {
     let response;
     if (localStorage.getItem("materialId")) {
@@ -42,7 +49,7 @@ const DetailedView = () => {
       };
       try {
         response = await axios.get(
-          `http://localhost:5000/techMaterial/${materialid}`,
+          `https://grssprojectserver.herokuapp.com/techMaterial/${materialid}`,
           config
         );
         setMaterial(response.data);
@@ -60,10 +67,9 @@ const DetailedView = () => {
       if (publication != null) {
         setPublicationlink(true);
       }
-      if(materialfile === undefined){
+      if (materialfile === undefined) {
         setMaterialfile(false);
-      }
-      else{
+      } else {
         setMaterialfile(true);
         console.log("file");
         console.log(materialfile);
@@ -75,14 +81,23 @@ const DetailedView = () => {
   return (
     <Styles>
       <Container className="main-bg text">
-        <div>
+        <div className="w3-panel w3-border w3-border-white">
           <h1 className="main-bg text">{title}</h1>
-          {about}
-          <div>{youtube && <ReactPlayer url={youtubelink} width="100%" />}</div>
+          <p>{about}</p>
+          <div>
+            {youtube != "undefined" && (
+              <ReactPlayer url={youtubelink} width="100%" height="40rem" />
+            )}{" "}
+            <br></br>
+          </div>
           <div>
             {materialFile && (
-                <a href={materialfile} target="blank"><Button>Click Here to Download File</Button></a>
-              )}
+              <a href={links(materialfile)} target="blank">
+                <Button variant="outline-light">
+                  Click Here to Download File
+                </Button>
+              </a>
+            )}
           </div>
         </div>
       </Container>

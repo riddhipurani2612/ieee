@@ -21,7 +21,7 @@ const UpcomingEventView = (props) => {
   });
   const [showModal, setModal] = useState(false);
   return (
-    <Styles className="my-5 mx-3">
+    <Styles className="my-5">
       <AboutView
         show={showModal}
         closeModal={() => setModal(false)}
@@ -29,20 +29,36 @@ const UpcomingEventView = (props) => {
         name={props.name}
         about={props.about}
       ></AboutView>
-      <b>{props.name}</b>
-      <br></br>
-      By {props.hostedby} <br></br>
-      {props.date}
-      <br></br>
-      {viewReadMode && (
-        <Button
-          variant="outline-light"
-          onClick={() => setModal(true)}
-          title="Feedback"
-        >
-          Know More
-        </Button>
-      )}
+
+      <Row className="mx-2">
+        <div className="my-3"> </div>
+        {props.eventimage != "undefined" && <Col xs={{ span: 12, order: 2 }} md={{ span: 6, order: 2 }}>
+          <img
+            src={props.eventimage}
+            style={{ marginRight: "2rem", marginBottom: "2rem" }}
+            height="250rem"
+            width="200rem"
+            alt={props.eventimage}
+          />
+        </Col>}
+        
+        <Col xs={{ span: 12, order: 1 }} md={{ span: 6, order: 1 }}>
+          <b>{props.name}</b>
+          <br></br>
+          By {props.hostedby} <br></br>
+          {props.date}
+          <br></br>
+          {viewReadMode && (
+            <Button
+              variant="outline-light"
+              onClick={() => setModal(true)}
+              title="Feedback"
+            >
+              Know More
+            </Button>
+          )}
+        </Col>
+      </Row>
       <hr></hr>
     </Styles>
   );

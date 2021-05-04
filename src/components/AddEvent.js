@@ -10,9 +10,16 @@ const Styles = styled.div`
   .text {
     color: #dbf1fb;
   }
+  .content {
+    max-width: 500px;
+    margin: auto;
+    padding: 50px;
+  }
 `;
 const AddEvent = () => {
   let response;
+  const [checkFile, setCheckFile] = useState(false);
+
   const history = useHistory();
   const token = localStorage.getItem("token");
   let config = {
@@ -22,14 +29,14 @@ const AddEvent = () => {
     },
   };
   useEffect(async () => {
-    if(token === null){
-      history.push("/");
+    if (token === null) {
+      history.goBack();
     }
     try {
-      response = await axios.get(`http://localhost:5000/user/getrole`, config);
+      response = await axios.get(`https://grssprojectserver.herokuapp.com/user/getrole`, config);
       console.log(response.data);
-      if (response.data != "Admin") {
-        history.push("/");
+      if (response.data.role != "Admin") {
+        history.goBack();
       }
     } catch (error) {
       console.log(error);
@@ -42,7 +49,17 @@ const AddEvent = () => {
     setProgess(0);
     const file = e.target.files[0]; // accesing file
     console.log(file);
-    setFile(file); // storing file
+    const extension = file.split(".").pop();
+    if (
+      extension === "jpg" ||
+      extension === "jpeg" ||
+      extension === "bmp" ||
+      extension === "png"
+    ) {
+      setFile(file); // storing file
+    } else {
+      alert("Only Image File Allowed");
+    }
   };
   const [events, setEvents] = useState({});
   const valueChanged = (e) => {
@@ -66,7 +83,7 @@ const AddEvent = () => {
     };
     let response;
     try {
-      response = await axios.post("http://localhost:5000/event", formData, {
+      response = await axios.post("https://grssprojectserver.herokuapp.com/event", formData, {
         onUploadProgress: (ProgressEvent) => {
           let progress =
             Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +
@@ -84,74 +101,106 @@ const AddEvent = () => {
   return (
     <Styles>
       <Container className="main-bg text">
-      <div className="display-3 text-center" style={{ color: "#ECC30B", textDecoration: "underline" }}>Add Event</div>
-        <Form>
-          <Form.Group>
-            <Form.Label>Event Name : </Form.Label>
-            <Form.Control
-              type="text"
-              name="eventname"
-              value={eventname}
-              onChange={valueChanged}
-            ></Form.Control>
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Event Date : </Form.Label>
-            <Form.Control
-              type="date"
-              name="date"
-              value={date}
-              onChange={valueChanged}
-            ></Form.Control>
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Time : </Form.Label>
-            <Form.Control
-              type="time"
-              name="time"
-              value={time}
-              onChange={valueChanged}
-            ></Form.Control>
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>About : </Form.Label>
-            <Form.Control
-              type="text"
-              name="about"
-              value={about}
-              onChange={valueChanged}
-            ></Form.Control>
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Hosted By : </Form.Label>
-            <Form.Control
-              type="text"
-              name="hostedby"
-              value={hostedby}
-              onChange={valueChanged}
-            ></Form.Control>
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Registration Link : </Form.Label>
-            <Form.Control
-              type="text"
-              name="registrationlink"
-              value={registrationlink}
-              onChange={valueChanged}
-            ></Form.Control>
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Upload Event Image : </Form.Label>
-            <input
-              type="file"
-              accept="application/pdf"
-              ref={el}
-              onChange={handleChange}
-            />
-          </Form.Group>
-          <ProgressBar now={progress} label={`${progress}%`} />
-          <Button onClick={addevent}>Add Event</Button>
-        </Form>
+        <br></br>
+        <div className="content w3-panel w3-border w3-border-white">
+          <div
+            className="display-3 text-center"
+            style={{ color: "white", textDecoration: "underline" }}
+          >
+            Add Event
+          </div>
+          <br></br>
+          <div>
+            <Form>
+              <Form.Group>
+                <Form.Label>Event Name : </Form.Label>
+                <input
+                  class="w3-input w3-animate-input"
+                  type="text"
+                  name="eventname"
+                  value={eventname}
+                  onChange={valueChanged}
+                ></input>
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Event Date : </Form.Label>
+                <input
+                  class="w3-input w3-animate-input"
+                  type="date"
+                  name="date"
+                  value={date}
+                  onChange={valueChanged}
+                ></input>
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Time : </Form.Label>
+                <input
+                  class="w3-input w3-animate-input"
+                  type="time"
+                  name="time"
+                  value={time}
+                  onChange={valueChanged}
+                ></input>
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>About : </Form.Label>
+                <input
+                  class="w3-input w3-animate-input"
+                  type="text"
+                  name="about"
+                  value={about}
+                  onChange={valueChanged}
+                ></input>
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Hosted By : </Form.Label>
+                <input
+                  class="w3-input w3-animate-input"
+                  type="text"
+                  name="hostedby"
+                  value={hostedby}
+                  onChange={valueChanged}
+                ></input>
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Registration Link : </Form.Label>
+                <input
+                  class="w3-input w3-animate-input"
+                  type="text"
+                  name="registrationlink"
+                  value={registrationlink}
+                  onChange={valueChanged}
+                ></input>
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Upload Event Image : </Form.Label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  ref={el}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+              {checkFile && (
+                <ProgressBar now={progress} label={`${progress}%`} />
+              )}
+              <br></br>
+              <Button
+                variant="outline-light"
+                onClick={addevent}
+                style={{
+                  width: "100%",
+                  padding: "14px 28px",
+                  "font-size": "16px",
+                  cursor: "pointer",
+                }}
+              >
+                Add Event
+              </Button>
+            </Form>
+          </div>
+        </div>
+        <br></br>
       </Container>
     </Styles>
   );

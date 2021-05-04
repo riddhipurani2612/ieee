@@ -11,6 +11,11 @@ const Styles = styled.div`
   .text {
     color: #dbf1fb;
   }
+  .content {
+    max-width: 800px;
+    margin: auto;
+    padding: 50px;
+  }
 `;
 
 const SignUp = () => {
@@ -22,8 +27,19 @@ const SignUp = () => {
     setProgess(0);
     const file = e.target.files[0]; // accesing file
     console.log(file);
-    setFile(file); // storing file
-    setCheckFile(true);
+    const extension = file.split(".").pop();
+    if (
+      extension === "jpg" ||
+      extension === "jpeg" ||
+      extension === "bmp" ||
+      extension === "png"
+    ) {
+      setFile(file); // storing file
+      setCheckFile(true);
+    } else {
+      alert("Uploaded File type invalid");
+    }
+    
   };
   const [signupData, setSignupData] = useState({});
   const history = useHistory();
@@ -69,7 +85,7 @@ const SignUp = () => {
         };
         let response;
         try {
-          response = await axios.post("http://localhost:5000/user", formData, {
+          response = await axios.post("https://grssprojectserver.herokuapp.com/user", formData, {
             onUploadProgress: (ProgressEvent) => {
               let progress =
                 Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +
@@ -106,7 +122,7 @@ const SignUp = () => {
         let response;
         try {
           response = await axios.post(
-            "http://localhost:5000/user",
+            "https://grssprojectserver.herokuapp.com/user",
             data,
             config
           );
@@ -125,28 +141,36 @@ const SignUp = () => {
       <div className="main-bg text">
         <Container>
           <br></br>
-          <div className="display-4 text-center my-5">Sign Up</div>
-          <div>
+          <div
+            className="display-3 text-center"
+            style={{ color: "white", textDecoration: "underline" }}
+          >
+            {" "}
+            Sign Up
+          </div><br></br>
+          <div className="content w3-panel w3-border w3-border-white">
             <Form className="text">
               <Form.Group controlId="signup_fisrtname">
                 <Form.Label>First name</Form.Label>
-                <Form.Control
+                <input
                   type="text"
+                  class="w3-input"
                   value={first_name}
                   name="first_name"
                   placeholder="Enter first name"
                   onChange={signupValueChanged}
-                ></Form.Control>
+                ></input>
               </Form.Group>
               <Form.Group controlId="signup_lastname">
                 <Form.Label>Last name</Form.Label>
-                <Form.Control
+                <input
+                  class="w3-input w3-animate-input"
                   type="text"
                   value={last_name}
                   name="last_name"
                   placeholder="Enter last name"
                   onChange={signupValueChanged}
-                ></Form.Control>
+                ></input>
               </Form.Group>
               <Form.Group controlId="role">
                 <Form.Label>Choose role</Form.Label>
@@ -164,74 +188,81 @@ const SignUp = () => {
               </Form.Group>
               <Form.Group controlId="signup_contact">
                 <Form.Label>Contact No</Form.Label>
-                <Form.Control
+                <input
+                  class="w3-input w3-animate-input"
                   type="text"
                   value={contact}
                   name="contact"
                   placeholder="+91-**********"
                   onChange={signupValueChanged}
-                ></Form.Control>
+                ></input>
               </Form.Group>
               <Form.Group controlId="signup_email">
-                <Form.Label>Email</Form.Label>
-                <Form.Control
+                <Form.Label>Email</Form.Label><br></br>
+                <input
+                  class="w3-input w3-animate-input"
                   type="text"
                   value={email}
                   name="email"
                   placeholder="example@xzy.com"
                   onChange={signupValueChanged}
-                ></Form.Control>
+                ></input>
               </Form.Group>
               <Form.Group controlId="signup_workplace">
                 <Form.Label>Work_Place/University</Form.Label>
-                <Form.Control
+                <input
+                  class="w3-input w3-animate-input"
                   type="text"
                   value={workplace}
                   name="workplace"
                   placeholder="Enter work place"
                   onChange={signupValueChanged}
-                ></Form.Control>
+                ></input>
               </Form.Group>
               <Form.Group controlId="signup_designation">
                 <Form.Label>Designation</Form.Label>
-                <Form.Control
+                <input
+                  class="w3-input w3-animate-input"
                   type="text"
                   value={designation}
                   name="designation"
                   placeholder="Enter designation"
                   onChange={signupValueChanged}
-                ></Form.Control>
+                ></input>
               </Form.Group>
               <Form.Group>
-                <Form.Label>More about you</Form.Label>
-                <Form.Control
+                <Form.Label>Short Biography</Form.Label>
+                <input
+                  class="w3-input w3-animate-input"
                   as="textarea"
                   row="4"
                   name="about"
                   value={about}
                   placeholder="Tell us more about you"
                   onChange={signupValueChanged}
-                ></Form.Control>
+                ></input>
               </Form.Group>
               <Form.Group controlId="signup_password">
                 <Form.Label>Password</Form.Label>
-                <Form.Control
+                <input
+                  class="w3-input w3-animate-input"
                   type="password"
                   value={password}
                   name="password"
                   placeholder="Enter Password"
                   onChange={signupValueChanged}
-                ></Form.Control>
+                ></input>
               </Form.Group>
               <Form.Group controlId="signup_confirmpassword">
                 <Form.Label>Confirm Password</Form.Label>
-                <Form.Control
+                <input
+                  class="w3-input w3-animate-input"
                   type="password"
                   value={confirmpassword}
                   name="confirmpassword"
                   placeholder="Enter Password"
                   onChange={signupValueChanged}
-                ></Form.Control>
+                ></input>
               </Form.Group>
               <Form.Group>
                 <Form.Label>Upload Profile Picture : </Form.Label>
@@ -246,7 +277,18 @@ const SignUp = () => {
               {checkFile && (
                 <ProgressBar now={progress} label={`${progress}%`} />
               )}
-              <Button onClick={submit}>Submit</Button>
+              <Button
+              onClick={submit}
+              variant="outline-light"
+              style={{
+                "width": "100%",
+                "padding": "14px 28px",
+                "font-size": "20px",
+                "cursor": "pointer",
+              }}
+            >
+              Sign Up
+            </Button>
             </Form>
           </div>
           <br></br>

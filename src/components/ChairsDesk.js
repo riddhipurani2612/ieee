@@ -26,7 +26,9 @@ const Styles = styled.div`
 const ChairsDesk = () => {
   return (
     <Styles>
-        <Container className="main-bg text">
+      <Container className="main-bg text">
+        <br></br>
+        <div className="w3-panel w3-border w3-border-white">
           <div
             className="display-3 text-center"
             style={{ color: "white", textDecoration: "underline" }}
@@ -135,7 +137,9 @@ const ChairsDesk = () => {
               of Chapter.
             </p>
           </div>
-        </Container>
+        </div>
+        <br></br>
+      </Container>
     </Styles>
   );
 };

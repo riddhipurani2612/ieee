@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Button, Container } from "react-bootstrap";
+import { Row, Col, Button, Container, Card } from "react-bootstrap";
 import styled from "styled-components";
 import AboutView from "../components/AboutView";
 import "animate.css/animate.min.css";
@@ -10,6 +10,14 @@ const Styles = styled.div`
   }
   .text {
     color: #dbf1fb;
+  }
+  .wrap {
+    overflow-wrap: break-word;
+    spacing: 2rem;
+  }
+  .custom-text {
+    font-size: 140%;
+    line-height: 2rem;
   }
 `;
 const MemberView = (props) => {
@@ -30,22 +38,33 @@ const MemberView = (props) => {
         name={name}
         about={props.about}
       ></AboutView>
-      <b>
-        {props.first_name} {props.last_name}
-      </b>
-      <br></br>
-      {props.designation} <br></br>
-      {props.workplace}
-      <br></br>
-      {props.contact} <br></br>
-      {props.email}<br></br>
-      {viewReadMode && <Button
-        variant="outline-light"
-        onClick={() => setModal(true)}
-        title="Feedback"
-      >Know More</Button>}
-      <br></br>
-      <br></br>
+      <Card>
+        <Card.Img variant="top" src={props.profile} />
+        <Card.Body>
+          <Card.Title>
+            {props.first_name} {props.last_name}
+          </Card.Title>
+          <Card.Text>
+            {props.designation} <br></br>
+            {props.workplace}
+            <br></br>
+            {props.contact} <br></br>
+            {props.email}
+            <br></br>
+          </Card.Text>
+          {viewReadMode && (
+            <Card.Footer>
+              <Button
+                variant="outline-light"
+                onClick={() => setModal(true)}
+                title="Feedback"
+              >
+                Know More
+              </Button>
+            </Card.Footer>
+          )}
+        </Card.Body>
+      </Card>
     </Styles>
   );
 };

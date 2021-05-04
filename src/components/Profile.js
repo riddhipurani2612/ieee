@@ -1,21 +1,31 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { Form, Container, Button, ProgressBar } from "react-bootstrap";
+import {
+  Form,
+  Container,
+  Button,
+  ProgressBar,
+  Row,
+  Col,
+} from "react-bootstrap";
 import PasswordChange from "./PasswordChange";
 import { useHistory } from "react-router";
 const Styles = styled.div`
   .main-bg {
     background-color: #084c61;
-    margin-top: -48px;
   }
   .text {
     color: #dbf1fb;
   }
-
+  .content {
+    max-width: 700px;
+    margin: auto;
+    padding: 50px;
+  }
 `;
 const Profile = (e) => {
-  const history=useHistory();
+  const history = useHistory();
   const [file, setFile] = useState("");
   const [checkFile, setCheckFile] = useState(false);
   const [progress, setProgess] = useState(0);
@@ -24,8 +34,18 @@ const Profile = (e) => {
     setProgess(0);
     const file = e.target.files[0]; // accesing file
     console.log(file);
-    setFile(file); // storing file
-    setCheckFile(true);
+    const extension = file.split(".").pop();
+    if (
+      extension === "jpg" ||
+      extension === "jpeg" ||
+      extension === "bmp" ||
+      extension === "png"
+    ) {
+      setFile(file); // storing file
+      setCheckFile(true);
+    } else {
+      alert("Only Image File Allowed");
+    }
   };
   const [editable, setEditable] = useState(true);
   const clicked = () => {
@@ -45,11 +65,20 @@ const Profile = (e) => {
     workplace,
     designation,
     about,
+    profile,
   } = user;
 
   const onChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
+  const links = (temp) => {
+    if (temp === undefined) {
+      return "undefined";
+    } else {
+      return "https://grssprojectserver.herokuapp.com/" + temp;
+    }
+  };
+
   const updateUser = async (e) => {
     const token = localStorage.getItem("token");
     if (checkFile) {
@@ -75,7 +104,7 @@ const Profile = (e) => {
 
       try {
         response = await axios.patch(
-          `http://localhost:5000/user`,
+          `https://grssprojectserver.herokuapp.com/user`,
           formData,
           config,
           {
@@ -88,9 +117,6 @@ const Profile = (e) => {
           }
         );
         console.log(response.data);
-        if (response.status == 200) {
-          setEditable(false);
-        }
       } catch (err) {
         console.log(err.request);
         console.log(err.response);
@@ -107,7 +133,7 @@ const Profile = (e) => {
       try {
         console.log(user);
         response = await axios.patch(
-          `http://localhost:5000/user`,
+          `https://grssprojectserver.herokuapp.com/user`,
           user,
           config
         );
@@ -119,7 +145,8 @@ const Profile = (e) => {
         console.log(err.request);
       }
     }
-    history.push("/profile");
+    setEditable(false);
+    window.location.reload(false);
   };
   const token = localStorage.getItem("token");
   let response;
@@ -131,9 +158,12 @@ const Profile = (e) => {
   };
   useEffect(async () => {
     try {
-      response = await axios.get(`http://localhost:5000/user`, config);
+      response = await axios.get(`https://grssprojectserver.herokuapp.com/user`, config);
       setUser(response.data);
       console.log(response.data);
+      if (response.data.role === "Admin") {
+        history.push("/");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -147,99 +177,127 @@ const Profile = (e) => {
         onHide={() => setPasswordModal(false)}
       />
       <Container className="main-bg text">
-        <div className="display-4 text-center my-5">
-          Profile
-          <Button onClick={clicked} variant="outline-light" className="mt-1">
-            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-          </Button>
-          <Button
-            className="mt-5"
-            variant="outline-light"
-            onClick={() => setPasswordModal(true)}
-            title="Feedback"
-          >
-            Change Password
-          </Button>
+        <br></br>
+        <div className="content w3-panel w3-border w3-border-white">
+          <Row>
+            <Col xs={{ span: 12, order: 1 }} md={{ span: 6, order: 1 }}>
+              {links(profile) != "undefined" ? (
+                <div>
+                  <img
+                    src={links(profile)}
+                    alt={profile}
+                    style={{ "border-radius": "50%" }}
+                    height="100rem"
+                    width="100rem"
+                  ></img>
+                </div>
+              ) : (
+                <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+              )}
+
+              <h2 className="my-4 mx-3">
+                {first_name} {last_name}
+              </h2>
+            </Col>
+            <Col xs={{ span: 12, order: 2 }} md={{ span: 6, order: 2 }}>
+              <Button
+                onClick={clicked}
+                variant="outline-light"
+                style={{ float: "right", "margin-top": "2rem" }}
+              >
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+              </Button><br></br><br></br>
+              <Button
+                style={{ float: "right", "margin-top": "1.5rem", "margin-right" : "-4.6rem" }}
+                variant="outline-light"
+                onClick={() => setPasswordModal(true)}
+                title="Change Password"
+              >
+                Change Password
+              </Button>
+            </Col>
+          </Row>
+
+          <div>
+            <Form>
+              <Form.Group>
+                <Form.Label>About</Form.Label>
+                <input
+                  className="w3-input w3-animate-input"
+                  type="text"
+                  name="about"
+                  value={about}
+                  disabled={editable}
+                  onChange={(e) => {
+                    setUser({ ...user, about: e.target.value });
+                  }}
+                ></input>
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Contact</Form.Label>
+                <input
+                  class="w3-input w3-animate-input"
+                  type="text"
+                  name="contact"
+                  disabled={editable}
+                  value={contact}
+                  onChange={(e) => {
+                    setUser({ ...user, contact: e.target.value });
+                  }}
+                ></input>
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Work Place</Form.Label>
+                <input
+                  class="w3-input w3-animate-input"
+                  type="text"
+                  disabled={editable}
+                  value={workplace}
+                  onChange={(e) => {
+                    setUser({ ...user, workplace: e.target.value });
+                  }}
+                ></input>
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Designation</Form.Label>
+                <input
+                  class="w3-input w3-animate-input"
+                  type="text"
+                  name="designation"
+                  disabled={editable}
+                  value={designation}
+                  onChange={(e) => {
+                    setUser({ ...user, designation: e.target.value });
+                  }}
+                ></input>
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Upload Profile Picture : </Form.Label>
+                <br></br>
+                <input
+                  class="w3-input w3-animate-input"
+                  type="file"
+                  accept="image*"
+                  disabled={editable}
+                  ref={el}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+              {checkFile && (
+                <ProgressBar now={progress} label={`${progress}%`} />
+              )}
+              <Button
+                onClick={updateUser}
+                variant="outline-light"
+                className="mt-5"
+                disabled={editable}
+              >
+                Update
+              </Button>
+            </Form>
+          </div>
         </div>
-        <Form>
-          <Form.Group>
-            <Form.Label>About</Form.Label>
-            <input
-              class="w3-input w3-animate-input"
-              type="text"
-              name="about"
-              value={about}
-              disabled={editable}
-              onChange={(e) => {
-                setUser({ ...user, about: e.target.value });
-              }}
-            ></input>
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Contact</Form.Label>
-            <input
-              class="w3-input w3-animate-input"
-              type="text"
-              name="contact"
-              disabled={editable}
-              value={contact}
-              onChange={(e) => {
-                setUser({ ...user, contact: e.target.value });
-              }}
-            ></input>
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Email</Form.Label>
-            <input
-              class="w3-input w3-animate-input"
-              type="text"
-              disabled={editable}
-              value={email}
-              onChange={(e) => {
-                setUser({ ...user, email: e.target.value });
-              }}
-            ></input>
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Work Place</Form.Label>
-            <input
-              class="w3-input w3-animate-input"
-              type="text"
-             disabled={editable}
-              value={workplace}
-              onChange={(e) => {
-                setUser({ ...user, workplace: e.target.value });
-              }}
-            ></input>
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Designation</Form.Label>
-            <input
-              class="w3-input w3-animate-input"
-              type="text"
-             name="designation"
-              disabled={editable}
-              value={designation}
-              onChange={(e) => {
-                setUser({ ...user, designation: e.target.value });
-              }}
-            ></input>
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Upload Profile Picture : </Form.Label>
-            <br></br>
-            <input
-               class="w3-input w3-animate-input"
-              type="file"
-              accept="image*"
-              disabled={editable}
-              ref={el}
-              onChange={handleChange}
-            />
-          </Form.Group>
-          {checkFile && <ProgressBar now={progress} label={`${progress}%`} />}
-          <Button onClick={updateUser} variant="outline-light" className="mt-5">Update</Button>
-        </Form>
+        <br></br>
       </Container>
     </Styles>
   );

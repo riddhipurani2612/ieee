@@ -33,7 +33,7 @@ const Members = () => {
             <Tab eventKey="foundermembers" title="Founder">
               <FounderMembers />
             </Tab>
-            <Tab eventKey="prodessionalmembers" title="Prodessional">
+            <Tab eventKey="prodessionalmembers" title="Professional">
               <ProfessionalMembers />
             </Tab>
             <Tab eventKey="studentmembers" title="Student">
