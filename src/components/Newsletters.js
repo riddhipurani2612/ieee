@@ -58,7 +58,7 @@ const Newsletter = () => {
         },
       };
       response = await axios.get(
-        `https://grssprojectserver.herokuapp.com/techMaterial/materials/${materialtype1}`,
+        `http://localhost:5000/techMaterial/materials/${materialtype1}`,
         config
       );
       setMaterial(response.data);

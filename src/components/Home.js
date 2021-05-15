@@ -120,7 +120,7 @@ const Home = (props) => {
     };
     try {
       response = await axios.get(
-        "https://grssprojectserver.herokuapp.com/event/upcoming",
+        "http://localhost:5000/event/upcoming",
         config
       );
       if (response.data.length) {

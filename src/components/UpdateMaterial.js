@@ -53,7 +53,7 @@ const UpdateMaterial = (props) => {
         let response;
         try {
           response = await axios.patch(
-            `https://grssprojectserver.herokuapp.com/techMaterial/${localStorage.getItem(
+            `http://localhost:5000/techMaterial/${localStorage.getItem(
               "materialIdUpdate"
             )}`,
             formData,
@@ -92,7 +92,7 @@ const UpdateMaterial = (props) => {
         let response;
         try {
           response = await axios.patch(
-            `https://grssprojectserver.herokuapp.com/techMaterial/${localStorage.getItem(
+            `http://localhost:5000/techMaterial/${localStorage.getItem(
               "materialIdUpdate"
             )}`,
             data,
@@ -122,7 +122,7 @@ const UpdateMaterial = (props) => {
       };
       try {
         response = await axios.get(
-          `https://grssprojectserver.herokuapp.com/techMaterial/${localStorage.getItem(
+          `http://localhost:5000/techMaterial/${localStorage.getItem(
             "materialIdUpdate"
           )}`,
           config

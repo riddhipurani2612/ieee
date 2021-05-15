@@ -30,7 +30,7 @@ const ExpertLecture = () => {
     const materialtype = "Expert Lecture Program";
     try {
       response = await axios.get(
-        `https://grssprojectserver.herokuapp.com/techMaterial/materials/${materialtype}`,
+        `http://localhost:5000/techMaterial/materials/${materialtype}`,
         config
       );
       setMaterial(response.data);
@@ -45,7 +45,7 @@ const ExpertLecture = () => {
     if (temp === undefined) {
       return "undefined";
     } else {
-      return "https://grssprojectserver.herokuapp.com/" + temp;
+      return "http://localhost:5000/" + temp;
     }
   };
   return (

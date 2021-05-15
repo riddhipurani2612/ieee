@@ -59,7 +59,7 @@ const AddMaterial = () => {
       let response;
       try {
         response = await axios.post(
-          "https://grssprojectserver.herokuapp.com/techMaterial",
+          "http://localhost:5000/techMaterial",
           formData,
           config,
           {
@@ -98,7 +98,7 @@ const AddMaterial = () => {
       let response;
       try {
         response = await axios.post(
-          "https://grssprojectserver.herokuapp.com/techMaterial",
+          "http://localhost:5000/techMaterial",
           data,
           config
         );
@@ -123,12 +123,12 @@ const AddMaterial = () => {
     }
     try {
       const response = await axios.get(
-        `https://grssprojectserver.herokuapp.com/user/getrole`,
+        `http://localhost:5000/user/getrole`,
         config
       );
       console.log(response.data);
-      if (!response.data.role.includes("Member")) {
-        history.push("/");
+      if (response.data.role.includes("Student")) {
+        history.goBack();
       }
     } catch (error) {
       console.log(error);

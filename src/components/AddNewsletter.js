@@ -31,7 +31,7 @@ const AddMaterial = () => {
       history.push("/");
     }
     try {
-      response = await axios.get(`https://grssprojectserver.herokuapp.com/user/getrole`, config);
+      response = await axios.get(`http://localhost:5000/user/getrole`, config);
       console.log(response.data);
       if (response.data === "Student") {
         history.push("/");
@@ -76,7 +76,7 @@ const AddMaterial = () => {
       let response;
       try {
         response = await axios.post(
-          "https://grssprojectserver.herokuapp.com/techMaterial",
+          "http://localhost:5000/techMaterial",
           formData,
           config,
           {
@@ -109,7 +109,7 @@ const AddMaterial = () => {
       let response;
       try {
         response = await axios.post(
-          "https://grssprojectserver.herokuapp.com/techMaterial",
+          "http://localhost:5000/techMaterial",
           data,
           config
         );

@@ -44,7 +44,7 @@ const MeetingView = () => {
         },
       };
       let response = await axios.get(
-        `https://grssprojectserver.herokuapp.com/user/getrole`,
+        `http://localhost:5000/user/getrole`,
         config
       );
       setUser(response.data);
@@ -68,7 +68,7 @@ const MeetingView = () => {
             "Content-Type": "application/json",
           },
         };
-        response = await axios.get("https://grssprojectserver.herokuapp.com/meeting", config);
+        response = await axios.get("http://localhost:5000/meeting", config);
         setMeetings(response.data);
         console.log(meetings);
         console.log(response.data);
@@ -81,7 +81,7 @@ const MeetingView = () => {
     if (temp === undefined) {
       return "undefined";
     } else {
-      return "https://grssprojectserver.herokuapp.com/" + temp;
+      return "http://localhost:5000/" + temp;
     }
   };
   return (

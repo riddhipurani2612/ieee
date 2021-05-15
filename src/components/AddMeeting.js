@@ -33,7 +33,7 @@ const AddMeeting = () => {
     }
     try {
       let response = await axios.get(
-        `https://grssprojectserver.herokuapp.com/user/getrole`,
+        `http://localhost:5000/user/getrole`,
         config
       );
       console.log(response.data);
@@ -86,7 +86,7 @@ const AddMeeting = () => {
 
     let response;
     try {
-      response = await axios.post("https://grssprojectserver.herokuapp.com/meeting", data, {
+      response = await axios.post("http://localhost:5000/meeting", data, {
         onUploadProgress: (ProgressEvent) => {
           let progress =
             Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +

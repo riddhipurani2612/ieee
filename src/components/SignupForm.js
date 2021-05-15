@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Button, Container, Form, ProgressBar } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
@@ -6,7 +6,6 @@ import { useHistory } from "react-router-dom";
 const Styles = styled.div`
   .main-bg {
     background-color: #084c61;
-    margin-top: -23px;
   }
   .text {
     color: #dbf1fb;
@@ -27,7 +26,7 @@ const SignUp = () => {
     setProgess(0);
     const file = e.target.files[0]; // accesing file
     console.log(file);
-    const extension = file.split(".").pop();
+    const extension = file.split(".").pop() === "jpg";
     if (
       extension === "jpg" ||
       extension === "jpeg" ||
@@ -39,13 +38,38 @@ const SignUp = () => {
     } else {
       alert("Uploaded File type invalid");
     }
-    
   };
   const [signupData, setSignupData] = useState({});
   const history = useHistory();
   const signupValueChanged = (e) => {
     setSignupData({ ...signupData, [e.target.name]: e.target.value });
   };
+  const [header, setHeader] = useState("");
+  useEffect(async () => {
+    const token = localStorage.getItem("token");
+    let config = {
+      headers: {
+        "Content-Type": "application/json",
+        "x-auth-token": token,
+      },
+    };
+    if (token === null) {
+      setHeader("Sign Up");
+    } else {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/user/getrole`,
+          config
+        );
+        console.log(response.data);
+        if (response.data.role.includes("Admin")) {
+          setHeader("Add Member");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, []);
 
   const {
     first_name,
@@ -85,7 +109,7 @@ const SignUp = () => {
         };
         let response;
         try {
-          response = await axios.post("https://grssprojectserver.herokuapp.com/user", formData, {
+          response = await axios.post("http://localhost:5000/user", formData, {
             onUploadProgress: (ProgressEvent) => {
               let progress =
                 Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +
@@ -122,7 +146,7 @@ const SignUp = () => {
         let response;
         try {
           response = await axios.post(
-            "https://grssprojectserver.herokuapp.com/user",
+            "http://localhost:5000/user",
             data,
             config
           );
@@ -145,9 +169,9 @@ const SignUp = () => {
             className="display-3 text-center"
             style={{ color: "white", textDecoration: "underline" }}
           >
-            {" "}
-            Sign Up
-          </div><br></br>
+            {header}
+          </div>
+          <br></br>
           <div className="content w3-panel w3-border w3-border-white">
             <Form className="text">
               <Form.Group controlId="signup_fisrtname">
@@ -198,7 +222,8 @@ const SignUp = () => {
                 ></input>
               </Form.Group>
               <Form.Group controlId="signup_email">
-                <Form.Label>Email</Form.Label><br></br>
+                <Form.Label>Email</Form.Label>
+                <br></br>
                 <input
                   class="w3-input w3-animate-input"
                   type="text"
@@ -278,17 +303,17 @@ const SignUp = () => {
                 <ProgressBar now={progress} label={`${progress}%`} />
               )}
               <Button
-              onClick={submit}
-              variant="outline-light"
-              style={{
-                "width": "100%",
-                "padding": "14px 28px",
-                "font-size": "20px",
-                "cursor": "pointer",
-              }}
-            >
-              Sign Up
-            </Button>
+                onClick={submit}
+                variant="outline-light"
+                style={{
+                  width: "100%",
+                  padding: "14px 28px",
+                  "font-size": "20px",
+                  cursor: "pointer",
+                }}
+              >
+                Sign Up
+              </Button>
             </Form>
           </div>
           <br></br>

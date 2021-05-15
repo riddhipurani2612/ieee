@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { CardGroup, Container, Row, Col } from "react-bootstrap";
+import { ListGroup, Container, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import styled from "styled-components";
 import MemberView from "./MemberView";
@@ -39,7 +39,7 @@ const FounderMembers = () => {
     const role = "Founder Member";
     try {
       response = await axios.get(
-        `https://grssprojectserver.herokuapp.com/user/getmembers/${role}`,
+        `http://localhost:5000/user/getmembers/${role}`,
         config
       );
       setMembers(response.data);
@@ -52,26 +52,24 @@ const FounderMembers = () => {
     if (temp === undefined) {
       return "undefined";
     } else {
-      return "https://grssprojectserver.herokuapp.com/" + temp;
+      return "http://localhost:5000/" + temp;
     }
   };
 
   return (
     <Styles>
       <Container className="main-bg text">
-        <CardGroup>
-          {members.map((memberObj, index) => (
-            <MemberView
-              first_name={memberObj.first_name}
-              last_name={memberObj.last_name}
-              workplace={memberObj.workplace}
-              contact={memberObj.contact}
-              email={memberObj.email}
-              about={memberObj.about}
-              profile={links(memberObj.profile)}
-            ></MemberView>
-          ))}
-        </CardGroup>
+        {members.map((memberObj, index) => (
+          <MemberView
+            first_name={memberObj.first_name}
+            last_name={memberObj.last_name}
+            workplace={memberObj.workplace}
+            contact={memberObj.contact}
+            email={memberObj.email}
+            about={memberObj.about}
+            profile={links(memberObj.profile)}
+          ></MemberView>
+        ))}
       </Container>
     </Styles>
   );

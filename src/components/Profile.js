@@ -34,7 +34,7 @@ const Profile = (e) => {
     setProgess(0);
     const file = e.target.files[0]; // accesing file
     console.log(file);
-    const extension = file.split(".").pop();
+    const extension = file.split(".").pop() === "jpg";
     if (
       extension === "jpg" ||
       extension === "jpeg" ||
@@ -75,7 +75,7 @@ const Profile = (e) => {
     if (temp === undefined) {
       return "undefined";
     } else {
-      return "https://grssprojectserver.herokuapp.com/" + temp;
+      return "http://localhost:5000/" + temp;
     }
   };
 
@@ -104,7 +104,7 @@ const Profile = (e) => {
 
       try {
         response = await axios.patch(
-          `https://grssprojectserver.herokuapp.com/user`,
+          `http://localhost:5000/user`,
           formData,
           config,
           {
@@ -133,7 +133,7 @@ const Profile = (e) => {
       try {
         console.log(user);
         response = await axios.patch(
-          `https://grssprojectserver.herokuapp.com/user`,
+          `http://localhost:5000/user`,
           user,
           config
         );
@@ -158,7 +158,7 @@ const Profile = (e) => {
   };
   useEffect(async () => {
     try {
-      response = await axios.get(`https://grssprojectserver.herokuapp.com/user`, config);
+      response = await axios.get(`http://localhost:5000/user`, config);
       setUser(response.data);
       console.log(response.data);
       if (response.data.role === "Admin") {

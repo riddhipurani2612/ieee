@@ -38,7 +38,7 @@ const ProfessionalMembers = () => {
     const role = "Professional Member";
     try {
       response = await axios.get(
-        `https://grssprojectserver.herokuapp.com/user/getmembers/${role}`,
+        `http://localhost:5000/user/getmembers/${role}`,
         config
       );
       setMembers(response.data);
@@ -56,7 +56,7 @@ const ProfessionalMembers = () => {
     if (temp === undefined) {
       return "undefined";
     } else {
-      return "https://grssprojectserver.herokuapp.com/" + temp;
+      return "http://localhost:5000/" + temp;
     }
   };
 

@@ -37,7 +37,7 @@ const PasswordChange = (props) => {
       };
       try {
         response = await axios.post(
-          `https://grssprojectserver.herokuapp.com/user/changepassword`,
+          `http://localhost:5000/user/changepassword`,
           data,
           config
         );

@@ -35,7 +35,7 @@ const DetailedView = () => {
     if (temp === undefined) {
       return "undefined";
     } else {
-      return "https://grssprojectserver.herokuapp.com/" + temp;
+      return "http://localhost:5000/" + temp;
     }
   };
   useEffect(async () => {
@@ -49,7 +49,7 @@ const DetailedView = () => {
       };
       try {
         response = await axios.get(
-          `https://grssprojectserver.herokuapp.com/techMaterial/${materialid}`,
+          `http://localhost:5000/techMaterial/${materialid}`,
           config
         );
         setMaterial(response.data);

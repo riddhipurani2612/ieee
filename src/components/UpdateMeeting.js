@@ -66,7 +66,7 @@ const UpdateMeeting = () => {
         },
       };
       response = await axios.patch(
-        `https://grssprojectserver.herokuapp.com/meeting/${localStorage.getItem(
+        `http://localhost:5000/meeting/${localStorage.getItem(
           "meetingUpdate"
         )}`,
         data,
@@ -100,7 +100,7 @@ const UpdateMeeting = () => {
       };
       try {
         response = await axios.get(
-          `https://grssprojectserver.herokuapp.com/meeting/${localStorage.getItem(
+          `http://localhost:5000/meeting/${localStorage.getItem(
             "meetingUpdate"
           )}`,
           config

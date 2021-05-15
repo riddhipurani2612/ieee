@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Button, Container, Card } from "react-bootstrap";
+import { Row, Col, Button, Container } from "react-bootstrap";
 import styled from "styled-components";
 import AboutView from "../components/AboutView";
 import "animate.css/animate.min.css";
@@ -38,33 +38,41 @@ const MemberView = (props) => {
         name={name}
         about={props.about}
       ></AboutView>
-      <Card>
-        <Card.Img variant="top" src={props.profile} />
-        <Card.Body>
-          <Card.Title>
+
+      <Row className="mx-5">
+        <div className="my-3"> </div>
+        <Col xs={{ span: 12, order: 2 }} md={{ span: 6, order: 1 }}>
+          <img
+            src={props.profile}
+            style={{ marginRight: "2rem", marginBottom: "2rem" }}
+            height="250rem"
+            width="200rem"
+            alt={props.profile}
+          />
+        </Col>
+        <Col xs={{ span: 12, order: 1 }} md={{ span: 6, order: 2 }}>
+          <b>
             {props.first_name} {props.last_name}
-          </Card.Title>
-          <Card.Text>
-            {props.designation} <br></br>
-            {props.workplace}
-            <br></br>
-            {props.contact} <br></br>
-            {props.email}
-            <br></br>
-          </Card.Text>
+          </b>
+          <br></br>
+          {props.designation} <br></br>
+          {props.workplace}
+          <br></br>
+          {props.contact} <br></br>
+          {props.email}
+          <br></br>
           {viewReadMode && (
-            <Card.Footer>
-              <Button
-                variant="outline-light"
-                onClick={() => setModal(true)}
-                title="Feedback"
-              >
-                Know More
-              </Button>
-            </Card.Footer>
+            <Button
+              variant="outline-light"
+              onClick={() => setModal(true)}
+              title="Feedback"
+            >
+              Know More
+            </Button>
           )}
-        </Card.Body>
-      </Card>
+        </Col>
+      </Row>
+      <hr></hr>
     </Styles>
   );
 };

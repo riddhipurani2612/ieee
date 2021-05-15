@@ -38,11 +38,11 @@ const Login = (props) => {
     };
     let response;
     try {
-      response = await axios.put("https://grssprojectserver.herokuapp.com/user", data, config);
+      response = await axios.put("http://localhost:5000/user", data, config);
       console.log(response.data);
       localStorage.setItem("token", response.data.token);
       props.setLogin(true);
-      history.push("/");
+      history.goBack();
     } catch (error) {
       console.log(error);
     }

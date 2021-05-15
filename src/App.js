@@ -2,6 +2,7 @@ import Footer from "./components/Footer";
 import Home from "./components/Home";
 import Navigation from "./components/Navigation";
 import Login from "./components/LoginForm";
+import axios from "axios";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ChairsDesk from "./components/ChairsDesk";
 import AboutUs from "./components/About";
@@ -27,15 +28,12 @@ import DetailedView from "./components/DetailedView";
 import UpdateMaterial from "./components/UpdateMaterial";
 import MeetingView from "./components/MeetingView";
 import UpdateMeeting from "./components/UpdateMeeting";
+import Dashboard from "./components/Dashboard";
+import NavigationTemp from "./components/NavigationTemp";
 function App() {
   console.log("App");
   const [isLoggedIn, setLoggedIn] = useState(false);
   const setLogin = (state) => setLoggedIn(state);
-  useEffect(() => {
-    if (localStorage.getItem("token") === null) {
-      setLoggedIn(false);
-    }
-  }, [isLoggedIn]);
   return (
     <Router>
       <div className="App">
@@ -43,6 +41,7 @@ function App() {
           isLoggedIn={isLoggedIn}
           setLogin={(state) => setLogin(state)}
         />
+
         <Switch>
           <Route path="/" exact component={Home} />
           <Route
@@ -55,7 +54,7 @@ function App() {
             )}
           />
           <Route path="/addmaterial" component={AddMaterial} />
-          <Route path="/updatematerial" component={UpdateMaterial}/>
+          <Route path="/updatematerial" component={UpdateMaterial} />
           <Route path="/addevent" component={AddEvent} />
           <Route path="/members" component={Members} />
           <Route path="/chairs-desk" component={ChairsDesk} />
@@ -66,21 +65,23 @@ function App() {
           <Route path="/publication" component={Publication} />
           <Route path="/dlp" component={DLP} />
           <Route path="/signup" component={SignUp} />
+          <Route path="/addmember" component={SignUp} />
           <Route path="/sar" component={SAR} />
           <Route path="/profile" component={Profile} />
           <Route path="/faq" component={FAQ} />
-          <Route path="/addmeeting" component={AddMeeting}/>
+          <Route path="/addmeeting" component={AddMeeting} />
           <Route path="/file" component={FileUpload} />
           <Route path="/addnewsletter" component={AddNewsletter} />
-          <Route path="/expertlecture" component={ExpertLecture}/> 
-          <Route path="/detailedview" component={DetailedView}/>
+          <Route path="/expertlecture" component={ExpertLecture} />
+          <Route path="/detailedview" component={DetailedView} />
+          <Route path="/dashboard" component={Dashboard} />
           <Route
             path="/logout"
             component={LogoutComp}
             setLogin={(state) => setLogin(state)}
           />
-          <Route path="/viewmeeting" component={MeetingView}/>
-          <Route path="/updatemeeting" component={UpdateMeeting}/>
+          <Route path="/viewmeeting" component={MeetingView} />
+          <Route path="/updatemeeting" component={UpdateMeeting} />
         </Switch>
         <Footer />
       </div>

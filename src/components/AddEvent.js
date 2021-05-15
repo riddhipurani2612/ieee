@@ -33,7 +33,7 @@ const AddEvent = () => {
       history.goBack();
     }
     try {
-      response = await axios.get(`https://grssprojectserver.herokuapp.com/user/getrole`, config);
+      response = await axios.get(`http://localhost:5000/user/getrole`, config);
       console.log(response.data);
       if (response.data.role != "Admin") {
         history.goBack();
@@ -83,7 +83,7 @@ const AddEvent = () => {
     };
     let response;
     try {
-      response = await axios.post("https://grssprojectserver.herokuapp.com/event", formData, {
+      response = await axios.post("http://localhost:5000/event", formData, {
         onUploadProgress: (ProgressEvent) => {
           let progress =
             Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +
