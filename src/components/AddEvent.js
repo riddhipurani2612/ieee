@@ -2,24 +2,18 @@ import React, { useState, useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
-import { Form, Button, Container, ProgressBar } from "react-bootstrap";
-const Styles = styled.div`
-  .main-bg {
-    background-color: #084c61;
-  }
-  .text {
-    color: #dbf1fb;
-  }
-  .content {
-    max-width: 500px;
-    margin: auto;
-    padding: 50px;
-  }
-`;
+import {
+  Form,
+  Button,
+  Container,
+  ProgressBar,
+  Row,
+  Col,
+} from "react-bootstrap";
+const Styles = styled.div``;
 const AddEvent = () => {
   let response;
   const [checkFile, setCheckFile] = useState(false);
-
   const history = useHistory();
   const token = localStorage.getItem("token");
   let config = {
@@ -49,7 +43,7 @@ const AddEvent = () => {
     setProgess(0);
     const file = e.target.files[0]; // accesing file
     console.log(file);
-    const extension = file.split(".").pop();
+    const extension = file.split(".");
     if (
       extension === "jpg" ||
       extension === "jpeg" ||
@@ -70,7 +64,7 @@ const AddEvent = () => {
     e.preventDefault();
     let formData = new FormData();
     formData.append("eventname", eventname);
-    formData.append("date", date);
+    formData.append("date", date.toString());
     formData.append("time", time);
     formData.append("about", about);
     formData.append("registrationlink", registrationlink);
@@ -100,108 +94,105 @@ const AddEvent = () => {
   };
   return (
     <Styles>
-      <Container className="main-bg text">
-        <br></br>
-        <div className="content w3-panel w3-border w3-border-white">
-          <div
-            className="display-3 text-center"
-            style={{ color: "white", textDecoration: "underline" }}
-          >
-            Add Event
+      <div className="main-bg">
+        <Container>
+          <br></br>
+          <div className="content w3-panel w3-border w3-border-white boxshadow">
+            <div className="header-1">Add Event</div>
+            <br></br>
+            <div className="content">
+              <Form>
+                <Form.Group>
+                  <Form.Label className="form-label">Event Name : </Form.Label>
+                  <input
+                    class="w3-input w3-animate-input"
+                    type="text"
+                    name="eventname"
+                    value={eventname}
+                    onChange={valueChanged}
+                  ></input>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Event Date : </Form.Label>
+                  <input
+                    class="w3-input w3-animate-input"
+                    type="date"
+                    name="date"
+                    value={date}
+                    onChange={valueChanged}
+                  ></input>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Time : </Form.Label>
+                  <input
+                    class="w3-input w3-animate-input"
+                    type="time"
+                    name="time"
+                    value={time}
+                    onChange={valueChanged}
+                  ></input>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>About : </Form.Label>
+                  <input
+                    class="w3-input w3-animate-input"
+                    type="text"
+                    name="about"
+                    value={about}
+                    onChange={valueChanged}
+                  ></input>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Hosted By : </Form.Label>
+                  <input
+                    class="w3-input w3-animate-input"
+                    type="text"
+                    name="hostedby"
+                    value={hostedby}
+                    onChange={valueChanged}
+                  ></input>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Registration Link : </Form.Label>
+                  <input
+                    class="w3-input w3-animate-input"
+                    type="text"
+                    name="registrationlink"
+                    value={registrationlink}
+                    onChange={valueChanged}
+                  ></input>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Upload Event Image : </Form.Label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    ref={el}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+                {checkFile && (
+                  <ProgressBar now={progress} label={`${progress}%`} />
+                )}
+                <br></br>
+                <Button
+                  onClick={addevent}
+                  className="button"
+                  style={{
+                    width: "100%",
+                    padding: "14px 28px",
+                    "font-size": "16px",
+                    cursor: "pointer",
+                  }}
+                >
+                  Add Event
+                </Button>
+              </Form>
+            </div>
           </div>
           <br></br>
-          <div>
-            <Form>
-              <Form.Group>
-                <Form.Label>Event Name : </Form.Label>
-                <input
-                  class="w3-input w3-animate-input"
-                  type="text"
-                  name="eventname"
-                  value={eventname}
-                  onChange={valueChanged}
-                ></input>
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Event Date : </Form.Label>
-                <input
-                  class="w3-input w3-animate-input"
-                  type="date"
-                  name="date"
-                  value={date}
-                  onChange={valueChanged}
-                ></input>
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Time : </Form.Label>
-                <input
-                  class="w3-input w3-animate-input"
-                  type="time"
-                  name="time"
-                  value={time}
-                  onChange={valueChanged}
-                ></input>
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>About : </Form.Label>
-                <input
-                  class="w3-input w3-animate-input"
-                  type="text"
-                  name="about"
-                  value={about}
-                  onChange={valueChanged}
-                ></input>
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Hosted By : </Form.Label>
-                <input
-                  class="w3-input w3-animate-input"
-                  type="text"
-                  name="hostedby"
-                  value={hostedby}
-                  onChange={valueChanged}
-                ></input>
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Registration Link : </Form.Label>
-                <input
-                  class="w3-input w3-animate-input"
-                  type="text"
-                  name="registrationlink"
-                  value={registrationlink}
-                  onChange={valueChanged}
-                ></input>
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Upload Event Image : </Form.Label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  ref={el}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              {checkFile && (
-                <ProgressBar now={progress} label={`${progress}%`} />
-              )}
-              <br></br>
-              <Button
-                variant="outline-light"
-                onClick={addevent}
-                style={{
-                  width: "100%",
-                  padding: "14px 28px",
-                  "font-size": "16px",
-                  cursor: "pointer",
-                }}
-              >
-                Add Event
-              </Button>
-            </Form>
-          </div>
-        </div>
-        <br></br>
-      </Container>
+        </Container>
+      </div>
     </Styles>
   );
 };

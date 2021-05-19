@@ -3,16 +3,8 @@ import { ListGroup, Container, Row, Col } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
 import MemberView from "../components/MemberView";
+import "./main.css";
 const Styles = styled.div`
-  .main-bg {
-    background-color: #084c61;
-  }
-  .text {
-    color: #dbf1fb;
-  }
-  .padding {
-    margin: 15px;
-  }
 `;
 const ProfessionalMembers = () => {
   const [members, setMembers] = useState([]);
@@ -62,21 +54,31 @@ const ProfessionalMembers = () => {
 
   return (
     <Styles>
-      <Container className="main-bg text">
-        <Row className="py-3">
-          {members.map((memberObj, index) => (
-            <MemberView
-              first_name={memberObj.first_name}
-              last_name={memberObj.last_name}
-              workplace={memberObj.workplace}
-              contact={memberObj.contact}
-              email={memberObj.email}
-              about={memberObj.about}
-              profile={links(memberObj.profile)}
-            ></MemberView>
-          ))}
-        </Row>
-      </Container>
+      <div className="main-bg">
+        <Container>
+          <div className="header-1">Professional Members</div>
+          <br></br>
+          <div>
+            <Row>
+              {members.map((memberObj, index) => (
+                <Col sm="4">
+                  <MemberView
+                    first_name={memberObj.first_name}
+                    last_name={memberObj.last_name}
+                    workplace={memberObj.workplace}
+                    contact={memberObj.contact}
+                    email={memberObj.email}
+                    about={memberObj.about}
+                    profile={links(memberObj.profile)}
+                    index={index}
+                  ></MemberView>
+                </Col>
+              ))}
+            </Row>
+          </div>
+          <br></br>
+        </Container>
+      </div>
     </Styles>
   );
 };

@@ -23,11 +23,14 @@ const Styles = styled.div`
   }
   /* change the color of active or hovered links */
   .navbar-custom .nav-item.active .nav-link,
-  .navbar-custom .nav-link {
-    color: #ffffff;
-  }
-  .navbar-custom .nav-item.active .nav-lnk.active {
+  .navbar-custom .nav-item.hover.nav-link {
     color: #cda95b;
+  }
+  .navbar-custom .nav-item.active .nav-link.active {
+    color: #cda95b;
+  }
+  .dropdown-menu {
+    position: 1rem;
   }
   .dropdown-submenu {
     position: relative;
@@ -42,12 +45,13 @@ const Styles = styled.div`
   .dropdown-submenu:focus .dropdown-menu {
     display: flex;
     flex-direction: column;
+    position: absolute !important;
     margin-top: -30px;
     left: 100%;
   }
   @media (max-width: 992px) {
     .dropdown-menu {
-      width: auto;
+      width: 63%;
     }
     .dropdown-menu .dropdown-submenu {
       width: auto;
@@ -144,14 +148,20 @@ const Navigation = (props) => {
                 </ReactBootStrap.NavDropdown.Item>
               </ReactBootStrap.NavDropdown>
 
-              <Link to="/members">
-                <ReactBootStrap.Nav.Link
-                  activeStyle={{ color: "#CDA95B" }}
-                  href="/members"
-                >
-                  Members
-                </ReactBootStrap.Nav.Link>
-              </Link>
+              <ReactBootStrap.NavDropdown
+                title="Members"
+                id="collasible-nav-dropdown"
+              >
+                <ReactBootStrap.NavDropdown.Item href="/foundermembers">
+                  Founder Members
+                </ReactBootStrap.NavDropdown.Item>
+                <ReactBootStrap.NavDropdown.Item href="/professionalmembers">
+                  Professional Members
+                </ReactBootStrap.NavDropdown.Item>
+                <ReactBootStrap.NavDropdown.Item href="/studentmembers">
+                  Student Members
+                </ReactBootStrap.NavDropdown.Item>
+              </ReactBootStrap.NavDropdown>
 
               <ReactBootStrap.NavDropdown
                 title="Materials"
@@ -166,11 +176,11 @@ const Navigation = (props) => {
                     Lectures
                   </a>
                   <ul class="dropdown-menu">
-                    <a class="dropdown-item" href="/dlp">
-                      Distiguished Lecture Program
+                    <a class="dropdown-item" href="#">
+                      Distiguished<br></br>Lectures
                     </a>
-                    <a class="dropdown-item" href="/expertlecture">
-                      Expert Lecture Program
+                    <a class="dropdown-item" href="#">
+                      Expert <br></br>Lectures
                     </a>
                   </ul>
                 </li>

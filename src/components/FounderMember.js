@@ -1,21 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ListGroup, Container, Row, Col } from "react-bootstrap";
-import axios from "axios";
 import styled from "styled-components";
-import MemberView from "./MemberView";
-
+import axios from "axios";
+import MemberView from "../components/MemberView";
+import "./main.css";
 const Styles = styled.div`
-  .main-bg {
-    background-color: #084c61;
-  }
-  .text {
-    color: #dbf1fb;
-  }
-  .padding {
-    margin: 15px;
-  }
 `;
-const FounderMembers = () => {
+const ProfessionalMembers = () => {
   const [members, setMembers] = useState([]);
   const {
     first_name,
@@ -27,8 +18,8 @@ const FounderMembers = () => {
     workplace,
     designation,
     about,
-    profile,
   } = members;
+  const [userabout, setAbout] = useState(false);
   useEffect(async () => {
     let response;
     let config = {
@@ -36,14 +27,19 @@ const FounderMembers = () => {
         "Content-Type": "application/json",
       },
     };
-    const role = "Founder Member";
+    const role = "Professional Member";
     try {
       response = await axios.get(
         `http://localhost:5000/user/getmembers/${role}`,
         config
       );
       setMembers(response.data);
-      console.log(response.data);
+      if (response.data.about != null) {
+        setAbout(true);
+        console.log(`About ${about}`);
+      } else {
+        console.log(`About null`);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -58,20 +54,32 @@ const FounderMembers = () => {
 
   return (
     <Styles>
-      <Container className="main-bg text">
-        {members.map((memberObj, index) => (
-          <MemberView
-            first_name={memberObj.first_name}
-            last_name={memberObj.last_name}
-            workplace={memberObj.workplace}
-            contact={memberObj.contact}
-            email={memberObj.email}
-            about={memberObj.about}
-            profile={links(memberObj.profile)}
-          ></MemberView>
-        ))}
-      </Container>
+      <div className="main-bg">
+        <Container>
+          <div className="header-1">Professional Members</div>
+          <br></br>
+          <div>
+            <Row>
+              {members.map((memberObj, index) => (
+                <Col sm="4">
+                  <MemberView
+                    first_name={memberObj.first_name}
+                    last_name={memberObj.last_name}
+                    workplace={memberObj.workplace}
+                    contact={memberObj.contact}
+                    email={memberObj.email}
+                    about={memberObj.about}
+                    profile={links(memberObj.profile)}
+                    index={index}
+                  ></MemberView>
+                </Col>
+              ))}
+            </Row>
+          </div>
+          <br></br>
+        </Container>
+      </div>
     </Styles>
   );
 };
-export default FounderMembers;
+export default ProfessionalMembers;

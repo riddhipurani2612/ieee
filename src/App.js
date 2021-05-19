@@ -29,7 +29,9 @@ import UpdateMaterial from "./components/UpdateMaterial";
 import MeetingView from "./components/MeetingView";
 import UpdateMeeting from "./components/UpdateMeeting";
 import Dashboard from "./components/Dashboard";
-import NavigationTemp from "./components/NavigationTemp";
+import FounderMembers from "./components/FounderMember";
+import ProfessionalMembers from "./components/ProfessionalMember";
+import StudentMember from "./components/StudentMember";
 function App() {
   console.log("App");
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -56,7 +58,6 @@ function App() {
           <Route path="/addmaterial" component={AddMaterial} />
           <Route path="/updatematerial" component={UpdateMaterial} />
           <Route path="/addevent" component={AddEvent} />
-          <Route path="/members" component={Members} />
           <Route path="/chairs-desk" component={ChairsDesk} />
           <Route path="/about" component={AboutUs} />
           <Route path="/contact" component={ContactUs} />
@@ -75,6 +76,9 @@ function App() {
           <Route path="/expertlecture" component={ExpertLecture} />
           <Route path="/detailedview" component={DetailedView} />
           <Route path="/dashboard" component={Dashboard} />
+          <Route path="foundermembers" component={FounderMembers} />
+          <Route path="/professionalmembers" component={ProfessionalMembers} />
+          <Route path="/studentmembers" component={StudentMember} />
           <Route
             path="/logout"
             component={LogoutComp}

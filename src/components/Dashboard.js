@@ -188,9 +188,10 @@ const Dashboard = () => {
             </Card.Body>
           </Card>
         </CardGroup>
-        <br></br><br></br>
+        <br></br>
+        <br></br>
         <CardGroup>
-        <Card style={{ height: "50%" }} className="main-bg">
+          <Card style={{ height: "50%" }} className="main-bg">
             <center>
               <i class="fa fa-calendar fa-4x" aria-hidden="true"></i>
             </center>
@@ -278,7 +279,7 @@ const Dashboard = () => {
               </Card.Text>
             </Card.Body>
           </Card>
-   </CardGroup>
+        </CardGroup>
       </Container>
     </Styles>
   );
