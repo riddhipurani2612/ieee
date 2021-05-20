@@ -4,8 +4,7 @@ import styled from "styled-components";
 import axios from "axios";
 import MemberView from "../components/MemberView";
 import "./main.css";
-const Styles = styled.div`
-`;
+const Styles = styled.div``;
 const ProfessionalMembers = () => {
   const [members, setMembers] = useState([]);
   const {
@@ -56,28 +55,32 @@ const ProfessionalMembers = () => {
     <Styles>
       <div className="main-bg">
         <Container>
-          <div className="header-1">Professional Members</div>
           <br></br>
-          <div>
-            <Row>
-              {members.map((memberObj, index) => (
-                <Col sm="4">
-                  <MemberView
-                    first_name={memberObj.first_name}
-                    last_name={memberObj.last_name}
-                    workplace={memberObj.workplace}
-                    contact={memberObj.contact}
-                    email={memberObj.email}
-                    about={memberObj.about}
-                    profile={links(memberObj.profile)}
-                    index={index}
-                  ></MemberView>
-                </Col>
-              ))}
-            </Row>
+          <div className="w3-panel w3-border w3-border-white boxshadow">
+            <div className="member-header">Professional Members</div>
+            <br></br>
+            <div>
+              <Row>
+                {members.map((memberObj, index) => (
+                  <Col sm="4">
+                    <MemberView
+                      first_name={memberObj.first_name}
+                      last_name={memberObj.last_name}
+                      workplace={memberObj.workplace}
+                      contact={memberObj.contact}
+                      email={memberObj.email}
+                      about={memberObj.about}
+                      profile={links(memberObj.profile)}
+                      index={index}
+                    ></MemberView>
+                  </Col>
+                ))}
+              </Row>
+            </div>
+            <br></br>
           </div>
-          <br></br>
         </Container>
+        <br></br>
       </div>
     </Styles>
   );

@@ -15,7 +15,6 @@ import SignUp from "./components/SignupForm";
 import SAR from "./components/SAR";
 import { useState, useEffect } from "react";
 import Profile from "./components/Profile";
-import Members from "./components/Members";
 import FAQ from "./components/FAQ";
 import AddEvent from "./components/AddEvent";
 import AddMaterial from "./components/AddMaterial";
@@ -29,9 +28,10 @@ import UpdateMaterial from "./components/UpdateMaterial";
 import MeetingView from "./components/MeetingView";
 import UpdateMeeting from "./components/UpdateMeeting";
 import Dashboard from "./components/Dashboard";
-import FounderMembers from "./components/FounderMember";
 import ProfessionalMembers from "./components/ProfessionalMember";
 import StudentMember from "./components/StudentMember";
+import FounderMembers from "./components/FounderMembers";
+import UpdateNewsletter from "./components/UpdateNewsletter";
 function App() {
   console.log("App");
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -76,8 +76,8 @@ function App() {
           <Route path="/expertlecture" component={ExpertLecture} />
           <Route path="/detailedview" component={DetailedView} />
           <Route path="/dashboard" component={Dashboard} />
-          <Route path="foundermembers" component={FounderMembers} />
           <Route path="/professionalmembers" component={ProfessionalMembers} />
+          <Route path="/foundermembers" component={FounderMembers}/>
           <Route path="/studentmembers" component={StudentMember} />
           <Route
             path="/logout"
@@ -86,6 +86,7 @@ function App() {
           />
           <Route path="/viewmeeting" component={MeetingView} />
           <Route path="/updatemeeting" component={UpdateMeeting} />
+          <Route path="/updatenewsletter-publication" component={UpdateNewsletter}/>
         </Switch>
         <Footer />
       </div>

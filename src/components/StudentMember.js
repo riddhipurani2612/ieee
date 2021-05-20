@@ -3,14 +3,8 @@ import { Container, ListGroup, Row, Col } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
 import MemberView from "../components/MemberView";
-const Styles = styled.div`
-  .main-bg {
-    background-color: #084c61;
-  }
-  .text {
-    color: #dbf1fb;
-  }
-`;
+
+const Styles = styled.div``;
 const StudentMember = () => {
   const [members, setMembers] = useState([]);
   const {
@@ -54,19 +48,36 @@ const StudentMember = () => {
 
   return (
     <Styles>
-      <Container className="main-bg text">
-          {members.map((memberObj, index) => (
-            <MemberView
-              first_name={memberObj.first_name}
-              last_name={memberObj.last_name}
-              workplace={memberObj.workplace}
-              contact={memberObj.contact}
-              email={memberObj.email}
-              about={memberObj.about}
-              profile={links(memberObj.profile)}
-            ></MemberView>
-          ))}
-      </Container>
+      <div className="main-bg">
+
+        <Container>
+          <br></br>
+          <div className="w3-panel w3-border w3-border-white boxshadow">
+            <div className="member-header">Student Members</div>
+            <br></br>
+            <div>
+              <Row>
+                {members.map((memberObj, index) => (
+                  <Col sm="4">
+                    <MemberView
+                      first_name={memberObj.first_name}
+                      last_name={memberObj.last_name}
+                      workplace={memberObj.workplace}
+                      contact={memberObj.contact}
+                      email={memberObj.email}
+                      about={memberObj.about}
+                      profile={links(memberObj.profile)}
+                      index={index}
+                    ></MemberView>
+                  </Col>
+                ))}
+              </Row>
+            </div>
+            <br></br>
+          </div>
+          <br></br>
+        </Container>
+      </div>
     </Styles>
   );
 };

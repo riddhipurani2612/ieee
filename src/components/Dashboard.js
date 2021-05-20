@@ -11,14 +11,8 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
-
+import "./main.css";
 const Styles = styled.div`
-  .main-bg {
-    background-color: #084c61;
-  }
-  .text {
-    color: #dbf1fb;
-  }
   .quarter {
     width: 50%;
     height: 100%;
@@ -53,234 +47,241 @@ const Dashboard = () => {
   }, []);
   return (
     <Styles>
-      <Container className="main-bg text">
-        <div
-          className="display-3 text-center"
-          style={{ color: "white", textDecoration: "underline" }}
-        >
-          Dashboard
-        </div>
-        <br></br>
+      <div className="main-bg" style={{backgroundColor : "white"}}>
+        <Container>
+          <br></br>
+          <div className="w3-panel w3-border w3-border-white boxshadow">
+            <div className="home-intro2">Dashboard</div>
+            <br></br>
 
-        <CardGroup>
-          <Card style={{ height: "50%" }} className="main-bg">
-            <center>
-              <i class="fa fa-users fa-4x" aria-hidden="true"></i>
-            </center>
-            <Card.Body>
-              <Card.Title>
-                <center>Members</center>
-              </Card.Title>
-              <Card.Text>
+            <CardGroup>
+              <Card style={{backgroundColor : "#971823"}}>
                 <center>
-                  <Row>
-                    <Col>
-                      <a href="/members">
-                        <Button
-                          variant="outline-light"
-                          style={{
-                            padding: "7px 7px",
-                            "font-size": "20px",
-                            cursor: "pointer",
-                          }}
-                        >
-                          View Members
-                        </Button>
-                      </a>
-                    </Col>
-                    <Col>
-                      <a href="/addmember">
-                        <Button
-                          variant="outline-light"
-                          style={{
-                            padding: "7px 7px",
-                            "font-size": "20px",
-                            cursor: "pointer",
-                          }}
-                        >
-                          Add Member
-                        </Button>
-                      </a>
-                    </Col>
-                  </Row>
+                  <br></br>
+                  <i class="fa fa-users fa-4x" style={{color: "white"}} aria-hidden="true"></i>
                 </center>
-              </Card.Text>
-            </Card.Body>
-          </Card>
-          <Card className="main-bg">
-            <center>
-              <i class="fa fa-book fa-4x" aria-hidden="true"></i>
-            </center>
-            <Card.Body>
-              <Card.Title>
-                <center>Material</center>
-              </Card.Title>
-              <Card.Text>
+                <Card.Body>
+                  <Card.Title>
+                    <center className="member-dash">Members</center>
+                  </Card.Title>
+                  <Card.Text>
+                    <center>
+                      <Row>
+                        <Col>
+                          <a href="/members">
+                            <Button
+                              variant="outline-light"
+                              style={{
+                                padding: "7px 7px",
+                                "font-size": "20px",
+                                cursor: "pointer",
+                              }}
+                            >
+                              View Members
+                            </Button>
+                          </a>
+                        </Col>
+                        <Col>
+                          <a href="/addmember">
+                            <Button
+                              variant="outline-light"
+                              style={{
+                                padding: "7px 7px",
+                                "font-size": "20px",
+                                cursor: "pointer",
+                              }}
+                            >
+                              Add Member
+                            </Button>
+                          </a>
+                        </Col>
+                      </Row>
+                    </center>
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <Card style={{backgroundColor:"#1B2876"}}>
                 <center>
-                  <Row>
-                    <Col>
-                      <Dropdown>
-                        <Dropdown.Toggle
-                          variant="success"
-                          id="dropdown-basic"
-                          variant="outline-light"
-                          style={{
-                            padding: "7px 7px",
-                            "font-size": "20px",
-                            cursor: "pointer",
-                          }}
-                        >
-                          Materials
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu
-                          variant="outline-light"
-                          style={{
-                            padding: "7px 7px",
-                            cursor: "pointer",
-                          }}
-                        >
-                          <Dropdown.Item href="/dlp">DLP</Dropdown.Item>
-                          <Dropdown.Item href="/expertlecture">
-                            Expert Lecture
-                          </Dropdown.Item>
-                          <Dropdown.Item href="/publication">
-                            Publications
-                          </Dropdown.Item>
-                          <Dropdown.Item href="/newsletter">
-                            Newsletters
-                          </Dropdown.Item>
-                        </Dropdown.Menu>
-                      </Dropdown>
-                    </Col>
-                    <Col>
-                      <Dropdown>
-                        <Dropdown.Toggle
-                          variant="success"
-                          id="dropdown-basic"
-                          variant="outline-light"
-                          style={{
-                            padding: "7px 7px",
-                            "font-size": "20px",
-                            cursor: "pointer",
-                          }}
-                        >
-                          Add Materials
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu
-                          variant="outline-light"
-                          style={{
-                            padding: "7px 7px",
-                            cursor: "pointer",
-                          }}
-                        >
-                          <Dropdown.Item href="/addmaterial">
-                            Add Lecture
-                          </Dropdown.Item>
-                          <Dropdown.Item href="/addnewsletter">
-                            Add Newsletters / Publication
-                          </Dropdown.Item>
-                        </Dropdown.Menu>
-                      </Dropdown>
-                    </Col>
-                  </Row>
+                  <br></br>
+                  <i class="fa fa-book fa-4x" style={{color :"white"}} aria-hidden="true"></i>
                 </center>
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </CardGroup>
-        <br></br>
-        <br></br>
-        <CardGroup>
-          <Card style={{ height: "50%" }} className="main-bg">
-            <center>
-              <i class="fa fa-calendar fa-4x" aria-hidden="true"></i>
-            </center>
-            <Card.Body>
-              <Card.Title>
-                <center>Events</center>
-              </Card.Title>
-              <Card.Text>
+                <Card.Body>
+                  <Card.Title className="material-dash">
+                    <center>Material</center>
+                  </Card.Title>
+                  <Card.Text>
+                    <center>
+                      <Row>
+                        <Col>
+                          <Dropdown>
+                            <Dropdown.Toggle
+                              variant="success"
+                              id="dropdown-basic"
+                              variant="outline-light"
+                              style={{
+                                padding: "7px 7px",
+                                "font-size": "20px",
+                                cursor: "pointer",
+                              }}
+                            >
+                              Materials
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu
+                              variant="outline-light"
+                              style={{
+                                padding: "7px 7px",
+                                cursor: "pointer",
+                              }}
+                            >
+                              <Dropdown.Item href="/dlp">DLP</Dropdown.Item>
+                              <Dropdown.Item href="/expertlecture">
+                                Expert Lecture
+                              </Dropdown.Item>
+                              <Dropdown.Item href="/publication">
+                                Publications
+                              </Dropdown.Item>
+                              <Dropdown.Item href="/newsletter">
+                                Newsletters
+                              </Dropdown.Item>
+                            </Dropdown.Menu>
+                          </Dropdown>
+                        </Col>
+                        <Col>
+                          <Dropdown>
+                            <Dropdown.Toggle
+                              variant="success"
+                              id="dropdown-basic"
+                              variant="outline-light"
+                              style={{
+                                padding: "7px 7px",
+                                "font-size": "20px",
+                                cursor: "pointer",
+                              }}
+                            >
+                              Add Materials
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu
+                              variant="outline-light"
+                              style={{
+                                padding: "7px 7px",
+                                cursor: "pointer",
+                              }}
+                            >
+                              <Dropdown.Item href="/addmaterial">
+                                Add Lecture
+                              </Dropdown.Item>
+                              <Dropdown.Item href="/addnewsletter">
+                                Add Newsletters / Publication
+                              </Dropdown.Item>
+                            </Dropdown.Menu>
+                          </Dropdown>
+                        </Col>
+                      </Row>
+                    </center>
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </CardGroup>
+            <br></br>
+            <CardGroup>
+              <Card style={{backgroundColor:"#747C40"}}>
                 <center>
-                  <Row>
-                    <Col>
-                      <a href="/events">
-                        <Button
-                          variant="outline-light"
-                          style={{
-                            padding: "7px 7px",
-                            "font-size": "20px",
-                            cursor: "pointer",
-                          }}
-                        >
-                          View Events
-                        </Button>
-                      </a>
-                    </Col>
-                    <Col>
-                      <a href="/addevent">
-                        <Button
-                          variant="outline-light"
-                          style={{
-                            padding: "7px 7px",
-                            "font-size": "20px",
-                            cursor: "pointer",
-                          }}
-                        >
-                          Add Event
-                        </Button>
-                      </a>
-                    </Col>
-                  </Row>
+                  <br></br>
+                  <i class="fa fa-calendar fa-4x" style={{color : "white"}} aria-hidden="true"></i>
                 </center>
-              </Card.Text>
-            </Card.Body>
-          </Card>
-          <Card style={{ height: "50%" }} className="main-bg">
-            <center>
-              <i class="fa fa-handshake-o fa-4x" aria-hidden="true"></i>
-            </center>
-            <Card.Body>
-              <Card.Title>
-                <center>Meetings</center>
-              </Card.Title>
-              <Card.Text>
+                <Card.Body>
+                  <Card.Title className="event-dash">
+                    <center>Events</center>
+                  </Card.Title>
+                  <Card.Text>
+                    <center>
+                      <Row>
+                        <Col>
+                          <a href="/events">
+                            <Button
+                              variant="outline-light"
+                              style={{
+                                padding: "7px 7px",
+                                "font-size": "20px",
+                                cursor: "pointer",
+                              }}
+                            >
+                              View Events
+                            </Button>
+                          </a>
+                        </Col>
+                        <Col>
+                          <a href="/addevent">
+                            <Button
+                              variant="outline-light"
+                              style={{
+                                padding: "7px 7px",
+                                "font-size": "20px",
+                                cursor: "pointer",
+                              }}
+                            >
+                              Add Event
+                            </Button>
+                          </a>
+                        </Col>
+                      </Row>
+                    </center>
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <Card style={{backgroundColor : "#D94F20"}}>
                 <center>
-                  <Row>
-                    <Col>
-                      <a href="/viewmeeting">
-                        <Button
-                          variant="outline-light"
-                          style={{
-                            padding: "7px 7px",
-                            "font-size": "20px",
-                            cursor: "pointer",
-                          }}
-                        >
-                          View Meetings
-                        </Button>
-                      </a>
-                    </Col>
-                    <Col>
-                      <a href="/addmeeting">
-                        <Button
-                          variant="outline-light"
-                          style={{
-                            padding: "7px 7px",
-                            "font-size": "20px",
-                            cursor: "pointer",
-                          }}
-                        >
-                          Add Meeting
-                        </Button>
-                      </a>
-                    </Col>
-                  </Row>
+                  <br></br>
+                  <i class="fa fa-handshake-o fa-4x" style={{color : "white"}} aria-hidden="true"></i>
                 </center>
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </CardGroup>
-      </Container>
+                <Card.Body>
+                  <Card.Title className="meeting-dash">
+                    <center>Meetings</center>
+                  </Card.Title>
+                  <Card.Text>
+                    <center>
+                      <Row>
+                        <Col>
+                          <a href="/viewmeeting">
+                            <Button
+                              variant="outline-light"
+                              style={{
+                                padding: "7px 7px",
+                                "font-size": "20px",
+                                cursor: "pointer",
+                              }}
+                            >
+                              View Meetings
+                            </Button>
+                          </a>
+                        </Col>
+                        <Col>
+                          <a href="/addmeeting">
+                            <Button
+                              variant="outline-light"
+                              style={{
+                                padding: "7px 7px",
+                                "font-size": "20px",
+                                cursor: "pointer",
+                              }}
+                            >
+                              Add Meeting
+                            </Button>
+                          </a>
+                        </Col>
+                      </Row>
+                    </center>
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </CardGroup>
+            <br></br>
+          </div>
+          <br></br>
+        </Container>
+      </div>
     </Styles>
   );
 };

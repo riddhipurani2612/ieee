@@ -4,26 +4,8 @@ import styled from "styled-components";
 import axios from "axios";
 import MeetingDetails from "./MeetingDetails";
 import { useHistory } from "react-router-dom";
-const Styles = styled.div`
-  .main-bg {
-    background-color: #084c61;
-    margin-top: 0px;
-  }
-  .text {
-    color: #dbf1fb;
-  }
-  .hr {
-    border-color: white;
-  }
-  table {
-    border-collapse: collapse;
-    width: 100%;
-    text-align: center;
-  }
-  Col {
-    padding: 15px;
-  }
-`;
+import "./main.css";
+const Styles = styled.div``;
 const MeetingView = () => {
   const history = useHistory();
   const [admin, setAdmin] = useState(false);
@@ -84,33 +66,35 @@ const MeetingView = () => {
       return "http://localhost:5000/" + temp;
     }
   };
+  const dateFormate = (date) => {
+    var temp = date.split("T");
+    return temp[0];
+  };
+
   return (
     <Styles>
-      <Container className="main-bg text">
-        <br></br>
-        <div className="w3-panel w3-border w3-border-white">
-          <div
-            className="display-3 text-center"
-            style={{ color: "white", textDecoration: "underline" }}
-          >
-            Meetings
+      <div className="main-bg">
+        <Container>
+          <br></br>
+          <div className="w3-panel w3-border w3-border-white boxshadow">
+            <div className="meeting-header"> Meetings</div>
+            {meetings.map((meetingObj, index) => (
+              <MeetingDetails
+                _id={meetingObj._id}
+                role={role}
+                date={dateFormate(meetingObj.date)}
+                place={meetingObj.place}
+                attendees={meetingObj.attendees}
+                summary={meetingObj.summary}
+                purpose={meetingObj.purpose}
+                minutes={meetingObj.minutes}
+                sign={links(meetingObj.sign)}
+              />
+            ))}
           </div>
-          {meetings.map((meetingObj, index) => (
-            <MeetingDetails
-              _id={meetingObj._id}
-              role={role}
-              date={meetingObj.date}
-              place={meetingObj.place}
-              attendees={meetingObj.attendees}
-              summary={meetingObj.summary}
-              purpose={meetingObj.purpose}
-              minutes={meetingObj.minutes}
-              sign={links(meetingObj.sign)}
-            />
-          ))}
-        </div>
-        <br></br>
-      </Container>
+          <br></br>
+        </Container>
+      </div>
     </Styles>
   );
 };

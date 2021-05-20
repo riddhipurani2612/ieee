@@ -24,9 +24,9 @@ const MemberView = (props) => {
           name={name}
           about={props.about}
         ></AboutView>
-        <Card key={props.index}>
-          <Card.Img variant="top" src={props.profile}/>
-          <Card.Body>
+        <Card key={props.index} className="main-bg">
+          <Card.Img variant="top" src={props.profile} />
+          <Card.Body className="member-content">
             <Card.Title>
               {props.first_name} {props.last_name}
             </Card.Title>
@@ -38,13 +38,12 @@ const MemberView = (props) => {
               {props.email}
               <br></br>
               {viewReadMode && (
-                <Button
-                  variant="outline-light"
+                <button
+                  className="member-button"
                   onClick={() => setModal(true)}
-                  title="Feedback"
                 >
                   Know More
-                </Button>
+                </button>
               )}
             </Card.Text>
           </Card.Body>

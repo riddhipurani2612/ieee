@@ -4,18 +4,8 @@ import { Accordion, Card, Button, Container } from "react-bootstrap";
 import YouTube from "react-youtube";
 import axios from "axios";
 import ViewMaterial from "./ViewMaterial";
+import "./main.css";
 const Styles = styled.div`
-.main-bg {
-  background-color: #084C61;
-}
-.text {
-  color: #dbf1fb;
-}
-  .center{
-    paddingBottom: "56.25%";
-    width: "100%";
-    height: "100%
-  }
 `;
 
 const DLP = () => {
@@ -60,14 +50,14 @@ const DLP = () => {
   };
   return (
     <Styles>
-      <Container className="main-bg text">
+    <div className="main-bg">
+      <Container>
         <br></br>
-        <div className="w3-panel w3-border w3-border-white">
+        <div className="w3-panel w3-border w3-border-white boxshadow">
           <div
-            className="display-4 text-center"
-            style={{ color: "white", textDecoration: "underline" }}
+            className="material-header"
           >
-            Distinguished Lecture Program
+            Distinguished Lectures
           </div>
           <br></br>
           {material.map((materialObj, index) => (
@@ -84,6 +74,7 @@ const DLP = () => {
         </div>
         <br></br>
       </Container>
+      </div>
     </Styles>
   );
 };

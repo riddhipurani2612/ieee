@@ -50,16 +50,16 @@ const ExpertLecture = () => {
   };
   return (
     <Styles>
-      <Container className="main-bg text">
+    <div className="main-bg">
+      <Container>
         <br></br>
-        <div className="w3-panel w3-border w3-border-white">
+        <div className="w3-panel w3-border w3-border-white boxshadow">
           <div
-            className="display-3 text-center"
-            style={{ color: "white", textDecoration: "underline" }}
+            className="material-header"
           >
-            Expert Lecture Program
+            Expert Lectures
           </div>
-
+          <br></br>
           {material.map((materialObj, index) => (
             <ViewMaterial
               _id={materialObj._id}
@@ -74,6 +74,7 @@ const ExpertLecture = () => {
         </div>
         <br></br>
       </Container>
+      </div>
     </Styles>
   );
 };

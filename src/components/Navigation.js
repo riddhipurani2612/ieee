@@ -7,56 +7,34 @@ import * as ReactBootStrap from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 const Styles = styled.div`
-  .navbar-custom {
-    background-color: #5f76a0;
-  }
-  /* change the brand and text color */
-  .navbar-custom .navbar-brand,
-  .navbar-custom .navbar-text {
-    color: white;
-    font-weight: bold;
-  }
-  /* change the link color */
-  .navbar-custom .navbar-nav .nav-link {
-    color: rgba(255, 255, 255, 0.5);
-    font-weight: bold;
-  }
-  /* change the color of active or hovered links */
-  .navbar-custom .nav-item.active .nav-link,
-  .navbar-custom .nav-item.hover.nav-link {
-    color: #cda95b;
-  }
-  .navbar-custom .nav-item.active .nav-link.active {
-    color: #cda95b;
-  }
+.dropdown-menu {
+  position: 1rem;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu a::after {
+  transform: rotate(-90deg);
+  position: absolute;
+  right: 3px;
+  top: 40%;
+}
+.dropdown-submenu:hover .dropdown-menu,
+.dropdown-submenu:focus .dropdown-menu {
+  display: flex;
+  flex-direction: column;
+  position: absolute !important;
+  margin-top: -30px;
+  left: 100%;
+}
+@media (max-width: 992px) {
   .dropdown-menu {
-    position: 1rem;
+    width: 63%;
   }
-  .dropdown-submenu {
-    position: relative;
+  .dropdown-menu .dropdown-submenu {
+    width: auto;
   }
-  .dropdown-submenu a::after {
-    transform: rotate(-90deg);
-    position: absolute;
-    right: 3px;
-    top: 40%;
-  }
-  .dropdown-submenu:hover .dropdown-menu,
-  .dropdown-submenu:focus .dropdown-menu {
-    display: flex;
-    flex-direction: column;
-    position: absolute !important;
-    margin-top: -30px;
-    left: 100%;
-  }
-  @media (max-width: 992px) {
-    .dropdown-menu {
-      width: 63%;
-    }
-    .dropdown-menu .dropdown-submenu {
-      width: auto;
-    }
-  }
+}
 `;
 const Navigation = (props) => {
   const [admin, setAdmin] = useState(false);
@@ -80,23 +58,28 @@ const Navigation = (props) => {
     }
   };
   useEffect(async () => {
-    try {
-      response = await axios.get(`http://localhost:5000/user/getrole`, config);
-      console.log(response.data);
-      setUser(response.data);
+    if (token != null) {
+      try {
+        response = await axios.get(
+          `http://localhost:5000/user/getrole`,
+          config
+        );
+        console.log(response.data);
+        setUser(response.data);
 
-      if (role === "Student") {
-        setStudent(true);
-      } else if (role === "Admin") {
-        setAdmin(true);
-      } else if (
-        response.data.role === "Founder Member" ||
-        response.data.role === "Professional Member"
-      ) {
-        setMember(true);
+        if (role === "Student") {
+          setStudent(true);
+        } else if (role === "Admin") {
+          setAdmin(true);
+        } else if (
+          response.data.role === "Founder Member" ||
+          response.data.role === "Professional Member"
+        ) {
+          setMember(true);
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
     }
     if (localStorage.getItem("token") === null) {
       props.setLogin(false);
@@ -115,6 +98,8 @@ const Navigation = (props) => {
           expand="xl"
           className="nava navbar-custom"
           sticky="top"
+          variant="dark"
+          bg="dark"
         >
           <ReactBootStrap.Navbar.Brand href="#home">
             IEEE GRSS Gujarat Section
@@ -176,10 +161,10 @@ const Navigation = (props) => {
                     Lectures
                   </a>
                   <ul class="dropdown-menu">
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="/dlp">
                       Distiguished<br></br>Lectures
                     </a>
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="/expertlecture">
                       Expert <br></br>Lectures
                     </a>
                   </ul>

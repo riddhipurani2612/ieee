@@ -3,17 +3,8 @@ import { Container } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
 import EventView from "./EventView";
-const Styles = styled.div`
-  .main-bg {
-    background-color: #084c61;
-  }
-  .text {
-    color: #dbf1fb;
-  }
-  .hr {
-    border-color: white;
-  }
-`;
+import "./main.css";
+const Styles = styled.div``;
 const Events = () => {
   const [events, setEvents] = useState([]);
   const { eventname, date, about, hostedby } = events;
@@ -39,31 +30,31 @@ const Events = () => {
       return "http://localhost:5000/" + temp;
     }
   };
-
+  const dateFormate = (date) => {
+    var temp = date.split("T");
+    return temp[0];
+  };
   return (
     <Styles>
-      <Container className="main-bg text">
-        <br></br>
-        <div className="w3-panel w3-border w3-border-white">
-          <div
-            className="display-3 text-center "
-            style={{ color: "white", textDecoration: "underline" }}
-          >
-            Events
-          </div>
+      <div className="main-bg">
+        <Container>
+          <br></br>
+          <div className="w3-panel w3-border w3-border-white boxshadow">
+            <div className="event-header"> Events</div>
 
-          {events.map((eventObj, index) => (
-            <EventView
-              name={eventObj.eventname}
-              date={eventObj.date}
-              about={eventObj.about}
-              hostedby={eventObj.hostedby}
-              eventimage={links(eventObj.eventimage)}
-            />
-          ))}
-        </div>
-        <br></br>
-      </Container>
+            {events.map((eventObj, index) => (
+              <EventView
+                name={eventObj.eventname}
+                date={dateFormate(eventObj.date)}
+                about={eventObj.about}
+                hostedby={eventObj.hostedby}
+                eventimage={links(eventObj.eventimage)}
+              />
+            ))}
+          </div>
+          <br></br>
+        </Container>
+      </div>
     </Styles>
   );
 };

@@ -14,8 +14,7 @@ const Styles = styled.div`
   .hr {
     border-color: white;
   }
-  .label{
-    
+  .meeting-content {
   }
 `;
 const MeetingDetails = (props) => {
@@ -57,39 +56,39 @@ const MeetingDetails = (props) => {
         <Row>
           <Col>
             {props.date != "undefined" ? (
-              <div>
-                <span className="label">Date : </span>
+              <div className="meeting-content">
+                <span className="meeting-content">Date : </span>
                 <span>{props.date}</span>
               </div>
             ) : (
               "Not Defined"
             )}
-            <span className="label">Place : </span>{" "}
+            <span className="meeting-content">Place : </span>{" "}
             {props.place != "undefined" ? props.place : "Not Defined"}
             <br></br>
-            <span className="label">No of Attendees : </span>{" "}
+            <span className="meeting-content">No of Attendees : </span>{" "}
             {props.attendees != "undefined" ? props.attendees : "Not Defined"}
             <br></br>
-            <span className="label">Summary : </span>{" "}
+            <span className="meeting-content">Summary : </span>{" "}
             {props.summary != "undefined" ? props.summary : "Not Defined"}
             <br></br>
-            <span className="label">Agenda : </span>{" "}
+            <span className="meeting-content">Agenda : </span>{" "}
             {props.purpose != "undefined" ? props.purpose : "Not Defined"}
             <br></br>
-            <span className="label">Minutes taken : </span>{" "}
+            <span className="meeting-content">Minutes taken : </span>{" "}
             {props.minutes != "undefined" ? props.minutes : "Not Defined"}
             <br></br>
-            <span className="label">Place : </span>{" "}
+            <span className="meeting-content">Place : </span>{" "}
             {props.place != "undefined" ? props.place : "Not Defined"}
             <br></br>
             {admin &&
               (props.sign != "undefined" ? (
                 <dvi>
-                  <span className="label">List of Attendees</span>
+                  <span className="meeting-content">List of Attendees</span>
                   <a href={props.sign} target="blank">
-                    <Button variant="outline-light" onClick={props.sign}>
+                    <button className="meeting-button" onClick={props.sign}>
                       Click Here
-                    </Button>
+                    </button>
                   </a>
                 </dvi>
               ) : (
@@ -98,14 +97,14 @@ const MeetingDetails = (props) => {
           </Col>
           <Col xs lg="2">
             {admin && (
-              <Button variant="outline-light" onClick={updatedetails}>
-                Update
-              </Button>
+              <button className="meeting-button" onClick={updatedetails}>
+                <i class="fa fa-edit" aria-hidden="true"></i>
+              </button>
             )}
             {admin && (
-              <Button variant="outline-light" onClick={deletedetails}>
-                Delete
-              </Button>
+              <button className="meeting-button" onClick={deletedetails}>
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </button>
             )}
           </Col>
         </Row>

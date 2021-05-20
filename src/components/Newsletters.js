@@ -3,34 +3,9 @@ import styled from "styled-components";
 import { Accordion, Card, Button, Row, Col, Container } from "react-bootstrap";
 import YouTube from "react-youtube";
 import axios from "axios";
-const Styles = styled.div`
-.main-bg {
-  background-color: #084C61;
-}
-.text, a {
-  font-size: 140%;
-  line-height: 2rem;
-}
-a:link {
-  color: white;
-}
-
-/* visited link */
-a:visited {
-  color: white;
-}
-
-/* mouse over link */
-a:hover {
-  color: grey;
-}
-
-  .center{
-    paddingBottom: "56.25%";
-    width: "100%";
-    height: "100%
-  }
-`;
+import ViewNP from "./ViewNP";
+import "./main.css";
+const Styles = styled.div``;
 
 const Newsletter = () => {
   const youtubeOptions = {
@@ -69,45 +44,26 @@ const Newsletter = () => {
   }, []);
   return (
     <Styles>
-      <Container className="main-bg">
-        <br></br>
-        <div className="main-bg text w3-panel w3-border w3-border-white">
-          <div
-            className="display-3 text-center"
-            style={{ color: "white", textDecoration: "underline" }}
-          >
-            News Letters
-          </div>
-          <Row className="my-3">
-            <Col>
-              <div
-                className="display-4 my-5 text-center"
-                style={{ color: "white" }}
-              >
-                <br></br>Need of a GRSS Chapter Newsletter
-              </div>
-            </Col>
-            <Col>
-              <YouTube videoId="OI4nz-Gvlj4" opts={youtubeOptions} />
-            </Col>
-          </Row>
-          <div>
-            <ul>
+      <div className="main-bg">
+        <Container>
+          <br></br>
+          <div className="w3-panel w3-border w3-border-white boxshadow">
+            <div className="material-header">Newsletter</div>
+            <br></br>
+            <br></br>
+            <ul className="material-content">
               {material.map((materialObj, index) => (
-                <div>
-                  <li>
-                    <a href={materialObj.materialfile} target="blank">
-                      {materialObj.title}
-                    </a>
-                  </li>
-                  <br></br>
-                </div>
+                <ViewNP
+                  _id={materialObj._id}
+                  title={materialObj.title}
+                  publicationlink={materialObj.publicationlink}
+                />
               ))}
             </ul>
           </div>
-        </div>
-        <br></br>
-      </Container>
+          <br></br>
+        </Container>
+      </div>
     </Styles>
   );
 };

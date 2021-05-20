@@ -5,7 +5,7 @@ import { useHistory } from "react-router";
 import axios from "axios";
 import "./main.css";
 const Styles = styled.div``;
-const ViewMaterial = (props) => {
+const ViewNP = (props) => {
   const history = useHistory();
   const [admin, setAdmin] = useState(false);
   const [member, setMember] = useState(false);
@@ -23,7 +23,7 @@ const ViewMaterial = (props) => {
   };
   const updatedetails = () => {
     localStorage.setItem("materialIdUpdate", props._id);
-    history.push("/updatematerial");
+    history.push("/updatenewsletter-publication");
   };
   const deletedetails = async () => {
     try {
@@ -74,31 +74,23 @@ const ViewMaterial = (props) => {
       <div className="material-content">
         <Row>
           <Col>
-            <b>{props.title}</b>
+            <b>
+              <a href={props.publicationlink} target="blank">
+                {props.title}
+              </a>
+            </b>
           </Col>
           <Col xs lg="3">
             {!student && (
               <button className="material-button" onClick={updatedetails}>
-                <i
-                  class="fa fa-edit"
-                  aria-hidden="true"
-                ></i>
+                <i class="fa fa-edit" aria-hidden="true"></i>
               </button>
             )}
             {!student && (
               <button onClick={deletedetails} className="material-button">
-                <i
-                  class="fa fa-trash"
-                  aria-hidden="true"
-                ></i>
+                <i class="fa fa-trash" aria-hidden="true"></i>
               </button>
             )}
-            <button onClick={viewdetails} className="material-button">
-              <i
-                class="fa fa-eye"
-                aria-hidden="true"
-              ></i>
-            </button>
           </Col>
         </Row>
       </div>
@@ -106,4 +98,4 @@ const ViewMaterial = (props) => {
     </Styles>
   );
 };
-export default ViewMaterial;
+export default ViewNP;

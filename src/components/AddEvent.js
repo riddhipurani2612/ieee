@@ -10,7 +10,13 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
-const Styles = styled.div``;
+const Styles = styled.div`
+.box {
+  max-width: 700px;
+  margin: auto;
+  padding: 50px;
+}
+`;
 const AddEvent = () => {
   let response;
   const [checkFile, setCheckFile] = useState(false);
@@ -97,10 +103,10 @@ const AddEvent = () => {
       <div className="main-bg">
         <Container>
           <br></br>
-          <div className="content w3-panel w3-border w3-border-white boxshadow">
-            <div className="header-1">Add Event</div>
+          <div className="box w3-panel w3-border w3-border-white boxshadow">
+            <div className="event-header">Add Event</div>
             <br></br>
-            <div className="content">
+            <div className="event-form">
               <Form>
                 <Form.Group>
                   <Form.Label className="form-label">Event Name : </Form.Label>
@@ -175,18 +181,18 @@ const AddEvent = () => {
                   <ProgressBar now={progress} label={`${progress}%`} />
                 )}
                 <br></br>
-                <Button
+                <button
                   onClick={addevent}
-                  className="button"
+                  className="event-button"
                   style={{
                     width: "100%",
                     padding: "14px 28px",
-                    "font-size": "16px",
+                    "font-size": "3rem",
                     cursor: "pointer",
                   }}
                 >
                   Add Event
-                </Button>
+                </button>
               </Form>
             </div>
           </div>

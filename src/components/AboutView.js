@@ -7,7 +7,7 @@ const Styles = styled.div`
 `;
 const AboutView = (props) => {
   return (
-    <Styles>
+    <Styles className="main-bg">
       <Modal
         {...props}
         size="lg"
@@ -15,7 +15,7 @@ const AboutView = (props) => {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title className="header-1" id="contained-modal-title-vcenter">
+          <Modal.Title id="contained-modal-title-vcenter">
             {props.name}
           </Modal.Title>
         </Modal.Header>

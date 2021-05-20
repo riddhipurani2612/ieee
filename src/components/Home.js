@@ -66,12 +66,12 @@ const Home = (props) => {
           />
           <Button
             className="mt-5"
-            style={{ position: "fixed", backgroundColor: "#084C61" }}
-            variant="outline-light"
+            style={{ position: "fixed", backgroundColor: "white" }}
+            variant="outline-dark"
             onClick={() => setFeedbackModal(true)}
             title="Feedback"
           >
-            <i class="fa fa-comments-o" aria-hidden="true"></i>
+            <i class="fa fa-comments-o fa-2x" aria-hidden="true"></i>
           </Button>
 
           <Container>

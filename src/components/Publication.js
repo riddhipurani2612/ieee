@@ -2,39 +2,21 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Accordion, Card, Button, Container } from "react-bootstrap";
 import YouTube from "react-youtube";
+import { useHistory } from "react-router";
 import axios from "axios";
 import ViewMaterial from "./ViewMaterial";
-const Styles = styled.div`
-.main-bg {
-  background-color: #084C61;
-  margin-top: -23px;
-}
-.text,a {
-  font-size: 140%;
-  line-height: 2rem;
-  color : "white"
-}
-a:link {
-  color: white;
-}
-
-/* visited link */
-a:visited {
-  color: white;
-}
-
-/* mouse over link */
-a:hover {
-  color: grey;
-}
-  .center{
-    paddingBottom: "56.25%";
-    width: "100%";
-    height: "100%
-  }
-`;
+import ViewNP from "./ViewNP";
+const Styles = styled.div``;
 
 const Publication = () => {
+  const history = useHistory();
+
+  const [admin, setAdmin] = useState(false);
+  const [member, setMember] = useState(false);
+  const [student, setStudent] = useState(false);
+  const [user, setUser] = useState({});
+  const { first_name, last_name, role } = user;
+
   const [material, setMaterial] = useState([]);
   const {
     title,
@@ -48,7 +30,6 @@ const Publication = () => {
 
   useEffect(async () => {
     const materialtype1 = "Publication";
-
     try {
       let response;
       let config = {
@@ -64,37 +45,76 @@ const Publication = () => {
     } catch (err) {
       console.log(err);
     }
+    const token = localStorage.getItem("token");
+
+    try {
+      let config = {
+        headers: {
+          "Content-Type": "application/json",
+          "x-auth-token": token,
+        },
+      };
+      let response = await axios.get(
+        `http://localhost:5000/user/getrole`,
+        config
+      );
+      setUser(response.data);
+      if (role === "Student") {
+        setStudent(true);
+      } else if (role === "Admin") {
+        setAdmin(true);
+      } else {
+        setMember(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
   const youtubeOptions = {
     width: "95%",
   };
+  const updatedetails = () => {
+    history.push("/updatematerial");
+  };
+  const deletedetails = async () => {
+    try {
+      let config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      let response = axios.delete(
+        `http://localhost:5000/techMaterial/`,
+        config
+      );
+      console.log(response.data);
+      window.location.reload(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <Styles>
-      <Container className="main-bg text">
-        <br></br>
-        <div className="w3-panel w3-border w3-border-white">
-          <div
-            className="display-3 text-center"
-            style={{ color: "white", textDecoration: "underline" }}
-          >
-            Publications
+      <div className="main-bg">
+        <Container>
+          <br></br>
+          <div className="w3-panel w3-border w3-border-white boxshadow">
+            <div className="material-header">Publications</div>
+            <br></br>
+            <br></br>
+            <ul className="material-content">
+              {material.map((materialObj, index) => (
+                <ViewNP
+                  _id={materialObj._id}
+                  title={materialObj.title}
+                  publicationlink={materialObj.publicationlink}/>
+              ))}
+            </ul>
           </div>
-          <br></br><br></br>
-          <ul style={{"color" : "white"}}>
-            {material.map((materialObj, index) => (
-              <div>
-                <li>
-                  <a href={materialObj.publicationlink} target="blank">
-                    {materialObj.title}
-                  </a>
-                </li>
-                <br></br>
-              </div>
-            ))}
-          </ul>
-        </div>
-        <br></br>
-      </Container>
+          <br></br>
+        </Container>
+      </div>
     </Styles>
   );
 };
