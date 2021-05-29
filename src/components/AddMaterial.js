@@ -1,23 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Button, Container, Form, ProgressBar } from "react-bootstrap";
+import { Row, Col, Container, Form, ProgressBar, Alert } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-const Styles = styled.div`
-  .main-bg {
-    background-color: #084c61;
-  }
-  .text {
-    color: #dbf1fb;
-  }
-  .content {
-    max-width: 500px;
-    margin: auto;
-    padding: 50px;
-  }
-`;
+import "./main.css";
+const Styles = styled.div``;
 const AddMaterial = () => {
   const history = useHistory();
+  const [error, setError] = useState("");
+  const [status, setStatus] = useState("");
+
   const [file, setFile] = useState("");
   const [checkFile, setCheckFile] = useState(false);
   const [progress, setProgess] = useState(0);
@@ -26,9 +18,17 @@ const AddMaterial = () => {
     setProgess(0);
     const file = e.target.files[0]; // accesing file
     console.log(file);
-    setFile(file); // storing file
-    setCheckFile(true);
+    const extension = file.name.split(".").pop() + "";
+    if (extension === "pdf") {
+      setFile(file); // storing file
+      setCheckFile(true);
+    } else {
+      setStatus("Warning");
+      alert(`${extension} file is not allowed`);
+      e.target.value = null;
+     }
   };
+
   const [material, setMaterial] = useState({});
   const { title, about, youtubelink, publicationlink, materialtype } = material;
 
@@ -59,7 +59,7 @@ const AddMaterial = () => {
       let response;
       try {
         response = await axios.post(
-          "http://localhost:5000/techMaterial",
+          "https://grssprojectserver.herokuapp.com/techMaterial",
           formData,
           config,
           {
@@ -71,9 +71,12 @@ const AddMaterial = () => {
             },
           }
         );
-        console.log(response.data);
-        localStorage.setItem("materialId", response.data._id);
-        history.push("/detailedview");
+        if (response.statusText === "OK") {
+          setStatus("Success");
+        } else {
+          setStatus("Warning");
+          setError(response.data.message);
+        }
       } catch (err) {
         console.log(err.response);
         console.log(err.request);
@@ -98,14 +101,17 @@ const AddMaterial = () => {
       let response;
       try {
         response = await axios.post(
-          "http://localhost:5000/techMaterial",
+          "https://grssprojectserver.herokuapp.com/techMaterial",
           data,
           config
         );
-        console.log(response.data);
-        localStorage.setItem("materialId", response.data._id);
-        history.push("/detailedview");
-      } catch (err) {
+        if (response.statusText === "OK") {
+          setStatus("Success");
+        } else {
+          setStatus("Warning");
+          setError(response.data.message);
+        }
+     } catch (err) {
         console.log(err.response);
       }
     }
@@ -123,7 +129,7 @@ const AddMaterial = () => {
     }
     try {
       const response = await axios.get(
-        `http://localhost:5000/user/getrole`,
+        `https://grssprojectserver.herokuapp.com/user/getrole`,
         config
       );
       console.log(response.data);
@@ -136,85 +142,119 @@ const AddMaterial = () => {
   }, []);
   return (
     <Styles>
-      <Container className="main-bg text">
+      <Container className="main-bg">
         <br></br>
-        <div className="content w3-panel w3-border w3-border-white">
-          <div
-            className="display-3 text-center"
-            style={{ color: "white", textDecoration: "underline" }}
-          >
-            Add Material
-          </div>
+        <div className="form-box w3-panel w3-border w3-border-white boxshadow">
+          <div className="material-header">Add Lecture</div>
           <br></br>
-          <Form>
-            <Form.Group>
-              <Form.Label>Lecture Type : </Form.Label>
-              <Form.Control
-                class="w3-input w3-animate-input"
-                as="select"
-                name="materialtype"
-                value={materialtype}
-                onChange={valueChanged}
+          <div class="material-form">
+            <form onSubmit={submit}>
+              <Form.Group>
+                <Row>
+                  <Col sm="4">
+                    <label>Lecture Type : </label><span style={{color : "red"}}>*</span>
+                  </Col>
+                  <Col>
+                    <select
+                      required
+                      class="w3-select"
+                      name="materialtype"
+                      value={materialtype}
+                      onChange={valueChanged}
+                      required
+                    >
+                      <option value="">-- Select Lecture Type --</option>
+                      <option>Distinguished Lecture Program</option>
+                      <option>Expert Lecture Program</option>
+                    </select>
+                  </Col>
+                </Row>
+              </Form.Group>
+              <Form.Group>
+                <Row>
+                  <Col sm="4">
+                    <label>Title : </label><span style={{color : "red"}}>*</span>
+                  </Col>
+                  <Col>
+                    <input
+                      placeholder="Enter Title"
+                      class="w3-input w3-animate-input"
+                      type="text"
+                      name="title"
+                      value={title}
+                      onChange={valueChanged}
+                      required
+                    ></input>
+                  </Col>
+                </Row>
+              </Form.Group>
+              <Form.Group>
+                <Row>
+                  <Col sm="4">
+                    <label>About : </label><span style={{color : "red"}}>*</span>
+                  </Col>
+                  <Col>
+                    <input
+                      placeholder="More about lecture"
+                      class="w3-input w3-animate-input"
+                      type="text"
+                      name="about"
+                      value={about}
+                      onChange={valueChanged}
+                      required
+                    ></input>
+                  </Col>
+                </Row>
+              </Form.Group>
+              <Form.Group>
+                <Row>
+                  <Col sm="4">
+                    <label>YouTube Link : </label>
+                  </Col>
+                  <Col>
+                    <input
+                      placeholder="Enter URL"
+                      class="w3-input w3-animate-input"
+                      type="url"
+                      name="youtubelink"
+                      value={youtubelink}
+                      onChange={valueChanged}
+                    ></input>
+                  </Col>
+                </Row>
+              </Form.Group>
+              <Form.Group>
+                <Row>
+                  <Col sm="4">
+                    <label>Upload File : </label>
+                  </Col>
+                  <Col>
+                    <input
+                      type="file"
+                      accept="application/pdf"
+                      ref={el}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Row>
+                <br></br>
+              </Form.Group>
+              {checkFile && (
+                <ProgressBar now={progress} label={`${progress}%`} />
+              )}
+              <button
+                className="material-button"
+                style={{
+                  width: "100%",
+                  padding: "14px 28px",
+                  "font-size": "16px",
+                  cursor: "pointer",
+                }}
               >
-                <option selected>-- Select --</option>
-                <option>Distinguished Lecture Program</option>
-                <option>Expert Lecture Program</option>
-              </Form.Control>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Title : </Form.Label>
-              <input
-                class="w3-input w3-animate-input"
-                type="text"
-                name="title"
-                value={title}
-                onChange={valueChanged}
-              ></input>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>About : </Form.Label>
-              <input
-                class="w3-input w3-animate-input"
-                type="text"
-                name="about"
-                value={about}
-                onChange={valueChanged}
-              ></input>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>YouTube Link : </Form.Label>
-              <input
-                class="w3-input w3-animate-input"
-                type="text"
-                name="youtubelink"
-                value={youtubelink}
-                onChange={valueChanged}
-              ></input>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Upload File : </Form.Label>
-              <br></br>
-              <input
-                type="file"
-                accept="application/pdf"
-                ref={el}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            {checkFile && <ProgressBar now={progress} label={`${progress}%`} />}
-            <Button
-              variant="outline-light"
-              style={{
-                width: "100%",
-                padding: "14px 28px",
-                "font-size": "16px",
-                cursor: "pointer",
-              }}
-              onClick={submit}
-            >
-              Submit
-            </Button>
-          </Form>
+                Add Lecture
+              </button>
+            </form>
+          </div>
         </div>
         <br></br>
       </Container>

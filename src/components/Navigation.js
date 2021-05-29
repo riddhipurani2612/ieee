@@ -7,6 +7,10 @@ import * as ReactBootStrap from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 const Styles = styled.div`
+.navbar{
+  font-family:Century !important;
+  font-size : 1.2rem;
+}
 .dropdown-menu {
   position: 1rem;
 }
@@ -54,14 +58,14 @@ const Navigation = (props) => {
     if (temp === undefined) {
       return "undefined";
     } else {
-      return "http://localhost:5000/" + temp;
+      return "https://grssprojectserver.herokuapp.com/" + temp;
     }
   };
   useEffect(async () => {
     if (token != null) {
       try {
         response = await axios.get(
-          `http://localhost:5000/user/getrole`,
+          `https://grssprojectserver.herokuapp.com/user/getrole`,
           config
         );
         console.log(response.data);
@@ -292,6 +296,13 @@ const Navigation = (props) => {
                 >
                   Dashboard
                 </ReactBootStrap.NavDropdown.Item>
+                <ReactBootStrap.NavDropdown.Item
+                  href="/feedbacks"
+                  hidden={!admin}
+                >
+                  Feedbacks
+                </ReactBootStrap.NavDropdown.Item>
+           
                 <ReactBootStrap.NavDropdown.Divider />
                 <ReactBootStrap.NavDropdown.Item href="/logout">
                   Log Out

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Table, Row, Col } from "react-bootstrap";
+import { Container, Table, Row, Col, Form } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
 import MeetingDetails from "./MeetingDetails";
@@ -26,7 +26,7 @@ const MeetingView = () => {
         },
       };
       let response = await axios.get(
-        `http://localhost:5000/user/getrole`,
+        `https://grssprojectserver.herokuapp.com/user/getrole`,
         config
       );
       setUser(response.data);
@@ -50,7 +50,7 @@ const MeetingView = () => {
             "Content-Type": "application/json",
           },
         };
-        response = await axios.get("http://localhost:5000/meeting", config);
+        response = await axios.get("https://grssprojectserver.herokuapp.com/meeting", config);
         setMeetings(response.data);
         console.log(meetings);
         console.log(response.data);
@@ -63,34 +63,76 @@ const MeetingView = () => {
     if (temp === undefined) {
       return "undefined";
     } else {
-      return "http://localhost:5000/" + temp;
+      return "https://grssprojectserver.herokuapp.com/" + temp;
     }
   };
   const dateFormate = (date) => {
     var temp = date.split("T");
     return temp[0];
   };
-
+  const [sort, setSort] = useState("");
   return (
     <Styles>
       <div className="main-bg">
         <Container>
           <br></br>
           <div className="w3-panel w3-border w3-border-white boxshadow">
-            <div className="meeting-header"> Meetings</div>
-            {meetings.map((meetingObj, index) => (
-              <MeetingDetails
-                _id={meetingObj._id}
-                role={role}
-                date={dateFormate(meetingObj.date)}
-                place={meetingObj.place}
-                attendees={meetingObj.attendees}
-                summary={meetingObj.summary}
-                purpose={meetingObj.purpose}
-                minutes={meetingObj.minutes}
-                sign={links(meetingObj.sign)}
-              />
-            ))}
+            <div className="meeting-header">
+              <Row>
+                <Col></Col>
+              </Row>
+              Meetings
+            </div>
+            <div style={{ float: "right" }}>
+              Sort : 
+              <select
+                onChange={(e) => setSort(e.target.value)}
+                style={{ float: "right" }}
+              >
+                <option value="" selected>
+                  -- Select --
+                </option>
+                <option value="Descending">Oldest First</option>
+                <option value="Ascending">Newst First</option>
+              </select>
+            </div>
+            <br></br>
+            {sort === "Ascending" ? (
+              <div>
+                {meetings
+                  .slice(0)
+                  .reverse()
+                  .map((meetingObj, index) => (
+                    <MeetingDetails
+                      _id={meetingObj._id}
+                      role={role}
+                      date={dateFormate(meetingObj.date)}
+                      place={meetingObj.place}
+                      attendees={meetingObj.attendees}
+                      summary={meetingObj.summary}
+                      purpose={meetingObj.purpose}
+                      minutes={meetingObj.minutes}
+                      sign={links(meetingObj.sign)}
+                    />
+                  ))}
+              </div>
+            ) : (
+              <div>
+                {meetings.map((meetingObj, index) => (
+                  <MeetingDetails
+                    _id={meetingObj._id}
+                    role={role}
+                    date={dateFormate(meetingObj.date)}
+                    place={meetingObj.place}
+                    attendees={meetingObj.attendees}
+                    summary={meetingObj.summary}
+                    purpose={meetingObj.purpose}
+                    minutes={meetingObj.minutes}
+                    sign={links(meetingObj.sign)}
+                  />
+                ))}
+              </div>
+            )}
           </div>
           <br></br>
         </Container>

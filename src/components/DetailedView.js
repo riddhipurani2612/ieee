@@ -6,15 +6,8 @@ import FileViewer from "react-file-viewer";
 import "animate.css/animate.min.css";
 import axios from "axios";
 import { useHistory } from "react-router";
-const Styles = styled.div`
-  .main-bg {
-    background-color: #084c61;
-    border: 1px solid white;
-  }
-  .text {
-    color: #dbf1fb;
-  }
-`;
+import "./main.css";
+const Styles = styled.div``;
 const DetailedView = () => {
   const history = useHistory();
   const [material, setMaterial] = useState({});
@@ -29,13 +22,12 @@ const DetailedView = () => {
   } = material;
   const [youtube, setYoutube] = useState(false);
   const [publication, setPublicationlink] = useState(false);
-  const [materialFile, setMaterialfile] = useState(false);
   let filetype, file;
   const links = (temp) => {
     if (temp === undefined) {
       return "undefined";
     } else {
-      return "http://localhost:5000/" + temp;
+      return "https://grssprojectserver.herokuapp.com/" + temp;
     }
   };
   useEffect(async () => {
@@ -49,7 +41,7 @@ const DetailedView = () => {
       };
       try {
         response = await axios.get(
-          `http://localhost:5000/techMaterial/${materialid}`,
+          `https://grssprojectserver.herokuapp.com/techMaterial/${materialid}`,
           config
         );
         setMaterial(response.data);
@@ -67,37 +59,34 @@ const DetailedView = () => {
       if (publication != null) {
         setPublicationlink(true);
       }
-      if (materialfile === undefined) {
-        setMaterialfile(false);
-      } else {
-        setMaterialfile(true);
-        console.log("file");
-        console.log(materialfile);
-      }
     } else {
       history.goBack();
     }
   }, []);
   return (
     <Styles>
-      <Container className="main-bg text">
-        <div className="w3-panel w3-border w3-border-white">
-          <h1 className="main-bg text">{title}</h1>
-          <p>{about}</p>
+      <Container className="main-bg">
+        <div className="w3-panel w3-border w3-border-white boxshadow">
+          <div className="material-header">{title}</div>
+          <div className="material-content">
+            <p>{about}</p>
+            <div>
+              {materialfile != undefined ? (
+                <a href={links(materialfile)} target="blank">
+                  <button className="material-button">
+                    Click Here to VIew File
+                  </button>
+                </a>
+              ) : (
+                ""
+              )}
+            </div>
+          </div>
           <div>
             {youtube != "undefined" && (
               <ReactPlayer url={youtubelink} width="100%" height="40rem" />
-            )}{" "}
-            <br></br>
-          </div>
-          <div>
-            {materialFile && (
-              <a href={links(materialfile)} target="blank">
-                <Button variant="outline-light">
-                  Click Here to Download File
-                </Button>
-              </a>
             )}
+            <br></br>
           </div>
         </div>
       </Container>

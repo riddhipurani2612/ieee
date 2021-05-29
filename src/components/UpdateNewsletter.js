@@ -1,23 +1,21 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { Form, Container, Button, Modal, ProgressBar } from "react-bootstrap";
+import {
+  Form,
+  Container,
+  Button,
+  Row,
+  Col,
+  ProgressBar,
+  Alert,
+} from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-const Styles = styled.div`
-  .main-bg {
-    background-color: #084c61;
-  }
-  .text {
-    color: #dbf1fb;
-  }
-  .content {
-    max-width: 500px;
-    margin: auto;
-    padding: 50px;
-  }
-`;
+const Styles = styled.div``;
 const UpdateNewsletter = (props) => {
   const token = localStorage.getItem("token");
+  const [error, setError] = useState("");
+  const [status, setStatus] = useState("");
   const history = useHistory();
   const [material, setMaterial] = useState({});
   const { title, about, publicationlink, materialtype, materialfile } =
@@ -29,12 +27,20 @@ const UpdateNewsletter = (props) => {
   const [checkFile, setCheckFile] = useState(false);
   const [progress, setProgess] = useState(0);
   const el = useRef(); // accesing input element
+
   const handleChange = (e) => {
     setProgess(0);
     const file = e.target.files[0]; // accesing file
     console.log(file);
-    setFile(file); // storing file
-    setCheckFile(true);
+    const extension = file.name.split(".").pop() + "";
+    if (extension === "pdf") {
+      setFile(file); // storing file
+      setCheckFile(true);
+    } else {
+      setStatus("Warning");
+      alert(`${extension} file is not allowed`);
+      e.target.value = null;
+    }
   };
 
   const updatedetails = async (e) => {
@@ -56,7 +62,7 @@ const UpdateNewsletter = (props) => {
       let response;
       try {
         response = await axios.patch(
-          `http://localhost:5000/techMaterial/${localStorage.getItem(
+          `https://grssprojectserver.herokuapp.com/techMaterial/${localStorage.getItem(
             "materialIdUpdate"
           )}`,
           formData,
@@ -70,7 +76,12 @@ const UpdateNewsletter = (props) => {
             },
           }
         );
-        console.log(response.data);
+        if (response.statusText === "OK") {
+          setStatus("Success");
+        } else {
+          setStatus("Warning");
+          setError(response.data.message);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -91,13 +102,18 @@ const UpdateNewsletter = (props) => {
       let response;
       try {
         response = await axios.patch(
-          `http://localhost:5000/techMaterial/${localStorage.getItem(
+          `https://grssprojectserver.herokuapp.com/techMaterial/${localStorage.getItem(
             "materialIdUpdate"
           )}`,
           formData,
           config
         );
-        console.log(response.data);
+        if (response.statusText === "OK") {
+          setStatus("Success");
+        } else {
+          setStatus("Warning");
+          setError(response.data.message);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -115,7 +131,7 @@ const UpdateNewsletter = (props) => {
       };
       try {
         response = await axios.get(
-          `http://localhost:5000/techMaterial/${localStorage.getItem(
+          `https://grssprojectserver.herokuapp.com/techMaterial/${localStorage.getItem(
             "materialIdUpdate"
           )}`,
           config
@@ -131,74 +147,114 @@ const UpdateNewsletter = (props) => {
     <Styles>
       <Container className="main-bg text">
         <br></br>
-        <div className="content w3-panel w3-border w3-border-white">
-          <div
-            className="display-3 text-center"
-            style={{ color: "white", textDecoration: "underline" }}
-          >
-            Update Newsletter/Publication
+        <div className="form-box w3-panel w3-border w3-border-white boxshadow">
+          <div className="material-header">
+            Update Newsletter/<br></br>Publication
           </div>
           <br></br>
-          <Form>
+          <Form onSubmit={updatedetails} className="material-form">
             <Form.Group>
-              <Form.Label>Material Type : </Form.Label>
-              <Form.Control
-                class="w3-input w3-animate-input"
-                as="select"
-                name="materialtype"
-                value={materialtype}
-                onChange={valueChanged}
-              >
-                <option>-- Select --</option>
-                <option>Publication</option>
-                <option>Newsletter</option>
-              </Form.Control>
+              <Row>
+                <Col sm="4">
+                  <label>Material Type : </label>
+                </Col>
+                <Col>
+                  <select
+                    name="materialtype"
+                    value={materialtype}
+                    onChange={valueChanged}
+                    className="w3-select"
+                    required
+                  >
+                    <option value="">-- Select --</option>
+                    <option>Publication</option>
+                    <option>Newsletter</option>
+                  </select>
+                </Col>
+              </Row>
             </Form.Group>
             <Form.Group>
-              <Form.Label>Title : </Form.Label>
-              <input
-                class="w3-input w3-animate-input"
-                type="text"
-                name="title"
-                value={title}
-                onChange={valueChanged}
-              ></input>
+              <Row>
+                <Col sm="4">
+                  <label>Title : </label>
+                </Col>
+                <Col>
+                  <input
+                    class="w3-input w3-animate-input"
+                    type="text"
+                    name="title"
+                    value={title}
+                    onChange={valueChanged}
+                    required
+                  ></input>
+                </Col>
+              </Row>
             </Form.Group>
             <Form.Group>
-              <Form.Label>Publication Link : </Form.Label>
-              <input
-                class="w3-input w3-animate-input"
-                type="text"
-                name="publicationlink"
-                value={publicationlink}
-                onChange={valueChanged}
-              ></input>
+              <Row>
+                <Col sm="4">
+                  <label>Publication Link : </label>
+                </Col>
+                <Col>
+                  <input
+                    class="w3-input w3-animate-input"
+                    type="text"
+                    name="publicationlink"
+                    value={publicationlink}
+                    onChange={valueChanged}
+                    required
+                  ></input>{" "}
+                </Col>
+              </Row>
             </Form.Group>
             <Form.Group>
-              <Form.Label>Upload File : </Form.Label>
-              <br></br>
-              <input
-                type="file"
-                accept="application/pdf"
-                ref={el}
-                onChange={handleChange}
-              />
+              <Row>
+                <Col sm="4">
+                  <label>Upload File : </label>
+                </Col>
+                <Col>
+                  <input
+                    type="file"
+                    accept="application/pdf"
+                    ref={el}
+                    onChange={handleChange}
+                  />
+                </Col>
+              </Row>
             </Form.Group>
             {checkFile && <ProgressBar now={progress} label={`${progress}%`} />}
-            <center>
-              <Button
-                variant="outline-light"
-                style={{
-                  width: "100%",
-                  padding: "14px 28px",
-                  "font-size": "16px",
-                  cursor: "pointer",
-                }}
-                onClick={updatedetails}
-              >
-                Update
-              </Button>
-            </center>
+            {status === "Success" ? (
+              <Alert variant="success">
+                <i class="fa fa-check-circle" aria-hidden="true"></i>
+                Data Uploaded Successfully!!
+              </Alert>
+            ) : null}
+            {status === "Error" ? (
+              <Alert variant="danger">
+                <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                {error}
+              </Alert>
+            ) : null}
+            {status === "Warning" ? (
+              <Alert variant="warning">
+                <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                Uploaded file format not supported. Please upload only image
+                file
+              </Alert>
+            ) : null}
+
+            <button
+              className="material-button"
+              style={{
+                width: "100%",
+                padding: "14px 28px",
+                "font-size": "16px",
+                cursor: "pointer",
+              }}
+              onClick={updatedetails}
+            >
+              Update
+            </button>
           </Form>
         </div>
         <br></br>

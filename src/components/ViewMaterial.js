@@ -33,7 +33,7 @@ const ViewMaterial = (props) => {
         },
       };
       let response = axios.delete(
-        `http://localhost:5000/techMaterial/${props._id}`,
+        `https://grssprojectserver.herokuapp.com/techMaterial/${props._id}`,
         config
       );
       console.log(response.data);
@@ -54,7 +54,7 @@ const ViewMaterial = (props) => {
         },
       };
       let response = await axios.get(
-        `http://localhost:5000/user/getrole`,
+        `https://grssprojectserver.herokuapp.com/user/getrole`,
         config
       );
       setUser(response.data);
@@ -77,7 +77,7 @@ const ViewMaterial = (props) => {
             <b>{props.title}</b>
           </Col>
           <Col xs lg="3">
-            {!student && (
+            {admin || member && (
               <button className="material-button" onClick={updatedetails}>
                 <i
                   class="fa fa-edit"
@@ -85,7 +85,7 @@ const ViewMaterial = (props) => {
                 ></i>
               </button>
             )}
-            {!student && (
+            {admin || member && (
               <button onClick={deletedetails} className="material-button">
                 <i
                   class="fa fa-trash"

@@ -8,24 +8,17 @@ import {
   ProgressBar,
   Row,
   Col,
+  Alert
 } from "react-bootstrap";
 import PasswordChange from "./PasswordChange";
 import { useHistory } from "react-router";
-const Styles = styled.div`
-  .main-bg {
-    background-color: #084c61;
-  }
-  .text {
-    color: #dbf1fb;
-  }
-  .content {
-    max-width: 700px;
-    margin: auto;
-    padding: 50px;
-  }
-`;
+import "./main.css";
+const Styles = styled.div``;
 const Profile = (e) => {
   const history = useHistory();
+  const [error, setError] = useState("");
+  const [status, setStatus] = useState("");
+
   const [file, setFile] = useState("");
   const [checkFile, setCheckFile] = useState(false);
   const [progress, setProgess] = useState(0);
@@ -34,7 +27,7 @@ const Profile = (e) => {
     setProgess(0);
     const file = e.target.files[0]; // accesing file
     console.log(file);
-    const extension = file.split(".").pop() === "jpg";
+    const extension = file.name.split(".").pop();
     if (
       extension === "jpg" ||
       extension === "jpeg" ||
@@ -44,7 +37,9 @@ const Profile = (e) => {
       setFile(file); // storing file
       setCheckFile(true);
     } else {
-      alert("Only Image File Allowed");
+      setStatus("Warning");
+      alert(`${extension} file is not allowed`);
+      e.target.value = null;
     }
   };
   const [editable, setEditable] = useState(true);
@@ -67,7 +62,7 @@ const Profile = (e) => {
     about,
     profile,
   } = user;
-
+  const [admin, setAdmin] = useState(false);
   const onChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
@@ -75,78 +70,155 @@ const Profile = (e) => {
     if (temp === undefined) {
       return "undefined";
     } else {
-      return "http://localhost:5000/" + temp;
+      return "https://grssprojectserver.herokuapp.com/" + temp;
     }
   };
 
   const updateUser = async (e) => {
-    const token = localStorage.getItem("token");
-    if (checkFile) {
-      e.preventDefault();
-      let config = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          "x-auth-token": token,
-        },
-      };
-      let response;
-      let formData = new FormData();
-      formData.append("first_name", first_name);
-      formData.append("last_name", last_name);
-      formData.append("role", role);
-      formData.append("about", about);
-      formData.append("designation", designation);
-      formData.append("workplace", workplace);
-      formData.append("email", email);
-      formData.append("contact", contact);
-      formData.append("about", about);
-      formData.append("file", file);
+    if (admin) {
+      const token = localStorage.getItem("userEmailUpdate");
+      if (checkFile) {
+        e.preventDefault();
+        let config = {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        };
+        let response;
+        let formData = new FormData();
+        formData.append("first_name", first_name);
+        formData.append("last_name", last_name);
+        formData.append("role", role);
+        formData.append("designation", designation);
+        formData.append("workplace", workplace);
+        formData.append("email", email);
+        formData.append("contact", contact);
+        formData.append("about", about);
+        formData.append("file", file);
 
-      try {
-        response = await axios.patch(
-          `http://localhost:5000/user`,
-          formData,
-          config,
-          {
-            onUploadProgress: (ProgressEvent) => {
-              let progress =
-                Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +
-                "%";
-              setProgess(progress);
-            },
-          }
-        );
-        console.log(response.data);
-      } catch (err) {
-        console.log(err.request);
-        console.log(err.response);
+        try {
+          response = await axios.patch(
+            `https://grssprojectserver.herokuapp.com/user/update/${token}`,
+            formData,
+            config,
+            {
+              onUploadProgress: (ProgressEvent) => {
+                let progress =
+                  Math.round(
+                    (ProgressEvent.loaded / ProgressEvent.total) * 100
+                  ) + "%";
+                setProgess(progress);
+              },
+            }
+          );
+          console.log(response.data);
+        } catch (err) {
+          console.log(err.request);
+          console.log(err.response);
+        }
+      } else {
+        e.preventDefault();
+        let config = {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        let response;
+        try {
+          console.log(user);
+          response = await axios.patch(
+            `https://grssprojectserver.herokuapp.com/user/update/${token}`,
+            user,
+            config
+          );
+          console.log(response.data);
+          alert("data updated");
+          window.location.reload(false);
+        } catch (err) {
+          console.log(err.response);
+          console.log(err.request);
+        }
       }
+      setEditable(false);
+      window.location.reload(false);
     } else {
-      e.preventDefault();
-      let config = {
-        headers: {
-          "Content-Type": "application/json",
-          "x-auth-token": token,
-        },
-      };
-      let response;
-      try {
-        console.log(user);
-        response = await axios.patch(
-          `http://localhost:5000/user`,
-          user,
-          config
-        );
-        console.log(response.data);
-        alert("data updated");
-        window.location.reload(false);
-      } catch (err) {
-        console.log(err.response);
-        console.log(err.request);
+      const token = localStorage.getItem("token");
+      if (checkFile) {
+        e.preventDefault();
+        let config = {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "x-auth-token": token,
+          },
+        };
+        let response;
+        let formData = new FormData();
+        formData.append("first_name", first_name);
+        formData.append("last_name", last_name);
+        formData.append("role", role);
+        formData.append("designation", designation);
+        formData.append("workplace", workplace);
+        formData.append("email", email);
+        formData.append("contact", contact);
+        formData.append("about", about);
+        formData.append("file", file);
+
+        try {
+          response = await axios.patch(
+            `https://grssprojectserver.herokuapp.com/user`,
+            formData,
+            config,
+            {
+              onUploadProgress: (ProgressEvent) => {
+                let progress =
+                  Math.round(
+                    (ProgressEvent.loaded / ProgressEvent.total) * 100
+                  ) + "%";
+                setProgess(progress);
+              },
+            }
+          );
+          if (response.statusText === "OK") {
+            setStatus("Success");
+          } else {
+            setStatus("Warning");
+            setError(response.data.message);
+          }
+          } catch (err) {
+          console.log(err.request);
+          console.log(err.response);
+        }
+      } else {
+        e.preventDefault();
+        let config = {
+          headers: {
+            "Content-Type": "application/json",
+            "x-auth-token": token,
+          },
+        };
+        let response;
+        try {
+          console.log(user);
+          response = await axios.patch(
+            `https://grssprojectserver.herokuapp.com/user`,
+            user,
+            config
+          );
+          if (response.statusText === "OK") {
+            setStatus("Success");
+          } else {
+            setStatus("Warning");
+            setError(response.data.message);
+          }
+          window.location.reload(false);
+        } catch (err) {
+          console.log(err.response);
+          console.log(err.request);
+        }
       }
+      setEditable(false);
+      window.location.reload(false);
     }
-    setEditable(false);
-    window.location.reload(false);
   };
   const token = localStorage.getItem("token");
   let response;
@@ -157,15 +229,50 @@ const Profile = (e) => {
     },
   };
   useEffect(async () => {
+    if (token === null) {
+      history.goBack();
+    }
     try {
-      response = await axios.get(`http://localhost:5000/user`, config);
-      setUser(response.data);
+      response = await axios.get(`https://grssprojectserver.herokuapp.com/user/getrole`, config);
       console.log(response.data);
-      if (response.data.role === "Admin") {
-        history.push("/");
-      }
     } catch (error) {
       console.log(error);
+    }
+    if (response.data.role === "Admin") {
+      setAdmin(true);
+      if (localStorage.getItem("userEmailUpdate") === null) {
+        alert("User Not selected");
+        history.goBack();
+      } else {
+        console.log("UPDATE");
+        let temp_config = {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        try {
+          const temp_response = await axios.get(
+            `https://grssprojectserver.herokuapp.com/user/get/${localStorage.getItem(
+              "userEmailUpdate"
+            )}`,
+            temp_config
+          );
+          setUser(temp_response.data);
+          setFile(temp_response.data.profile);
+          console.log(temp_response.data);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    } else {
+      try {
+        response = await axios.get(`https://grssprojectserver.herokuapp.com/user`, config);
+        setUser(response.data);
+        setFile(response.data.profile);
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
     }
   }, []);
   const [showPasswordModal, setPasswordModal] = useState(false);
@@ -176,125 +283,186 @@ const Profile = (e) => {
         closeModal={() => setPasswordModal(false)}
         onHide={() => setPasswordModal(false)}
       />
-      <Container className="main-bg text">
+      <Container className="main-bg">
         <br></br>
-        <div className="content w3-panel w3-border w3-border-white">
-          <Row>
-            <Col xs={{ span: 12, order: 1 }} md={{ span: 6, order: 1 }}>
-              {links(profile) != "undefined" ? (
-                <div>
-                  <img
-                    src={links(profile)}
-                    alt={profile}
-                    style={{ "border-radius": "50%" }}
-                    height="100rem"
-                    width="100rem"
-                  ></img>
-                </div>
-              ) : (
-                <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-              )}
+        <div className="form-box w3-panel w3-border w3-border-white boxshadow">
+          <div className="member-header">
+            <Row>
+              <Col>
+                {links(profile) != "undefined" ? (
+                  <div>
+                    <img
+                      src={links(profile)}
+                      alt={profile}
+                      style={{ "border-radius": "50%" }}
+                      height="100rem"
+                      width="100rem"
+                    ></img>
+                  </div>
+                ) : (
+                  <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                )}
 
-              <h2 className="my-4 mx-3">
-                {first_name} {last_name}
-              </h2>
-            </Col>
-            <Col xs={{ span: 12, order: 2 }} md={{ span: 6, order: 2 }}>
-              <Button
-                onClick={clicked}
-                variant="outline-light"
-                style={{ float: "right", "margin-top": "2rem" }}
-              >
-                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
-              </Button><br></br><br></br>
-              <Button
-                style={{ float: "right", "margin-top": "1.5rem", "margin-right" : "-4.6rem" }}
-                variant="outline-light"
-                onClick={() => setPasswordModal(true)}
-                title="Change Password"
-              >
-                Change Password
-              </Button>
-            </Col>
-          </Row>
+                <h2 className="my-4 mx-3">
+                  {first_name} {last_name}
+                </h2>
+              </Col>
+              <Row>
+                <Col>
+                  <button
+                    style={{
+                      float: "right",
+                    }}
+                    className="member-button"
+                    onClick={() => setPasswordModal(true)}
+                    title="Change Password"
+                  >
+                    Change<br></br>Password
+                  </button>
+                  <button
+                    onClick={clicked}
+                    className="member-button"
+                    style={{ float: "right" }}
+                    title="Edit profile"
+                  >
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                  </button>
+                </Col>
+              </Row>
+            </Row>
+          </div>
+          <br></br>
+          <div class="member-form">
+            <div>
+              <form onSubmit={updateUser}>
+                <Form.Group>
+                  <Row>
+                    <Col sm="4">
+                      <label>About</label>
+                    </Col>
+                    <Col>
+                      <textarea
+                        required
+                        className="textarea"
+                        row={30}
+                        type="text"
+                        name="about"
+                        value={about}
+                        disabled={editable}
+                        onChange={(e) => {
+                          setUser({ ...user, about: e.target.value });
+                        }}
+                      ></textarea>
+                    </Col>
+                  </Row>
+                </Form.Group>
+                <Form.Group>
+                  <Row>
+                    <Col sm="4">
+                      <label>Contact</label>
+                    </Col>
+                    <Col>
+                      <input
+                        type="text"
+                        name="contact"
+                        disabled={editable}
+                        value={contact}
+                        onChange={(e) => {
+                          setUser({ ...user, contact: e.target.value });
+                        }}
+                      ></input>
+                    </Col>
+                  </Row>
+                </Form.Group>
+                <Form.Group>
+                  <Row>
+                    <Col sm="4">
+                      <label>Work Place</label>
+                    </Col>
+                    <Col>
+                      <input
+                        type="text"
+                        disabled={editable}
+                        value={workplace}
+                        onChange={(e) => {
+                          setUser({ ...user, workplace: e.target.value });
+                        }}
+                      ></input>
+                    </Col>
+                  </Row>
+                </Form.Group>
+                <Form.Group>
+                  <Row>
+                    <Col sm="4">
+                      <label>Designation</label>
+                    </Col>
+                    <Col>
+                      <input
+                        type="text"
+                        name="designation"
+                        disabled={editable}
+                        value={designation}
+                        onChange={(e) => {
+                          setUser({ ...user, designation: e.target.value });
+                        }}
+                      ></input>
+                    </Col>
+                  </Row>
+                </Form.Group>
+                <Form.Group>
+                  <Row>
+                    <Col sm="4">
+                      <label>Upload Profile Picture : </label>
+                    </Col>
+                    <Col>
+                      <input
+                        type="file"
+                        accept="image*"
+                        disabled={editable}
+                        ref={el}
+                        onChange={handleChange}
+                      />
+                    </Col>
+                  </Row>
+                </Form.Group>
+                {checkFile && (
+                  <ProgressBar now={progress} label={`${progress}%`} />
+                )}
+                {status === "Success" ? (
+                  <Alert variant="success">
+                    <i class="fa fa-check-circle" aria-hidden="true"></i>
+                    Data Uploaded Successfully!!
+                  </Alert>
+                ) : null}
+                {status === "Error" ? (
+                  <Alert variant="danger">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                    {error}
+                  </Alert>
+                ) : null}
+                {status === "Warning" ? (
+                  <Alert variant="warning">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                    Uploaded file format not supported. Please upload only image
+                    file
+                  </Alert>
+                ) : null}
 
-          <div>
-            <Form>
-              <Form.Group>
-                <Form.Label>About</Form.Label>
-                <input
-                  className="w3-input w3-animate-input"
-                  type="text"
-                  name="about"
-                  value={about}
-                  disabled={editable}
-                  onChange={(e) => {
-                    setUser({ ...user, about: e.target.value });
+                <Button
+                  onClick={updateUser}
+                  style={{
+                    width: "100%",
+                    padding: "14px 28px",
+                    "font-size": "2rem",
+                    cursor: "pointer",
                   }}
-                ></input>
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Contact</Form.Label>
-                <input
-                  class="w3-input w3-animate-input"
-                  type="text"
-                  name="contact"
+                  className="mt-5 member-button"
                   disabled={editable}
-                  value={contact}
-                  onChange={(e) => {
-                    setUser({ ...user, contact: e.target.value });
-                  }}
-                ></input>
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Work Place</Form.Label>
-                <input
-                  class="w3-input w3-animate-input"
-                  type="text"
-                  disabled={editable}
-                  value={workplace}
-                  onChange={(e) => {
-                    setUser({ ...user, workplace: e.target.value });
-                  }}
-                ></input>
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Designation</Form.Label>
-                <input
-                  class="w3-input w3-animate-input"
-                  type="text"
-                  name="designation"
-                  disabled={editable}
-                  value={designation}
-                  onChange={(e) => {
-                    setUser({ ...user, designation: e.target.value });
-                  }}
-                ></input>
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Upload Profile Picture : </Form.Label>
-                <br></br>
-                <input
-                  class="w3-input w3-animate-input"
-                  type="file"
-                  accept="image*"
-                  disabled={editable}
-                  ref={el}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              {checkFile && (
-                <ProgressBar now={progress} label={`${progress}%`} />
-              )}
-              <Button
-                onClick={updateUser}
-                variant="outline-light"
-                className="mt-5"
-                disabled={editable}
-              >
-                Update
-              </Button>
-            </Form>
+                >
+                  Update
+                </Button>
+              </form>
+            </div>
           </div>
         </div>
         <br></br>

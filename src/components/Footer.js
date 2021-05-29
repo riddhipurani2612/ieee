@@ -29,7 +29,7 @@ const Footer = (props) => {
                 <br></br> © Copyright 2021 IEEE GRSS Gujarat Section – All
                 rights reserved. Use of this Web site signifies your agreement
                 to the terms and conditions.
-                <br></br>Support : Developed anf maintained by Department of
+                <br></br>Support : Developed and maintained by Department of
                 Computer Science Gujarat University
               </div>
             </Col>

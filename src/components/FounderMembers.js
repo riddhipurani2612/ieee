@@ -29,7 +29,7 @@ const FounderMembers = () => {
     const role = "Founder Member";
     try {
       response = await axios.get(
-        `http://localhost:5000/user/getmembers/${role}`,
+        `https://grssprojectserver.herokuapp.com/user/getmembers/${role}`,
         config
       );
       setMembers(response.data);
@@ -47,7 +47,7 @@ const FounderMembers = () => {
     if (temp === undefined) {
       return "undefined";
     } else {
-      return "http://localhost:5000/" + temp;
+      return "https://grssprojectserver.herokuapp.com/" + temp;
     }
   };
 

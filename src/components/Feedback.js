@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Form, Button } from "react-bootstrap";
+import { Modal, Form, Button, Alert } from "react-bootstrap";
 import axios from "axios";
 const Feedback = (props) => {
   const [formData, setFormData] = useState({});
@@ -9,6 +9,8 @@ const Feedback = (props) => {
   };
 
   const { name, email, contact, address, subject, message } = formData;
+  const [error, setError] = useState("");
+  const [status, setStatus] = useState("");
 
   const submitClicked = async (e) => {
     e.preventDefault();
@@ -27,8 +29,17 @@ const Feedback = (props) => {
     };
     let response;
     try {
-      response = await axios.post("http://localhost:5000/feedback", data, config);
-      console.log(response.data);
+      response = await axios.post(
+        "https://grssprojectserver.herokuapp.com/feedback",
+        data,
+        config
+      );
+      if (response.statusText === "OK") {
+        setStatus("Success");
+      } else {
+        setStatus("Warning");
+        setError(response.data.message);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -108,7 +119,26 @@ const Feedback = (props) => {
             />
           </Form.Group>
         </Form>
+        {status === "Success" ? (
+          <Alert variant="success">
+            <i class="fa fa-check-circle" aria-hidden="true"></i>
+            Data Uploaded Successfully!!
+          </Alert>
+        ) : null}
+        {status === "Error" ? (
+          <Alert variant="danger">
+            <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+            {error}
+          </Alert>
+        ) : null}
+        {status === "Warning" ? (
+          <Alert variant="warning">
+            <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+            Uploaded file format not supported. Please upload only image file
+          </Alert>
+        ) : null}
       </Modal.Body>
+
       <Modal.Footer>
         <Button variant="primary" onClick={submitClicked}>
           Submit Feedback

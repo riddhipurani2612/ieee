@@ -38,7 +38,7 @@ const Publication = () => {
         },
       };
       response = await axios.get(
-        `http://localhost:5000/techMaterial/materials/${materialtype1}`,
+        `https://grssprojectserver.herokuapp.com/techMaterial/materials/${materialtype1}`,
         config
       );
       setMaterial(response.data);
@@ -55,7 +55,7 @@ const Publication = () => {
         },
       };
       let response = await axios.get(
-        `http://localhost:5000/user/getrole`,
+        `https://grssprojectserver.herokuapp.com/user/getrole`,
         config
       );
       setUser(response.data);
@@ -84,7 +84,7 @@ const Publication = () => {
         },
       };
       let response = axios.delete(
-        `http://localhost:5000/techMaterial/`,
+        `https://grssprojectserver.herokuapp.com/techMaterial/`,
         config
       );
       console.log(response.data);
@@ -105,7 +105,9 @@ const Publication = () => {
             <br></br>
             <ul className="material-content">
               {material.map((materialObj, index) => (
-                <ViewNP
+                <ViewNP 
+                  materialtype = "Publication"
+                  materialfile = {materialObj.materialfile}
                   _id={materialObj._id}
                   title={materialObj.title}
                   publicationlink={materialObj.publicationlink}/>

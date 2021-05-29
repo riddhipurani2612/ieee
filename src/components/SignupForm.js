@@ -1,21 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Button, Container, Form, ProgressBar } from "react-bootstrap";
+import { Row, Col, Container, Form, ProgressBar } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-const Styles = styled.div`
-  .main-bg {
-    background-color: #084c61;
-  }
-  .text {
-    color: #dbf1fb;
-  }
-  .content {
-    max-width: 800px;
-    margin: auto;
-    padding: 50px;
-  }
-`;
+const Styles = styled.div``;
 
 const SignUp = () => {
   const [file, setFile] = useState("");
@@ -26,7 +14,7 @@ const SignUp = () => {
     setProgess(0);
     const file = e.target.files[0]; // accesing file
     console.log(file);
-    const extension = file.split(".").pop() === "jpg";
+    const extension = file.name.split(".").pop() + "";
     if (
       extension === "jpg" ||
       extension === "jpeg" ||
@@ -36,7 +24,8 @@ const SignUp = () => {
       setFile(file); // storing file
       setCheckFile(true);
     } else {
-      alert("Uploaded File type invalid");
+      alert("Only Image File Allowed");
+      e.target.value = null;
     }
   };
   const [signupData, setSignupData] = useState({});
@@ -58,7 +47,7 @@ const SignUp = () => {
     } else {
       try {
         const response = await axios.get(
-          `http://localhost:5000/user/getrole`,
+          `https://grssprojectserver.herokuapp.com/user/getrole`,
           config
         );
         console.log(response.data);
@@ -109,7 +98,7 @@ const SignUp = () => {
         };
         let response;
         try {
-          response = await axios.post("http://localhost:5000/user", formData, {
+          response = await axios.post("https://grssprojectserver.herokuapp.com/user", formData, {
             onUploadProgress: (ProgressEvent) => {
               let progress =
                 Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +
@@ -146,7 +135,7 @@ const SignUp = () => {
         let response;
         try {
           response = await axios.post(
-            "http://localhost:5000/user",
+            "https://grssprojectserver.herokuapp.com/user",
             data,
             config
           );
@@ -162,159 +151,224 @@ const SignUp = () => {
   };
   return (
     <Styles>
-      <div className="main-bg text">
+      <div className="main-bg">
         <Container>
           <br></br>
-          <div
-            className="display-3 text-center"
-            style={{ color: "white", textDecoration: "underline" }}
-          >
-            {header}
-          </div>
-          <br></br>
-          <div className="content w3-panel w3-border w3-border-white">
-            <Form className="text">
-              <Form.Group controlId="signup_fisrtname">
-                <Form.Label>First name</Form.Label>
-                <input
-                  type="text"
-                  class="w3-input"
-                  value={first_name}
-                  name="first_name"
-                  placeholder="Enter first name"
-                  onChange={signupValueChanged}
-                ></input>
-              </Form.Group>
-              <Form.Group controlId="signup_lastname">
-                <Form.Label>Last name</Form.Label>
-                <input
-                  class="w3-input w3-animate-input"
-                  type="text"
-                  value={last_name}
-                  name="last_name"
-                  placeholder="Enter last name"
-                  onChange={signupValueChanged}
-                ></input>
-              </Form.Group>
-              <Form.Group controlId="role">
-                <Form.Label>Choose role</Form.Label>
-                <Form.Control
-                  as="select"
-                  name="role"
-                  value={role}
-                  onChange={signupValueChanged}
+          <div className="form-box w3-panel w3-border w3-border-white boxshadow">
+            <div className="member-header">{header}</div>
+            <br></br>
+            <div className="member-form">
+              <form onSubmit={submit}>
+                <Form.Group controlId="signup_fisrtname">
+                  <Row>
+                    <Col sm="4">
+                      <label>First name</label>
+                    </Col>
+                    <Col>
+                      <input
+                        required
+                        type="text"
+                        class="w3-input"
+                        value={first_name}
+                        name="first_name"
+                        placeholder="Enter first name"
+                        onChange={signupValueChanged}
+                      ></input>
+                    </Col>
+                  </Row>
+                </Form.Group>
+                <Form.Group controlId="signup_lastname">
+                  <Row>
+                    <Col sm="4">
+                      <label>Last name</label>
+                    </Col>
+                    <Col>
+                      <input
+                        type="text"
+                        value={last_name}
+                        name="last_name"
+                        placeholder="Enter last name"
+                        onChange={signupValueChanged}
+                        required
+                      ></input>
+                    </Col>
+                  </Row>
+                </Form.Group>
+                <Form.Group controlId="role">
+                  <Row>
+                    <Col sm="4">
+                      <label>Choose role</label>
+                    </Col>
+                    <Col>
+                      <select
+                        name="role"
+                        className="w3-select"
+                        value={role}
+                        onChange={signupValueChanged}
+                        required
+                      >
+                        <option selected="true" value="">
+                          --Select--
+                        </option>
+                        <option>Student</option>
+                        <option>Professional Member</option>
+                        <option>Founder Member</option>
+                      </select>
+                    </Col>
+                  </Row>
+                </Form.Group>
+                <Form.Group controlId="signup_contact">
+                  <Row>
+                    <Col sm="4">
+                      <label>Contact No</label>
+                    </Col>
+                    <Col>
+                      <input
+                        required
+                        type="text"
+                        value={contact}
+                        name="contact"
+                        placeholder="+91-**********"
+                        onChange={signupValueChanged}
+                      ></input>
+                    </Col>
+                  </Row>
+                </Form.Group>
+                <Form.Group controlId="signup_email">
+                  <Row>
+                    <Col sm="4">
+                      <label>Email</label>
+                    </Col>
+                    <Col>
+                      <input
+                        required
+                        type="text"
+                        value={email}
+                        name="email"
+                        placeholder="example@xzy.com"
+                        onChange={signupValueChanged}
+                      ></input>
+                    </Col>
+                  </Row>
+                </Form.Group>
+                <Form.Group controlId="signup_workplace">
+                  <Row>
+                    <Col sm="4">
+                      <label>Work_Place/University</label>
+                    </Col>
+                    <Col>
+                      <input
+                        required
+                        type="text"
+                        value={workplace}
+                        name="workplace"
+                        placeholder="Enter work place"
+                        onChange={signupValueChanged}
+                      ></input>
+                    </Col>
+                  </Row>
+                </Form.Group>
+                <Form.Group controlId="signup_designation">
+                  <Row>
+                    <Col sm="4">
+                      <label>Designation</label>
+                    </Col>
+                    <Col>
+                      <input
+                        required
+                        type="text"
+                        value={designation}
+                        name="designation"
+                        placeholder="Enter designation"
+                        onChange={signupValueChanged}
+                      ></input>
+                    </Col>
+                  </Row>
+                </Form.Group>
+                <Form.Group>
+                  <Row>
+                    <Col sm="4">
+                      <label>Short Biography</label>
+                    </Col>
+                    <Col>
+                      <input
+                        required
+                        as="textarea"
+                        row="4"
+                        name="about"
+                        value={about}
+                        placeholder="Tell us more about you"
+                        onChange={signupValueChanged}
+                      ></input>
+                    </Col>
+                  </Row>
+                </Form.Group>
+                <Form.Group controlId="signup_password">
+                  <Row>
+                    <Col sm="4">
+                      <label>Password</label>
+                    </Col>
+                    <Col>
+                      <input
+                        required
+                        type="password"
+                        value={password}
+                        name="password"
+                        placeholder="Enter Password"
+                        onChange={signupValueChanged}
+                      ></input>
+                    </Col>
+                  </Row>
+                </Form.Group>
+                <Form.Group controlId="signup_confirmpassword">
+                  <Row>
+                    <Col sm="4">
+                      <label>Confirm Password</label>
+                    </Col>
+                    <Col>
+                      <input
+                        required
+                        type="password"
+                        value={confirmpassword}
+                        name="confirmpassword"
+                        placeholder="Enter Password"
+                        onChange={signupValueChanged}
+                      ></input>
+                    </Col>
+                  </Row>
+                </Form.Group>
+                <Form.Group>
+                  <Row>
+                    <Col sm="4">
+                      <label>Upload Profile Picture </label>
+                    </Col>
+                    <Col>
+                      <input
+                        type="file"
+                        accept="image*"
+                        ref={el}
+                        onChange={handleChange}
+                      />
+                    </Col>
+                  </Row>
+                  <br></br>
+                </Form.Group>
+                {checkFile && (
+                  <ProgressBar now={progress} label={`${progress}%`} />
+                )}
+                <button
+                  className="member-button"
+                  style={{
+                    width: "100%",
+                    padding: "14px 28px",
+                    "font-size": "20px",
+                    cursor: "pointer",
+                  }}
                 >
-                  <option selected="true">--Select--</option>
-                  <option>Student</option>
-                  <option>Professional Member</option>
-                  <option>Founder Member</option>
-                </Form.Control>
-              </Form.Group>
-              <Form.Group controlId="signup_contact">
-                <Form.Label>Contact No</Form.Label>
-                <input
-                  class="w3-input w3-animate-input"
-                  type="text"
-                  value={contact}
-                  name="contact"
-                  placeholder="+91-**********"
-                  onChange={signupValueChanged}
-                ></input>
-              </Form.Group>
-              <Form.Group controlId="signup_email">
-                <Form.Label>Email</Form.Label>
-                <br></br>
-                <input
-                  class="w3-input w3-animate-input"
-                  type="text"
-                  value={email}
-                  name="email"
-                  placeholder="example@xzy.com"
-                  onChange={signupValueChanged}
-                ></input>
-              </Form.Group>
-              <Form.Group controlId="signup_workplace">
-                <Form.Label>Work_Place/University</Form.Label>
-                <input
-                  class="w3-input w3-animate-input"
-                  type="text"
-                  value={workplace}
-                  name="workplace"
-                  placeholder="Enter work place"
-                  onChange={signupValueChanged}
-                ></input>
-              </Form.Group>
-              <Form.Group controlId="signup_designation">
-                <Form.Label>Designation</Form.Label>
-                <input
-                  class="w3-input w3-animate-input"
-                  type="text"
-                  value={designation}
-                  name="designation"
-                  placeholder="Enter designation"
-                  onChange={signupValueChanged}
-                ></input>
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Short Biography</Form.Label>
-                <input
-                  class="w3-input w3-animate-input"
-                  as="textarea"
-                  row="4"
-                  name="about"
-                  value={about}
-                  placeholder="Tell us more about you"
-                  onChange={signupValueChanged}
-                ></input>
-              </Form.Group>
-              <Form.Group controlId="signup_password">
-                <Form.Label>Password</Form.Label>
-                <input
-                  class="w3-input w3-animate-input"
-                  type="password"
-                  value={password}
-                  name="password"
-                  placeholder="Enter Password"
-                  onChange={signupValueChanged}
-                ></input>
-              </Form.Group>
-              <Form.Group controlId="signup_confirmpassword">
-                <Form.Label>Confirm Password</Form.Label>
-                <input
-                  class="w3-input w3-animate-input"
-                  type="password"
-                  value={confirmpassword}
-                  name="confirmpassword"
-                  placeholder="Enter Password"
-                  onChange={signupValueChanged}
-                ></input>
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Upload Profile Picture : </Form.Label>
-                <br></br>
-                <input
-                  type="file"
-                  accept="image*"
-                  ref={el}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              {checkFile && (
-                <ProgressBar now={progress} label={`${progress}%`} />
-              )}
-              <Button
-                onClick={submit}
-                variant="outline-light"
-                style={{
-                  width: "100%",
-                  padding: "14px 28px",
-                  "font-size": "20px",
-                  cursor: "pointer",
-                }}
-              >
-                Sign Up
-              </Button>
-            </Form>
+                  {header}
+                </button>
+              </form>
+            </div>
           </div>
           <br></br>
         </Container>

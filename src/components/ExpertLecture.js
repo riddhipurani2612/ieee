@@ -4,17 +4,6 @@ import { Accordion, Card, Button, Container } from "react-bootstrap";
 import axios from "axios";
 import ViewMaterial from "./ViewMaterial";
 const Styles = styled.div`
-.main-bg {
-  background-color: #084C61;
-}
-.text {
-  color: #dbf1fb;
-}
-  .center{
-    paddingBottom: "56.25%";
-    width: "100%";
-    height: "100%
-  }
 `;
 
 const ExpertLecture = () => {
@@ -30,7 +19,7 @@ const ExpertLecture = () => {
     const materialtype = "Expert Lecture Program";
     try {
       response = await axios.get(
-        `http://localhost:5000/techMaterial/materials/${materialtype}`,
+        `https://grssprojectserver.herokuapp.com/techMaterial/materials/${materialtype}`,
         config
       );
       setMaterial(response.data);
@@ -45,7 +34,7 @@ const ExpertLecture = () => {
     if (temp === undefined) {
       return "undefined";
     } else {
-      return "http://localhost:5000/" + temp;
+      return "https://grssprojectserver.herokuapp.com/" + temp;
     }
   };
   return (

@@ -20,7 +20,6 @@ import AddEvent from "./components/AddEvent";
 import AddMaterial from "./components/AddMaterial";
 import LogoutComp from "./components/LogoutComp";
 import AddMeeting from "./components/AddMeeting";
-import FileUpload from "./components/FileUpload";
 import AddNewsletter from "./components/AddNewsletter";
 import ExpertLecture from "./components/ExpertLecture";
 import DetailedView from "./components/DetailedView";
@@ -32,6 +31,8 @@ import ProfessionalMembers from "./components/ProfessionalMember";
 import StudentMember from "./components/StudentMember";
 import FounderMembers from "./components/FounderMembers";
 import UpdateNewsletter from "./components/UpdateNewsletter";
+import UpdateEvent from "./components/UpdateEvent";
+import Feedbacks from "./components/Feedbacks";
 function App() {
   console.log("App");
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -71,7 +72,6 @@ function App() {
           <Route path="/profile" component={Profile} />
           <Route path="/faq" component={FAQ} />
           <Route path="/addmeeting" component={AddMeeting} />
-          <Route path="/file" component={FileUpload} />
           <Route path="/addnewsletter" component={AddNewsletter} />
           <Route path="/expertlecture" component={ExpertLecture} />
           <Route path="/detailedview" component={DetailedView} />
@@ -79,6 +79,8 @@ function App() {
           <Route path="/professionalmembers" component={ProfessionalMembers} />
           <Route path="/foundermembers" component={FounderMembers}/>
           <Route path="/studentmembers" component={StudentMember} />
+          <Route path="/updateevent" component={UpdateEvent}/>
+          <Route path="/feedbacks"component={Feedbacks}/> 
           <Route
             path="/logout"
             component={LogoutComp}

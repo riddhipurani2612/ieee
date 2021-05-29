@@ -1,21 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Form, Container, Button, ProgressBar } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Form,
+  Container,
+  Button,
+  ProgressBar,
+  Alert,
+} from "react-bootstrap";
 import axios from "axios";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-const Styles = styled.div`
-  .main-bg {
-    background-color: #084c61;
-  }
-  .text {
-    color: #dbf1fb;
-  }
-  .content {
-    max-width: 500px;
-    margin: auto;
-    padding: 50px;
-  }
-`;
+import "./main.css";
+const Styles = styled.div``;
 const AddMaterial = () => {
   let response;
   const history = useHistory();
@@ -31,7 +28,7 @@ const AddMaterial = () => {
       history.push("/");
     }
     try {
-      response = await axios.get(`http://localhost:5000/user/getrole`, config);
+      response = await axios.get(`https://grssprojectserver.herokuapp.com/user/getrole`, config);
       console.log(response.data);
       if (response.data === "Student") {
         history.push("/");
@@ -52,11 +49,19 @@ const AddMaterial = () => {
     setProgess(0);
     const file = e.target.files[0]; // accesing file
     console.log(file);
-    setFile(file); // storing file
-    setCheckFile(true);
+    const extension = file.name.split(".").pop() + "";
+    if (extension === "pdf") {
+      setFile(file); // storing file
+      setCheckFile(true);
+    } else {
+      setStatus("Warning");
+      alert(`${extension} file is not allowed`);
+      e.target.value = null;
+    }
   };
+  const [error, setError] = useState("");
+  const [status, setStatus] = useState("");
   const { title, about, publicationlink, materialtype } = material;
-  const [message, setMessage] = useState("");
   const uploadMaterial = async (e) => {
     e.preventDefault();
     let formData = new FormData();
@@ -76,7 +81,7 @@ const AddMaterial = () => {
       let response;
       try {
         response = await axios.post(
-          "http://localhost:5000/techMaterial",
+          "https://grssprojectserver.herokuapp.com/techMaterial",
           formData,
           config,
           {
@@ -88,7 +93,12 @@ const AddMaterial = () => {
             },
           }
         );
-        console.log(response.data);
+        if (response.statusText === "OK") {
+          setStatus("Success");
+        } else {
+          setStatus("Warning");
+          setError(response.data.message);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -109,11 +119,16 @@ const AddMaterial = () => {
       let response;
       try {
         response = await axios.post(
-          "http://localhost:5000/techMaterial",
+          "https://grssprojectserver.herokuapp.com/techMaterial",
           data,
           config
         );
-        console.log(response.data);
+        if (response.statusText === "OK") {
+          setStatus("Success");
+        } else {
+          setStatus("Warning");
+          setError(response.data.message);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -121,77 +136,106 @@ const AddMaterial = () => {
   };
   return (
     <Styles>
-      <Container className="main-bg text">
+      <Container className="main-bg">
         <br></br>
-        <div className="content w3-panel w3-border w3-border-white">
-          <div
-            style={{ color: "white", textDecoration: "underline", textAlign : "center", fontSize : "1.5rem" }}
-          >
-            Add Newsletter/Publication
+        <div className="form-box w3-panel w3-border w3-border-white boxshadow">
+          <div className="material-header">
+            Add Newsletter/<br></br>Publication
           </div>
           <br></br>
-          <Form>
-            <Form.Group>
-              <Form.Label>Material Type : </Form.Label>
-              <Form.Control
-                class="w3-input w3-animate-input"
-                as="select"
-                name="materialtype"
-                value={materialtype}
-                onChange={valueChanged}
-              >
-                <option>-- Select --</option>
-                <option>Publication</option>
-                <option>Newsletter</option>
-              </Form.Control>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Title : </Form.Label>
-              <input
-                class="w3-input w3-animate-input"
-                type="text"
-                name="title"
-                value={title}
-                onChange={valueChanged}
-              ></input>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Publication Link : </Form.Label>
-              <input
-                class="w3-input w3-animate-input"
-                type="text"
-                name="publicationlink"
-                value={publicationlink}
-                onChange={valueChanged}
-              ></input>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Upload File : </Form.Label>
-              <br></br>
-              <input
-                type="file"
-                accept="application/pdf"
-                ref={el}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            {checkFile && <ProgressBar now={progress} label={`${progress}%`} />}
-            <center>
-              <Button
-                variant="outline-light"
-                style={{
-                  width: "100%",
-                  padding: "14px 28px",
-                  "font-size": "16px",
-                  cursor: "pointer",
-                }}
-                onClick={uploadMaterial}
-              >
-                Upload
-              </Button>
-            </center>
-          </Form>
-          <br></br>
+          <div class="material-form">
+            <form onSubmit={uploadMaterial}>
+              <Form.Group>
+                <Row>
+                  <Col sm="4">
+                    <label>Material Type : </label>
+                    <span style={{ color: "red" }}>*</span>
+                  </Col>
+                  <Col>
+                    <select
+                      required
+                      class="w3-select"
+                      name="materialtype"
+                      value={materialtype}
+                      onChange={valueChanged}
+                      required
+                    >
+                      <option value="">-- Select --</option>
+                      <option>Publication</option>
+                      <option>Newsletter</option>
+                    </select>
+                  </Col>
+                </Row>
+              </Form.Group>
+              <Form.Group>
+                <Row>
+                  <Col sm="4">
+                    <label>Title : </label>
+                    <span style={{ color: "red" }}>*</span>
+                  </Col>
+                  <Col>
+                    <input
+                      placeholder="Enter Title"
+                      class="w3-input w3-animate-input"
+                      type="text"
+                      name="title"
+                      value={title}
+                      onChange={valueChanged}
+                      required
+                    ></input>
+                  </Col>
+                </Row>
+              </Form.Group>
+              <Form.Group>
+                <Row>
+                  <Col sm="4">
+                    <label>Publication Link : </label>
+                  </Col>
+                  <Col>
+                    <input
+                      placeholder="Enter URL"
+                      class="w3-input w3-animate-input"
+                      type="url"
+                      name="publicationlink"
+                      value={publicationlink}
+                      onChange={valueChanged}
+                    ></input>
+                  </Col>
+                </Row>
+              </Form.Group>
+              <Form.Group>
+                <Row>
+                  <Col sm="4">
+                    <label>Upload File : </label>
+                  </Col>
+                  <Col>
+                    <input
+                      type="file"
+                      accept="application/pdf"
+                      ref={el}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Row>
+              </Form.Group>
+              {checkFile && (
+                <ProgressBar now={progress} label={`${progress}%`} />
+              )}
+              <center>
+                <Button
+                  className="material-button"
+                  style={{
+                    width: "100%",
+                    padding: "14px 28px",
+                    "font-size": "16px",
+                    cursor: "pointer",
+                  }}
+                >
+                  Upload
+                </Button>
+              </center>
+            </form>
+          </div>
         </div>
         <br></br>
       </Container>

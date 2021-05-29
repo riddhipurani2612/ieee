@@ -16,7 +16,7 @@ const Events = () => {
       },
     };
     try {
-      response = await axios.get("http://localhost:5000/event", config);
+      response = await axios.get("https://grssprojectserver.herokuapp.com/event", config);
       setEvents(response.data);
       console.log(response.data);
     } catch (err) {
@@ -27,7 +27,7 @@ const Events = () => {
     if (temp === undefined) {
       return "undefined";
     } else {
-      return "http://localhost:5000/" + temp;
+      return "https://grssprojectserver.herokuapp.com/" + temp;
     }
   };
   const dateFormate = (date) => {
@@ -44,6 +44,7 @@ const Events = () => {
 
             {events.map((eventObj, index) => (
               <EventView
+                _id={eventObj._id}
                 name={eventObj.eventname}
                 date={dateFormate(eventObj.date)}
                 about={eventObj.about}

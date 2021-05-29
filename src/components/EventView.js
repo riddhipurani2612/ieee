@@ -29,7 +29,7 @@ const UpcomingEventView = (props) => {
         },
       };
       let response = await axios.get(
-        `http://localhost:5000/user/getrole`,
+        `https://grssprojectserver.herokuapp.com/user/getrole`,
         config
       );
       setUser(response.data);
@@ -43,7 +43,7 @@ const UpcomingEventView = (props) => {
     } catch (error) {
       console.log(error);
     }
-  },[]);
+  }, []);
   const [showModal, setModal] = useState(false);
   const updatedetails = () => {
     localStorage.setItem("eventIdUpdate", props._id);
@@ -57,7 +57,7 @@ const UpcomingEventView = (props) => {
         },
       };
       let response = axios.delete(
-        `http://localhost:5000/techMaterial/${props._id}`,
+        `https://grssprojectserver.herokuapp.com/event/${props._id}`,
         config
       );
       console.log(response.data);
@@ -78,7 +78,6 @@ const UpcomingEventView = (props) => {
       ></AboutView>
 
       <Row className="mx-2">
-        <div className="my-3"> </div>
         {props.eventimage != "undefined" && (
           <Col xs={{ span: 12, order: 2 }} md={{ span: 6, order: 2 }}>
             <img
@@ -91,35 +90,35 @@ const UpcomingEventView = (props) => {
           </Col>
         )}
 
-        <Col
-          xs={{ span: 12, order: 1 }}
-          md={{ span: 6, order: 1 }}
-          className="event-content"
-        >
-          <div style={{ fontWeight: "500" }}>{props.name}</div>
-          <br></br>
-          By {props.hostedby} <br></br>
-          {props.date}
-          <br></br>
-          {viewReadMode && (
-            <button
-              className="event-button"
-              onClick={() => setModal(true)}
-              title="Feedback"
-            >
-              Know More
-            </button>
-          )}
-          {!student && (
-            <button className="event-button" onClick={updatedetails}>
-              <i class="fa fa-edit" aria-hidden="true"></i>
-            </button>
-          )}
-          {!student && (
-            <button onClick={deletedetails} className="event-button">
-              <i class="fa fa-trash" aria-hidden="true"></i>
-            </button>
-          )}
+        <Col xs={{ span: 12, order: 1 }} md={{ span: 6, order: 1 }}>
+          <div className="event-form">
+            <div className="event-content">{props.name}</div>
+            <br></br>
+            <div style={{ color: "grey" }}>
+              By {props.hostedby} <br></br>
+              {props.date}
+            </div>
+            <br></br>
+            {viewReadMode && (
+              <button
+                className="event-button"
+                onClick={() => setModal(true)}
+                title="Feedback"
+              >
+                Know More
+              </button>
+            )}
+            {role === "Admin" && (
+              <button className="event-button" onClick={updatedetails}>
+                <i class="fa fa-edit" aria-hidden="true"></i>
+              </button>
+            )}
+            {role === "Admin" && (
+              <button onClick={deletedetails} className="event-button">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </button>
+            )}
+          </div>
         </Col>
       </Row>
       <hr></hr>

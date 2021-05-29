@@ -1,22 +1,10 @@
 import React, { useState, setState } from "react";
-import { Button, Container, Form } from "react-bootstrap";
+import { Button, Container, Form, Row, Col } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-
-const Styles = styled.div`
-  .main-bg {
-    background: #084c61;
-  }
-  .text {
-    color: white;
-  }
-  .content {
-    max-width: 500px;
-    margin: auto;
-    padding: 50px;
-  }
-`;
+import "./main.css";
+const Styles = styled.div``;
 
 const Login = (props) => {
   const [formData, setFormData] = useState({});
@@ -38,7 +26,7 @@ const Login = (props) => {
     };
     let response;
     try {
-      response = await axios.put("http://localhost:5000/user", data, config);
+      response = await axios.put("https://grssprojectserver.herokuapp.com/user", data, config);
       console.log(response.data);
       localStorage.setItem("token", response.data.token);
       props.setLogin(true);
@@ -50,54 +38,63 @@ const Login = (props) => {
 
   return (
     <Styles>
-      <Container className="main-bg text">
-        <div
-          className="display-3 text-center"
-          style={{ color: "white", textDecoration: "underline" }}
-        >
-          Login
-        </div>
+      <Container className="main-bg">
         <br></br>
-        <div className="content w3-panel w3-border w3-border-white">
-          <Form>
-            <Form.Group controlID="login_email">
-              <Form.Label>email</Form.Label>
-              <input
-                class="w3-input w3-animate-input"
-                type="text"
-                value={email}
-                name="email"
-                placeholder="Enter email"
-                onChange={valueChange}
-              ></input>
-            </Form.Group>
-            <Form.Group controlID="login_password">
-              <Form.Label>Password</Form.Label>
-              <input
-                class="w3-input w3-animate-input"
-                type="password"
-                name="password"
-                value={password}
-                placeholder="password"
-                onChange={valueChange}
-              ></input>
-            </Form.Group>
-            <Button
-              onClick={loginClicked}
-              variant="outline-light"
-              style={{
-                width: "100%",
-                padding: "14px 28px",
-                "font-size": "20px",
-                cursor: "pointer",
-              }}
-            >
-              Login
-            </Button>
-          </Form>
-          <div className="text">
-            Do not have account?
-            <a href="/signup">Click here</a> to join!!
+        <div className="form-box w3-panel w3-border w3-border-white boxshadow">
+          <div className="member-header">Login</div>
+          <br></br>
+          <div class="member-form">
+            <form onSubmit={loginClicked}>
+              <Form.Group controlID="login_email">
+                <Row>
+                  <Col sm="4">
+                    <label>Email</label>
+                  </Col>
+                  <Col>
+                    <input
+                      type="text"
+                      value={email}
+                      name="email"
+                      placeholder="Enter email"
+                      onChange={valueChange}
+                      required
+                    ></input>
+                  </Col>
+                </Row>
+              </Form.Group>
+              <Form.Group controlID="login_password">
+                <Row>
+                  <Col sm="4">
+                    <label>Password</label>
+                  </Col>
+                  <Col>
+                    <input
+                      type="password"
+                      name="password"
+                      value={password}
+                      placeholder="Enter password"
+                      onChange={valueChange}
+                      required
+                    ></input>
+                  </Col>
+                </Row>
+              </Form.Group>
+              <button
+                className="member-button"
+                style={{
+                  width: "100%",
+                  padding: "14px 28px",
+                  "font-size": "20px",
+                  cursor: "pointer",
+                }}
+              >
+                Login
+              </button>
+            </form>
+            <div className="text">
+              Do not have account?<br></br>
+              <a href="/signup">Click here</a> to join!!
+            </div>
           </div>
         </div>
         <br></br>

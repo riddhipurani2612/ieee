@@ -1,52 +1,25 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
-import {Alert} from "react-bootstrap";
 import axios from "axios";
-import "./main.css";
-import {
-  Form,
-  Button,
-  Container,
-  ProgressBar,
-  Row,
-  Col,
-} from "react-bootstrap";
-const Styles = styled.div`
-  .box {
-    max-width: 700px;
-    margin: auto;
-    padding: 50px;
-  }
-`;
-const AddEvent = () => {
-  let response;
+import { Form, Container, Row, Col, ProgressBar, Alert } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+const Styles = styled.div``;
+const UpdateEvent = (props) => {
+  const [events, setEvents] = useState({});
+  const {
+    eventname,
+    date,
+    time,
+    about,
+    hostedby,
+    registrationlink,
+    eventimage,
+  } = events;
+  const history = useHistory();
   const [error, setError] = useState("");
   const [status, setStatus] = useState("");
-  const [checkFile, setCheckFile] = useState(false);
-  const history = useHistory();
-  const token = localStorage.getItem("token");
-  let config = {
-    headers: {
-      "Content-Type": "application/json",
-      "x-auth-token": token,
-    },
-  };
-  useEffect(async () => {
-    if (token === null) {
-      history.goBack();
-    }
-    try {
-      response = await axios.get(`https://grssprojectserver.herokuapp.com/user/getrole`, config);
-      console.log(response.data);
-      if (response.data.role != "Admin") {
-        history.goBack();
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
   const [file, setFile] = useState("");
+  const [checkFile, setCheckFile] = useState(false);
   const [progress, setProgess] = useState(0);
   const el = useRef(); // accesing input element
   const handleChange = (e) => {
@@ -68,60 +41,106 @@ const AddEvent = () => {
       e.target.value = null;
     }
   };
-  const [events, setEvents] = useState({});
-  const valueChanged = (e) => {
-    setEvents({ ...events, [e.target.name]: e.target.value });
-  };
-  const { eventname, date, time, about, hostedby, registrationlink } = events;
-  const addevent = async (e) => {
-    e.preventDefault();
-    let formData = new FormData();
-    formData.append("eventname", eventname);
-    formData.append("date", date.toString());
-    formData.append("time", time);
-    formData.append("about", about);
-    formData.append("registrationlink", registrationlink);
-    formData.append("hostedby", hostedby);
-    formData.append("file", file);
-    let config = {
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-    };
-    let response;
+  const updatedetails = async (e) => {
     try {
-      response = await axios.post("https://grssprojectserver.herokuapp.com/event", formData, {
-        onUploadProgress: (ProgressEvent) => {
-          let progress =
-            Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +
-            "%";
-          setProgess(progress);
-        },
-      });
-      if (response.statusText === "OK") {
-        setStatus("Success");
+      e.preventDefault();
+      let formData = new FormData();
+      formData.append("eventname", eventname);
+      formData.append("date", date.toString());
+      formData.append("about", about);
+      formData.append("registrationlink", registrationlink);
+      formData.append("hostedby", hostedby);
+      if (file != "") {
+        formData.append("file", file);
       } else {
-        setStatus("Warning");
-        setError(response.data.message);
+        formData.append("file", eventimage);
+      }
+      const config = {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      };
+      let response;
+      try {
+        response = await axios.patch(
+          `https://grssprojectserver.herokuapp.com/event/${localStorage.getItem(
+            "eventIdUpdate"
+          )}`,
+          formData,
+          config,
+          {
+            onUploadProgress: (ProgressEvent) => {
+              let progress =
+                Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +
+                "%";
+              setProgess(progress);
+            },
+          }
+        );
+        if (response.statusText === "OK") {
+          setStatus("Success");
+        } else {
+          setStatus("Warning");
+          setError(response.data.message);
+        }
+      } catch (err) {
+        console.log(err.response);
+        console.log(err.request);
+        console.log(err.message);
       }
     } catch (err) {
       console.log(err);
     }
   };
+
+  useEffect(async () => {
+    let response;
+    console.log("event");
+    if (localStorage.getItem("eventIdUpdate")) {
+      console.log("gg");
+      let config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      try {
+        response = await axios.get(
+          `https://grssprojectserver.herokuapp.com/event/get/${localStorage.getItem(
+            "eventIdUpdate"
+          )}`,
+          config
+        );
+        console.log(localStorage.getItem("eventIdUpdate"));
+        console.log("response");
+        setEvents(response.data);
+        console.log(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }, []);
+  const dateFormate = (date) => {
+    if (date != undefined) {
+      var temp = date.split("T");
+      return temp[0];
+    }
+  };
+
   return (
     <Styles>
       <div className="main-bg">
         <Container>
           <br></br>
           <div className="form-box w3-panel w3-border w3-border-white boxshadow">
-            <div className="event-header">Add Event</div>
+            <div className="event-header">Update Event</div>
             <br></br>
             <div className="event-form">
-              <form onSubmit={addevent}>
+              <br></br>
+              <form onSubmit={updatedetails}>
                 <Form.Group>
                   <Row>
                     <Col sm="4">
-                      <label className="font-label">Event Name :</label>
+                      <label>Event Name : </label>
                       <span style={{ color: "red" }}>*</span>
                     </Col>
                     <Col>
@@ -130,7 +149,9 @@ const AddEvent = () => {
                         type="text"
                         name="eventname"
                         value={eventname}
-                        onChange={valueChanged}
+                        onChange={(e) => {
+                          setEvents({ ...events, eventname: e.target.value });
+                        }}
                         required
                       ></input>
                     </Col>
@@ -146,8 +167,10 @@ const AddEvent = () => {
                       <input
                         type="date"
                         name="date"
-                        value={date}
-                        onChange={valueChanged}
+                        value={dateFormate(date)}
+                        onChange={(e) => {
+                          setEvents({ ...events, date: e.target.value });
+                        }}
                         required
                       ></input>
                     </Col>
@@ -162,11 +185,12 @@ const AddEvent = () => {
                     <Col>
                       <input
                         placeholder="Enter Details of Event"
-                        class="w3-input w3-animate-input"
                         type="text"
                         name="about"
                         value={about}
-                        onChange={valueChanged}
+                        onChange={(e) => {
+                          setEvents({ ...events, about: e.target.value });
+                        }}
                         required
                       ></input>
                     </Col>
@@ -181,11 +205,12 @@ const AddEvent = () => {
                     <Col>
                       <input
                         placeholder="Enter Host Name"
-                        class="w3-input w3-animate-input"
                         type="text"
                         name="hostedby"
                         value={hostedby}
-                        onChange={valueChanged}
+                        onChange={(e) => {
+                          setEvents({ ...events, hostedby: e.target.value });
+                        }}
                         required
                       ></input>
                     </Col>
@@ -195,17 +220,19 @@ const AddEvent = () => {
                   <Row>
                     <Col sm="4">
                       <label>Registration Link : </label>
-                      <span style={{ color: "red" }}>*</span>
                     </Col>
                     <Col>
                       <input
+                        type="url"
                         placeholder="Enter URL"
-                        class="w3-input w3-animate-input"
-                        type="text"
                         name="registrationlink"
                         value={registrationlink}
-                        onChange={valueChanged}
-                        required
+                        onChange={(e) => {
+                          setEvents({
+                            ...events,
+                            registrationlink: e.target.value,
+                          });
+                        }}
                       ></input>
                     </Col>
                   </Row>
@@ -224,15 +251,11 @@ const AddEvent = () => {
                       />
                     </Col>
                   </Row>
-                  <br></br>
                 </Form.Group>
                 {checkFile && (
                   <ProgressBar now={progress} label={`${progress}%`} />
                 )}
-                <br></br>
-                {checkFile && (
-                  <ProgressBar now={progress} label={`${progress}%`} />
-                )}
+
                 <br></br>
                 {status === "Success" ? (
                   <Alert variant="success">
@@ -253,17 +276,16 @@ const AddEvent = () => {
                     file
                   </Alert>
                 ) : null}
-
                 <button
                   className="event-button"
                   style={{
                     width: "100%",
                     padding: "14px 28px",
-                    "font-size": "2rem",
+                    "font-size": "3rem",
                     cursor: "pointer",
                   }}
                 >
-                  Add Event
+                  Update Event
                 </button>
               </form>
             </div>
@@ -274,4 +296,4 @@ const AddEvent = () => {
     </Styles>
   );
 };
-export default AddEvent;
+export default UpdateEvent;

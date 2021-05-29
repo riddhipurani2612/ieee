@@ -1,23 +1,21 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { Form, Container, Button, Modal, ProgressBar } from "react-bootstrap";
+import {
+  Form,
+  Container,
+  Button,
+  Row,
+  Col,
+  Alert,
+  ProgressBar,
+} from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-const Styles = styled.div`
-  .main-bg {
-    background-color: #084c61;
-  }
-  .text {
-    color: #dbf1fb;
-  }
-  .content {
-    max-width: 500px;
-    margin: auto;
-    padding: 50px;
-  }
-`;
+const Styles = styled.div``;
 const UpdateMaterial = (props) => {
   const history = useHistory();
+  const [error, setError] = useState("");
+  const [status, setStatus] = useState("");
   const [file, setFile] = useState("");
   const [checkFile, setCheckFile] = useState(false);
   const [progress, setProgess] = useState(0);
@@ -26,8 +24,15 @@ const UpdateMaterial = (props) => {
     setProgess(0);
     const file = e.target.files[0]; // accesing file
     console.log(file);
-    setFile(file); // storing file
-    setCheckFile(true);
+    const extension = file.name.split(".").pop() + "";
+    if (extension === "pdf") {
+      setFile(file); // storing file
+      setCheckFile(true);
+    } else {
+      setStatus("Warning");
+      alert(`${extension} file is not allowed`);
+      e.target.value = null;
+    }
   };
   const [material, setMaterial] = useState({});
   const { title, about, youtubelink, materialtype, materialfile } = material;
@@ -42,7 +47,11 @@ const UpdateMaterial = (props) => {
         formData.append("about", about);
         formData.append("youtubelink", youtubelink);
         formData.append("materialtype", materialtype);
-        formData.append("file", file);
+        if (file != "") {
+          formData.append("file", file);
+        } else {
+          formData.append("file", materialfile);
+        }
         console.log(token);
         const config = {
           headers: {
@@ -53,7 +62,7 @@ const UpdateMaterial = (props) => {
         let response;
         try {
           response = await axios.patch(
-            `http://localhost:5000/techMaterial/${localStorage.getItem(
+            `https://grssprojectserver.herokuapp.com/techMaterial/${localStorage.getItem(
               "materialIdUpdate"
             )}`,
             formData,
@@ -68,7 +77,12 @@ const UpdateMaterial = (props) => {
               },
             }
           );
-          console.log(response.data);
+          if (response.statusText === "OK") {
+            setStatus("Success");
+          } else {
+            setStatus("Warning");
+            setError(response.data.message);
+          }
         } catch (err) {
           console.log(err.response);
           console.log(err.request);
@@ -92,16 +106,18 @@ const UpdateMaterial = (props) => {
         let response;
         try {
           response = await axios.patch(
-            `http://localhost:5000/techMaterial/${localStorage.getItem(
+            `https://grssprojectserver.herokuapp.com/techMaterial/${localStorage.getItem(
               "materialIdUpdate"
             )}`,
             data,
             config
           );
-          console.log(response.data);
-          localStorage.setItem("materialId", response.data._id);
-          localStorage.removeItem("materialIdUpdate");
-          history.push("/detailedview");
+          if (response.statusText === "OK") {
+            setStatus("Success");
+          } else {
+            setStatus("Warning");
+            setError(response.data.message);
+          }
         } catch (err) {
           console.log(err);
         }
@@ -122,7 +138,7 @@ const UpdateMaterial = (props) => {
       };
       try {
         response = await axios.get(
-          `http://localhost:5000/techMaterial/${localStorage.getItem(
+          `https://grssprojectserver.herokuapp.com/techMaterial/${localStorage.getItem(
             "materialIdUpdate"
           )}`,
           config
@@ -136,92 +152,150 @@ const UpdateMaterial = (props) => {
   }, []);
   return (
     <Styles>
-      <Container className="main-bg text">
-        <br></br>
-        <div className="content w3-panel w3-border w3-border-white">
-          <div
-            className="display-3 text-center"
-            style={{ color: "white", textDecoration: "underline" }}
-          >
-            Update Material
-          </div>
+      <div className="main-bg">
+        <Container>
           <br></br>
-          <Form>
-            <Form.Group>
-              <Form.Label>Lecture Type : </Form.Label>
-              <Form.Control
-                as="select"
-                name="materialtype"
-                value={materialtype}
-                onChange={(e) => {
-                  setMaterial({ ...material, materialtype: e.target.value });
+          <div className="form-box w3-panel w3-border w3-border-white boxshadow">
+            <div className="material-header">Update Material</div>
+            <br></br>
+            <form onSubmit={updatedetails}>
+              <Form.Group>
+                <Row>
+                  <Col sm="4">
+                    <label>Lecture Type : </label>
+                    <span style={{ color: "red" }}>*</span>
+                  </Col>
+                  <Col>
+                    <select
+                      name="materialtype"
+                      value={materialtype}
+                      onChange={(e) => {
+                        setMaterial({
+                          ...material,
+                          materialtype: e.target.value,
+                        });
+                      }}
+                      required
+                      className="w3-select"
+                    >
+                      <option value="">-- Select Lecture Type --</option>
+                      <option>Distinguished Lecture Program</option>
+                      <option>Expert Lecture Program</option>
+                    </select>
+                  </Col>
+                </Row>
+              </Form.Group>
+              <Form.Group>
+                <Row>
+                  <Col sm="4">
+                    <label>Title : </label>
+                    <span style={{ color: "red" }}>*</span>
+                  </Col>
+                  <Col>
+                    <input
+                      placeholder="Enter Title"
+                      type="text"
+                      name="title"
+                      value={title}
+                      onChange={(e) => {
+                        setMaterial({ ...material, title: e.target.value });
+                      }}
+                      reuired
+                    ></input>
+                  </Col>
+                </Row>
+              </Form.Group>
+              <Form.Group>
+                <Row>
+                  <Col sm="4">
+                    <label>About : </label>
+                    <span style={{ color: "red" }}>*</span>
+                  </Col>
+                  <Col>
+                    <textarea
+                      placeholder="More about Lecture"
+                      className="textarea"
+                      name="about"
+                      value={about}
+                      onChange={(e) => {
+                        setMaterial({ ...material, about: e.target.value });
+                      }}
+                      required
+                      row={30}
+                    ></textarea>{" "}
+                  </Col>
+                </Row>
+              </Form.Group>
+              <Form.Group>
+                <Row>
+                  <Col sm="4">
+                    <label>YouTube Link : </label>
+                  </Col>
+                  <Col>
+                    <input
+                      placeholder="Enter URL"
+                      type="url"
+                      name="youtubelink"
+                      value={youtubelink}
+                      onChange={(e) => {
+                        setMaterial({
+                          ...material,
+                          youtubelink: e.target.value,
+                        });
+                      }}
+                    ></input>
+                  </Col>
+                </Row>
+              </Form.Group>
+              <Form.Group>
+                <Row>
+                  <Col sm="4">
+                    <label>Upload File : </label>
+                  </Col>
+                  <Col>
+                    <input type="file" ref={el} onChange={handleChange} />
+                  </Col>
+                </Row>
+              </Form.Group>
+              {checkFile && (
+                <ProgressBar now={progress} label={`${progress}%`} />
+              )}
+              {status === "Success" ? (
+                <Alert variant="success">
+                  <i class="fa fa-check-circle" aria-hidden="true"></i>
+                  Data Uploaded Successfully!!
+                </Alert>
+              ) : null}
+              {status === "Error" ? (
+                <Alert variant="danger">
+                  <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                  {error}
+                </Alert>
+              ) : null}
+              {status === "Warning" ? (
+                <Alert variant="warning">
+                  <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                  Uploaded file format not supported. Please upload only image
+                  file
+                </Alert>
+              ) : null}
+
+              <Button
+                className="material-button"
+                style={{
+                  width: "100%",
+                  padding: "14px 28px",
+                  "font-size": "16px",
+                  cursor: "pointer",
                 }}
               >
-                <option>-- Select --</option>
-                <option>Distinguished Lecture Program</option>
-                <option>Expert Lecture Program</option>
-              </Form.Control>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Title : </Form.Label>
-              <Form.Control
-                type="text"
-                name="title"
-                value={title}
-                onChange={(e) => {
-                  setMaterial({ ...material, title: e.target.value });
-                }}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>About : </Form.Label>
-              <Form.Control
-                as="textarea"
-                name="about"
-                value={about}
-                onChange={(e) => {
-                  setMaterial({ ...material, about: e.target.value });
-                }}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>YouTube Link : </Form.Label>
-              <Form.Control
-                type="text"
-                name="youtubelink"
-                value={youtubelink}
-                onChange={(e) => {
-                  setMaterial({ ...material, youtubelink: e.target.value });
-                }}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Upload File : </Form.Label>
-              <br></br>
-              <input
-                type="file"
-                accept="application/pdf"
-                ref={el}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            {checkFile && <ProgressBar now={progress} label={`${progress}%`} />}
-            <Button
-              variant="outline-light"
-              style={{
-                width: "100%",
-                padding: "14px 28px",
-                "font-size": "16px",
-                cursor: "pointer",
-              }}
-              onClick={updatedetails}
-            >
-              Update
-            </Button>
-          </Form>
-        </div>
-        <br></br>
-      </Container>
+                Update
+              </Button>
+            </form>
+          </div>
+          <br></br>
+        </Container>
+      </div>
     </Styles>
   );
 };

@@ -59,7 +59,7 @@ const ContactUs = () => {
                   </p>
                 </Col>
               </Row>
-
+              <hr></hr>
               <Row>
                 <Col xs={{ span: 12, order: 1 }} md={{ span: 6, order: 2 }}>
                   <img

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row, Carousel } from "react-bootstrap";
 import styled from "styled-components";
 import YouTube from "react-youtube";
 import Feedback from "./Feedback";
@@ -9,6 +9,13 @@ import axios from "axios";
 import ScrollAnimation from "react-animate-on-scroll";
 import "animate.css/animate.min.css";
 import "./main.css";
+import img1 from "../assets/1.jpg";
+import img2 from "../assets/2.jpg";
+import img3 from "../assets/3.jpg";
+import img4 from "../assets/4.jpg";
+import img5 from "../assets/5.jpg";
+import grss from "../assets/grss_logo.png";
+import ieee from "../assets/ieee.png";
 const Styles = styled.div``;
 const Home = (props) => {
   const [eventValues, setEventValues] = useState(false);
@@ -18,11 +25,12 @@ const Home = (props) => {
   };
   const [events, setEvents] = useState([]);
   const { eventname, date, time, about, hostedby } = events;
-  const dateFormate = (date) =>{
-    var temp =date.split('T') 
+  const dateFormate = (date) => {
+    var temp = date.split("T");
     return temp[0];
   };
   useEffect(async () => {
+    console.log("useEffect");
     let response;
     let config = {
       headers: {
@@ -31,26 +39,25 @@ const Home = (props) => {
     };
     try {
       response = await axios.get(
-        "http://localhost:5000/event/upcoming",
+        "https://grssprojectserver.herokuapp.com/event/upcoming",
         config
       );
+
       if (response.data.length) {
         setEvents(response.data);
         setEventValues(true);
       }
-      console.log(response.data);
     } catch (err) {
       console.log(err);
     }
   }, []);
-  const link = (links) =>{
-    if(links===undefined){
-      return "undefined"
+  const link = (links) => {
+    if (links === undefined) {
+      return "undefined";
+    } else {
+      return links;
     }
-    else{
-      return links
-    }
-  }
+  };
   const [showFeedbackModal, setFeedbackModal] = useState(false);
   return (
     <Styles>
@@ -66,40 +73,41 @@ const Home = (props) => {
           />
           <Button
             className="mt-5"
-            style={{ position: "fixed", backgroundColor: "white" }}
+            style={{ position: "fixed" }}
             variant="outline-dark"
             onClick={() => setFeedbackModal(true)}
             title="Feedback"
           >
-            <i class="fa fa-comments-o fa-2x" aria-hidden="true"></i>
+            <i class="fa fa-comments-o" aria-hidden="true"></i>
           </Button>
+          <Carousel fade>
+            <Carousel.Item>
+              <img className="d-block w-100" src={img5} alt="First slide" />
+            </Carousel.Item>
+            <Carousel.Item>
+              <img className="d-block w-100" src={img2} alt="Second slide" />
+            </Carousel.Item>
+            <Carousel.Item>
+              <img className="d-block w-100" src={img4} alt="Third slide" />
+            </Carousel.Item>
+            <Carousel.Item>
+              <img className="d-block w-100" src={img3} alt="Fourth slide" />
+            </Carousel.Item>
 
-          <Container>
-            <ScrollAnimation
-              animateIn="animate__backInDown"
-              animateOut="animate__backOutUp"
-            >
-              <div className="home-intro">
-                <br></br>Welcome To IEEE<br></br>
-                Gujarat Section<br></br> GRSS Chapter<br></br>
-                <br></br>Scroll to explore more
-                <br></br>
-                <Link to="who" spy={true} smooth={true}>
-                  <div className="heading">
-                    <i className="fa fa-chevron-down my-5"></i>
-                  </div>
-                </Link>
-              </div>
-            </ScrollAnimation>
-          </Container>
+            <Carousel.Item>
+              <img className="d-block w-100" src={img1} alt="Fifth slide" />
+            </Carousel.Item>
+          </Carousel>
+          <br></br>
+          <div className="home-intro" width="60%">
+            Welcome To IEEE<br></br>
+            Gujarat Section<br></br> GRSS Chapter<br></br>
+          </div>
+          <br></br>
+          <br></br>
           <div id="who">
             <Container>
-              <ScrollAnimation
-                animateIn="animate__pulse"
-                animateOut="animate__fadeOut"
-              >
-                <div className="home-intro2">Who are we?</div>
-              </ScrollAnimation>
+              <div className="home-intro2">Who are we?</div>
               <br></br>
               <br></br>
               <div className="content">
@@ -132,7 +140,7 @@ const Home = (props) => {
               <br></br>
               <br></br>
               <div>
-                  <YouTube videoId="JZrCOuquSN0" opts={youtubeOptions} />
+                <YouTube videoId="JZrCOuquSN0" opts={youtubeOptions} />
                 <br></br>
                 <br></br>
                 {eventValues && (
@@ -141,11 +149,7 @@ const Home = (props) => {
                     animateOut="animate__fadeOut"
                   >
                     <div>
-                      <div
-                        className="home-intro2"
-                      >
-                        Upcoming Events
-                      </div>
+                      <div className="home-intro2">Upcoming Events</div>
                       <br></br>
                       <br></br>
                       <br></br>
@@ -166,67 +170,50 @@ const Home = (props) => {
                 )}
               </div>
               <Container>
-                <ScrollAnimation
-                  animateIn="animate__backInUp"
-                  animateOut="animate__backOutDown"
-                >
-                  <div>
-                    <div className="home-intro2">Important Links</div>
-                    <br></br>
-                    <Row>
-                      <Col
-                        xs={{ span: 3, order: 1 }}
-                        md={{ span: 3, order: 1 }}
+                <div>
+                  <div className="home-intro2">Important Links</div>
+                  <br></br>
+                  <Row>
+                    <Col xs={{ span: 3, order: 1 }} md={{ span: 3, order: 1 }}>
+                      <a
+                        href="https://www.grss-ieee.org/"
+                        target="blank"
+                        className="links"
                       >
-                        <a
-                          href="https://www.grss-ieee.org/"
-                          target="blank"
-                          className="links"
-                        >
-                          IEEE - GRSS
-                        </a>
-                      </Col>
-                      <Col
-                        xs={{ span: 3, order: 2 }}
-                        md={{ span: 3, order: 2 }}
+                        IEEE - GRSS
+                      </a>
+                    </Col>
+                    <Col xs={{ span: 3, order: 2 }} md={{ span: 3, order: 2 }}>
+                      <a
+                        href="https://www.grss-ieee.org/about/membership/benefits-of-membership/"
+                        target="blank"
+                        className="links"
                       >
-                        <a
-                          href="https://www.grss-ieee.org/about/membership/benefits-of-membership/"
-                          target="blank"
-                          className="links"
-                        >
-                          Why Join Us?
-                        </a>
-                      </Col>
-                      <Col
-                        xs={{ span: 3, order: 3 }}
-                        md={{ span: 3, order: 3 }}
+                        Why Join Us?
+                      </a>
+                    </Col>
+                    <Col xs={{ span: 3, order: 3 }} md={{ span: 3, order: 3 }}>
+                      <a
+                        href="https://ieeexplore.ieee.org/Xplore/home.jsp"
+                        target="blank"
+                        className="links"
                       >
-                        <a
-                          href="https://ieeexplore.ieee.org/Xplore/home.jsp"
-                          target="blank"
-                          className="links"
-                        >
-                          IEEE-Xplore Digital Library
-                        </a>
-                      </Col>
-                      <Col
-                        xs={{ span: 3, order: 4 }}
-                        md={{ span: 3, order: 4 }}
+                        IEEE-Xplore Digital Library
+                      </a>
+                    </Col>
+                    <Col xs={{ span: 3, order: 4 }} md={{ span: 3, order: 4 }}>
+                      <a
+                        href="https://standards.ieee.org/"
+                        target="blank"
+                        className="links"
                       >
-                        <a
-                          href="https://standards.ieee.org/"
-                          target="blank"
-                          className="links"
-                        >
-                          IEEE Standards
-                        </a>
-                      </Col>
-                    </Row>
-                    <br></br>
-                    <br></br>
-                  </div>
-                </ScrollAnimation>
+                        IEEE Standards
+                      </a>
+                    </Col>
+                  </Row>
+                  <br></br>
+                  <br></br>
+                </div>
               </Container>
             </Container>
           </div>

@@ -36,7 +36,7 @@ const Dashboard = () => {
   const [role, setRole] = useState("");
   useEffect(async () => {
     try {
-      response = await axios.get(`http://localhost:5000/user`, config);
+      response = await axios.get(`https://grssprojectserver.herokuapp.com/user`, config);
       console.log(response.data);
       if (response.data.role != "Admin") {
         history.goBack();
@@ -124,8 +124,8 @@ const Dashboard = () => {
                                 "font-size": "20px",
                                 cursor: "pointer",
                               }}
-                            >
-                              Materials
+                            >View
+                              Material
                             </Dropdown.Toggle>
                             <Dropdown.Menu
                               variant="outline-light"
@@ -159,7 +159,7 @@ const Dashboard = () => {
                                 cursor: "pointer",
                               }}
                             >
-                              Add Materials
+                              Add Material
                             </Dropdown.Toggle>
                             <Dropdown.Menu
                               variant="outline-light"

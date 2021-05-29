@@ -3,20 +3,7 @@ import { Container, Button, Table, Row, Col } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
 import { useHistory } from "react-router";
-const Styles = styled.div`
-  .main-bg {
-    background-color: #084c61;
-    margin-top: 0px;
-  }
-  .text {
-    color: #dbf1fb;
-  }
-  .hr {
-    border-color: white;
-  }
-  .meeting-content {
-  }
-`;
+const Styles = styled.div``;
 const MeetingDetails = (props) => {
   const history = useHistory();
   let link;
@@ -34,7 +21,7 @@ const MeetingDetails = (props) => {
         },
       };
       let response = axios.delete(
-        `http://localhost:5000/meeting/${props._id}`,
+        `https://grssprojectserver.herokuapp.com/meeting/${props._id}`,
         config
       );
       console.log(response.data);
@@ -63,23 +50,40 @@ const MeetingDetails = (props) => {
             ) : (
               "Not Defined"
             )}
-            <span className="meeting-content">Place : </span>{" "}
-            {props.place != "undefined" ? props.place : "Not Defined"}
+            <span className="meeting-content">Place : </span>
+            {props.place != "undefined" ? (
+              <span className="meeting-content">{props.place}</span>
+            ) : (
+              "Not Defined"
+            )}
             <br></br>
-            <span className="meeting-content">No of Attendees : </span>{" "}
-            {props.attendees != "undefined" ? props.attendees : "Not Defined"}
+            <span className="meeting-content">No of Attendees : </span>
+            {props.attendees != "undefined" ? (
+              <span className="meeting-content">{props.attendees}</span>
+            ) : (
+              "Not Defined"
+            )}
             <br></br>
             <span className="meeting-content">Summary : </span>{" "}
-            {props.summary != "undefined" ? props.summary : "Not Defined"}
+            {props.summary != "undefined" ? (
+              <span className="meeting-content">{props.summary}</span>
+            ) : (
+              "Not Defined"
+            )}
             <br></br>
             <span className="meeting-content">Agenda : </span>{" "}
-            {props.purpose != "undefined" ? props.purpose : "Not Defined"}
+            {props.purpose != "undefined" ? (
+              <span className="meeting-content">{props.purpose}</span>
+            ) : (
+              "Not Defined"
+            )}
             <br></br>
             <span className="meeting-content">Minutes taken : </span>{" "}
-            {props.minutes != "undefined" ? props.minutes : "Not Defined"}
-            <br></br>
-            <span className="meeting-content">Place : </span>{" "}
-            {props.place != "undefined" ? props.place : "Not Defined"}
+            {props.minutes != "undefined" ? (
+              <span className="meeting-content">{props.minutes}</span>
+            ) : (
+              "Not Defined"
+            )}
             <br></br>
             {admin &&
               (props.sign != "undefined" ? (
@@ -92,7 +96,7 @@ const MeetingDetails = (props) => {
                   </a>
                 </dvi>
               ) : (
-                "Not Defined"
+                null
               ))}
           </Col>
           <Col xs lg="2">

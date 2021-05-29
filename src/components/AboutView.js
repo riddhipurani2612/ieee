@@ -20,7 +20,7 @@ const AboutView = (props) => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="content">
+          <div className="main-bg content">
             {props.eventimg && (
               <div class="wrap">
                 <img

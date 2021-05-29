@@ -33,7 +33,7 @@ const Newsletter = () => {
         },
       };
       response = await axios.get(
-        `http://localhost:5000/techMaterial/materials/${materialtype1}`,
+        `https://grssprojectserver.herokuapp.com/techMaterial/materials/${materialtype1}`,
         config
       );
       setMaterial(response.data);
@@ -42,6 +42,14 @@ const Newsletter = () => {
       console.log(err);
     }
   }, []);
+  const link = (link) => {
+    if (link != undefined) {
+      return "https://grssprojectserver.herokuapp.com/" + link;
+    } else {
+      return "undefined";
+    }
+  };
+  const [sort, setSort] = useState("");
   return (
     <Styles>
       <div className="main-bg">
@@ -49,14 +57,28 @@ const Newsletter = () => {
           <br></br>
           <div className="w3-panel w3-border w3-border-white boxshadow">
             <div className="material-header">Newsletter</div>
+            <div style={{ float: "right" }}>
+              Sort :
+              <select
+                onChange={(e) => setSort(e.target.value)}
+                style={{ float: "right" }}
+              >
+                <option value="" selected>
+                  -- Select --
+                </option>
+                <option value="Descending">Oldest First</option>
+                <option value="Ascending">Newst First</option>
+              </select>
+            </div>
             <br></br>
             <br></br>
             <ul className="material-content">
               {material.map((materialObj, index) => (
                 <ViewNP
+                  materialtype = "Newsletter"
                   _id={materialObj._id}
                   title={materialObj.title}
-                  publicationlink={materialObj.publicationlink}
+                  materialfile={link(materialObj.materialfile)}
                 />
               ))}
             </ul>

@@ -1,23 +1,24 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Container, Form, Button, ProgressBar } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Container,
+  Form,
+  Button,
+  ProgressBar,
+  Alert,
+} from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
 import { useHistory } from "react-router";
-const Styles = styled.div`
-  .main-bg {
-    background-color: #084c61;
-  }
-  .text {
-    color: #dbf1fb;
-  }
-  .content {
-    max-width: 500px;
-    margin: auto;
-    padding: 50px;
-  }
-`;
+import "./main.css";
+const Styles = styled.div``;
 
 const AddMeeting = () => {
+  const [checkFile, setCheckFile] = useState(false);
+  const [error, setError] = useState("");
+  const [status, setStatus] = useState("");
+
   const history = useHistory();
   const token = localStorage.getItem("token");
   let config = {
@@ -33,7 +34,7 @@ const AddMeeting = () => {
     }
     try {
       let response = await axios.get(
-        `http://localhost:5000/user/getrole`,
+        `https://grssprojectserver.herokuapp.com/user/getrole`,
         config
       );
       console.log(response.data);
@@ -55,9 +56,9 @@ const AddMeeting = () => {
   const el = useRef(); // accesing input element
   const handleChange = (e) => {
     setProgess(0);
-    const file = e.target.files[0]+""; // accesing file
+    const file = e.target.files[0]; // accesing file
     console.log(file);
-    const extension = file.split(".").pop() +'';
+    const extension = file.name.split(".").pop() + "";
     if (
       extension === "jpg" ||
       extension === "jpeg" ||
@@ -68,11 +69,14 @@ const AddMeeting = () => {
       extension === "ods"
     ) {
       setFile(file); // storing file
+      setCheckFile(true);
     } else {
-      alert("Only Image File Allowed");
-      setFile(undefined);
+      setStatus("Warning");
+      alert(`${extension} file is not allowed`);
+      e.target.value = null;
     }
   };
+
   const addMeeting = async (e) => {
     e.preventDefault();
     const data = new FormData();
@@ -86,7 +90,7 @@ const AddMeeting = () => {
 
     let response;
     try {
-      response = await axios.post("http://localhost:5000/meeting", data, {
+      response = await axios.post("https://grssprojectserver.herokuapp.com/meeting", data, {
         onUploadProgress: (ProgressEvent) => {
           let progress =
             Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +
@@ -94,7 +98,12 @@ const AddMeeting = () => {
           setProgess(progress);
         },
       });
-      console.log(response.data);
+      if (response.statusText === "OK") {
+        setStatus("Success");
+      } else {
+        setStatus("Warning");
+        setError(response.data.message);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -102,104 +111,162 @@ const AddMeeting = () => {
 
   return (
     <Styles>
-      <Container className="main-bg text">
-        <div
-          className="display-3 text-center"
-          style={{ color: "white", textDecoration: "underline" }}
-        >
-          Add Meeting Details
-        </div>
+      <Container className="main-bg">
         <br></br>
-        <div className="content w3-panel w3-border w3-border-white">
-          <Form>
-            <Form.Group>
-              <Form.Label>Date</Form.Label>
-              <Form.Control
-                class="w3-input w3-animate-input"
-                type="date"
-                name="date"
-                value={date}
-                onChange={meetingValueChanged}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Place</Form.Label>
-              <Form.Control
-                class="w3-input w3-animate-input"
-                type="text"
-                name="place"
-                value={place}
-                onChange={meetingValueChanged}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Purpose</Form.Label>
-              <Form.Control
-                class="w3-input w3-animate-input"
-                type="text"
-                name="purpose"
-                value={purpose}
-                onChange={meetingValueChanged}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>No of members attended</Form.Label>
-              <Form.Control
-                class="w3-input w3-animate-input"
-                type="number"
-                name="attendees"
-                value={attendees}
-                onChange={meetingValueChanged}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Summary</Form.Label>
-              <Form.Control
-                class="w3-input w3-animate-input"
-                as="textarea"
-                name="summary"
-                value={summary}
-                onChange={meetingValueChanged}
-                row={30}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Minutes taken</Form.Label>
-              <Form.Control
-                class="w3-input w3-animate-input"
-                type="number"
-                name="minutes"
-                value={minutes}
-                placeholder="0min"
-                onChange={meetingValueChanged}
-                row={30}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Upload Sign File</Form.Label>
+        <div className="form-box w3-panel w3-border w3-border-white boxshadow">
+          <div className="meeting-header">Add Meeting</div>
+          <br></br>
+          <div class="meeting-form">
+            <form onSubmit={addMeeting}>
+              <Form.Group>
+                <Row>
+                  <Col sm="4">
+                    <label>Date</label>
+                    <span style={{ color: "red" }}>*</span>
+                  </Col>
+                  <Col>
+                    <input
+                      type="date"
+                      name="date"
+                      value={date}
+                      onChange={meetingValueChanged}
+                      required
+                    ></input>
+                  </Col>
+                </Row>
+              </Form.Group>
+              <Form.Group>
+                <Row>
+                  <Col sm="4">
+                    <label>Place</label>
+                    <span style={{ color: "red" }}>*</span>
+                  </Col>
+                  <Col>
+                    <input
+                      placeholder="Enter Place"
+                      type="text"
+                      name="place"
+                      value={place}
+                      onChange={meetingValueChanged}
+                      required
+                    ></input>
+                  </Col>
+                </Row>
+              </Form.Group>
+              <Form.Group>
+                <Row>
+                  <Col sm="4">
+                    <label>Purpose</label>
+                    <span style={{ color: "red" }}>*</span>
+                  </Col>
+                  <Col>
+                    <input
+                      placeholder="Enter purpose of meeting"
+                      type="text"
+                      name="purpose"
+                      value={purpose}
+                      onChange={meetingValueChanged}
+                      required
+                    ></input>
+                  </Col>
+                </Row>
+              </Form.Group>
+              <Form.Group>
+                <Row>
+                  <Col sm="4">
+                    <label>
+                      No of <br></br>members attended
+                    </label>
+                    <span style={{ color: "red" }}>*</span>
+                  </Col>
+                  <Col>
+                    <input
+                      placeholder="2"
+                      class="w3-input w3-animate-input"
+                      type="number"
+                      min="2"
+                      name="attendees"
+                      value={attendees}
+                      onChange={meetingValueChanged}
+                      required
+                    ></input>
+                  </Col>
+                </Row>
+              </Form.Group>
+              <Form.Group>
+                <Row>
+                  <Col sm="4">
+                    <label>Summary</label>
+                    <span style={{ color: "red" }}>*</span>
+                  </Col>
+                  <Col>
+                    <textarea
+                      placeholder="Summary of meeting"
+                      class="textarea"
+                      name="summary"
+                      value={summary}
+                      onChange={meetingValueChanged}
+                      required
+                      row={30}
+                    ></textarea>
+                  </Col>
+                </Row>
+              </Form.Group>
+              <Form.Group>
+                <Row>
+                  <Col sm="4">
+                    <label>Upload Sign File</label>
+                    <span style={{ color: "red" }}>*</span>
+                  </Col>
+                  <Col>
+                    <input
+                      type="file"
+                      accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, image/*"
+                      ref={el}
+                      onChange={handleChange}
+                      required
+                      title=""
+                    />
+                  </Col>
+                </Row>
+              </Form.Group>
+              {checkFile && (
+                <ProgressBar now={progress} label={`${progress}%`} />
+              )}
+
               <br></br>
-              <input
-                type="file"
-                accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, image/*"
-                ref={el}
-                onChange={handleChange}
-                title=""
-              />
-            </Form.Group>
-            {file && <ProgressBar now={progress} label={`${progress}%`} />}
-            <Button
-              variant="outline-light"
-              style={{
-                width: "100%",
-                padding: "14px 28px",
-                "font-size": "16px",
-                cursor: "pointer",
-              }}
-              onClick={addMeeting}
-            >
-              Add Meeting
-            </Button>
-          </Form>
+              {status === "Success" ? (
+                <Alert variant="success">
+                  <i class="fa fa-check-circle" aria-hidden="true"></i>
+                  Data Uploaded Successfully!!
+                </Alert>
+              ) : null}
+              {status === "Error" ? (
+                <Alert variant="danger">
+                  <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                  {error}
+                </Alert>
+              ) : null}
+              {status === "Warning" ? (
+                <Alert variant="warning">
+                  <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                  Uploaded file format not supported. Please upload only image
+                  file
+                </Alert>
+              ) : null}
+              <button
+                className="meeting-button"
+                style={{
+                  width: "100%",
+                  padding: "14px 28px",
+                  "font-size": "16px",
+                  cursor: "pointer",
+                }}
+              >
+                Add Meeting
+              </button>
+            </form>
+          </div>
         </div>
         <br></br>
       </Container>
