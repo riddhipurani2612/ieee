@@ -58,6 +58,13 @@ const Home = (props) => {
       return links;
     }
   };
+  const linkImage = (temp) => {
+    if (temp === undefined) {
+      return "undefined";
+    } else {
+      return "https://grssprojectserver.herokuapp.com/" + temp;
+    }
+  }
   const [showFeedbackModal, setFeedbackModal] = useState(false);
   return (
     <Styles>
@@ -162,6 +169,7 @@ const Home = (props) => {
                             about={eventObj.about}
                             hostedby={eventObj.hostedby}
                             registrationlink={link(eventObj.registrationlink)}
+                            eventimage={linkImage(eventObj.eventimage)}
                           />
                         ))}
                       </div>

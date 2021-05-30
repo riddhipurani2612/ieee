@@ -8,7 +8,7 @@ import {
   ProgressBar,
   Row,
   Col,
-  Alert
+  Alert,
 } from "react-bootstrap";
 import PasswordChange from "./PasswordChange";
 import { useHistory } from "react-router";
@@ -97,21 +97,31 @@ const Profile = (e) => {
         formData.append("file", file);
 
         try {
-          response = await axios.patch(
-            `https://grssprojectserver.herokuapp.com/user/update/${token}`,
-            formData,
-            config,
-            {
-              onUploadProgress: (ProgressEvent) => {
-                let progress =
-                  Math.round(
-                    (ProgressEvent.loaded / ProgressEvent.total) * 100
-                  ) + "%";
-                setProgess(progress);
-              },
-            }
-          );
-          console.log(response.data);
+          response = await axios
+            .patch(
+              `https://grssprojectserver.herokuapp.com/user/update/${token}`,
+              formData,
+              config,
+              {
+                onUploadProgress: (ProgressEvent) => {
+                  let progress =
+                    Math.round(
+                      (ProgressEvent.loaded / ProgressEvent.total) * 100
+                    ) + "%";
+                  setProgess(progress);
+                },
+              }
+            )
+            .catch((err) => {
+              if (err.response) {
+                setStatus("Error");
+                setError(err.response.data.msg);
+                console.log(err.response.data.msg);
+              }
+            });
+          if (response.data && response.statusText === "OK") {
+            window.location.reload(false);
+          }
         } catch (err) {
           console.log(err.request);
           console.log(err.response);
@@ -126,14 +136,22 @@ const Profile = (e) => {
         let response;
         try {
           console.log(user);
-          response = await axios.patch(
-            `https://grssprojectserver.herokuapp.com/user/update/${token}`,
-            user,
-            config
-          );
-          console.log(response.data);
-          alert("data updated");
-          window.location.reload(false);
+          response = await axios
+            .patch(
+              `https://grssprojectserver.herokuapp.com/user/update/${token}`,
+              user,
+              config
+            )
+            .catch((err) => {
+              if (err.response) {
+                setStatus("Error");
+                setError(err.response.data.msg);
+                console.log(err.response.data.msg);
+              }
+            });
+          if (response.data && response.statusText === "OK") {
+            window.location.reload(false);
+          }
         } catch (err) {
           console.log(err.response);
           console.log(err.request);
@@ -164,27 +182,32 @@ const Profile = (e) => {
         formData.append("file", file);
 
         try {
-          response = await axios.patch(
-            `https://grssprojectserver.herokuapp.com/user`,
-            formData,
-            config,
-            {
-              onUploadProgress: (ProgressEvent) => {
-                let progress =
-                  Math.round(
-                    (ProgressEvent.loaded / ProgressEvent.total) * 100
-                  ) + "%";
-                setProgess(progress);
-              },
-            }
-          );
-          if (response.statusText === "OK") {
-            setStatus("Success");
-          } else {
-            setStatus("Warning");
-            setError(response.data.message);
+          response = await axios
+            .patch(
+              `https://grssprojectserver.herokuapp.com/user`,
+              formData,
+              config,
+              {
+                onUploadProgress: (ProgressEvent) => {
+                  let progress =
+                    Math.round(
+                      (ProgressEvent.loaded / ProgressEvent.total) * 100
+                    ) + "%";
+                  setProgess(progress);
+                },
+              }
+            )
+            .catch((err) => {
+              if (err.response) {
+                setStatus("Error");
+                setError(err.response.data.msg);
+                console.log(err.response.data.msg);
+              }
+            });
+          if (response.data && response.statusText === "OK") {
+            window.location.reload(false);
           }
-          } catch (err) {
+        } catch (err) {
           console.log(err.request);
           console.log(err.response);
         }
@@ -199,16 +222,18 @@ const Profile = (e) => {
         let response;
         try {
           console.log(user);
-          response = await axios.patch(
-            `https://grssprojectserver.herokuapp.com/user`,
-            user,
-            config
-          );
-          if (response.statusText === "OK") {
-            setStatus("Success");
-          } else {
-            setStatus("Warning");
-            setError(response.data.message);
+          response = await axios
+            .patch(`https://grssprojectserver.herokuapp.com/user`, user, config)
+            .catch((err) => {
+              if (err.response) {
+                setStatus("Error");
+                setError(err.response.data.msg);
+                console.log(err.response.data.msg);
+              }
+            });
+
+          if (response.data && response.statusText === "OK") {
+            window.location.reload(false);
           }
           window.location.reload(false);
         } catch (err) {
@@ -233,7 +258,10 @@ const Profile = (e) => {
       history.goBack();
     }
     try {
-      response = await axios.get(`https://grssprojectserver.herokuapp.com/user/getrole`, config);
+      response = await axios.get(
+        `https://grssprojectserver.herokuapp.com/user/getrole`,
+        config
+      );
       console.log(response.data);
     } catch (error) {
       console.log(error);
@@ -266,7 +294,10 @@ const Profile = (e) => {
       }
     } else {
       try {
-        response = await axios.get(`https://grssprojectserver.herokuapp.com/user`, config);
+        response = await axios.get(
+          `https://grssprojectserver.herokuapp.com/user`,
+          config
+        );
         setUser(response.data);
         setFile(response.data.profile);
         console.log(response.data);

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Row, Col, Container, Form, ProgressBar } from "react-bootstrap";
+import { Row, Col, Container, Form, ProgressBar, Alert } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
@@ -9,6 +9,9 @@ const SignUp = () => {
   const [file, setFile] = useState("");
   const [checkFile, setCheckFile] = useState(false);
   const [progress, setProgess] = useState(0);
+  const [error, setError] = useState("");
+  const [status, setStatus] = useState("");
+
   const el = useRef(); // accesing input element
   const handleChange = (e) => {
     setProgess(0);
@@ -24,7 +27,8 @@ const SignUp = () => {
       setFile(file); // storing file
       setCheckFile(true);
     } else {
-      alert("Only Image File Allowed");
+      setStatus("Warning");
+      alert(`${extension} file is not allowed`);
       e.target.value = null;
     }
   };
@@ -98,17 +102,29 @@ const SignUp = () => {
         };
         let response;
         try {
-          response = await axios.post("https://grssprojectserver.herokuapp.com/user", formData, {
-            onUploadProgress: (ProgressEvent) => {
-              let progress =
-                Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +
-                "%";
-              setProgess(progress);
-            },
-          });
-          console.log(response.data);
-          if (response.status === "200") {
-            history.push("/login");
+          response = await axios
+            .post("https://grssprojectserver.herokuapp.com/user", formData, {
+              onUploadProgress: (ProgressEvent) => {
+                let progress =
+                  Math.round(
+                    (ProgressEvent.loaded / ProgressEvent.total) * 100
+                  ) + "%";
+                setProgess(progress);
+              },
+            })
+            .catch((err) => {
+              if (err.response) {
+                setStatus("Error");
+                setError(err.response.data.msg);
+                console.log(err.response.data.msg);
+              }
+            });
+          if (
+            response != undefined &&
+            response.data != undefined &&
+            response.statusText === "OK"
+          ) {
+            history.goBack();
           }
         } catch (err) {
           console.log(err);
@@ -126,7 +142,6 @@ const SignUp = () => {
           password,
           about,
         };
-        console.log(data);
         let config = {
           headers: {
             "Content-Type": "application/json",
@@ -134,14 +149,21 @@ const SignUp = () => {
         };
         let response;
         try {
-          response = await axios.post(
-            "https://grssprojectserver.herokuapp.com/user",
-            data,
-            config
-          );
-          console.log(response.data);
-          if (response.status === "200") {
-            history.push("/login");
+          response = await axios
+            .post("https://grssprojectserver.herokuapp.com/user", data, config)
+            .catch((err) => {
+              if (err.response) {
+                setStatus("Error");
+                setError(err.response.data.msg);
+                console.log(err.response.data.msg);
+              }
+            });
+          if (
+            response != undefined &&
+            response.data != undefined &&
+            response.statusText === "OK"
+          ) {
+            history.goBack();
           }
         } catch (err) {
           console.log(err);
@@ -356,6 +378,26 @@ const SignUp = () => {
                 {checkFile && (
                   <ProgressBar now={progress} label={`${progress}%`} />
                 )}
+                {status === "Success" ? (
+                  <Alert variant="success">
+                    <i class="fa fa-check-circle" aria-hidden="true"></i>
+                    Data Uploaded Successfully!!
+                  </Alert>
+                ) : null}
+                {status === "Error" ? (
+                  <Alert variant="danger">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                    {error}
+                  </Alert>
+                ) : null}
+                {status === "Warning" ? (
+                  <Alert variant="warning">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                    Uploaded file format not supported. Please upload only image
+                    file
+                  </Alert>
+                ) : null}
+
                 <button
                   className="member-button"
                   style={{

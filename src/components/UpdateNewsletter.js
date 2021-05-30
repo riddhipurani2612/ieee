@@ -111,8 +111,8 @@ const UpdateNewsletter = (props) => {
         if (response.statusText === "OK") {
           setStatus("Success");
         } else {
-          setStatus("Warning");
-          setError(response.data.message);
+          setStatus("Error");
+          setError(response.data.msg);
         }
       } catch (err) {
         console.log(err);

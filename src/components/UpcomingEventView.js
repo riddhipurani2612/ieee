@@ -24,7 +24,6 @@ const UpcomingEventView = (props) => {
   const linkName = readMore ? "Read Less << " : "Read More >> ";
   const [link, setLink] = useState(false);
   useEffect(() => {
-    console.log(props.registrationlink);
     if (props.registrationlink != "undefined") {
       setLink(true);
     }
@@ -39,28 +38,31 @@ const UpcomingEventView = (props) => {
       setViewReadMore(true);
     }
     const token = localStorage.getItem("token");
-    try {
-      let config = {
-        headers: {
-          "Content-Type": "application/json",
-          "x-auth-token": token,
-        },
-      };
-      let response = await axios.get(
-        `https://grssprojectserver.herokuapp.com/user/getrole`,
-        config
-      );
-      setUser(response.data);
-      console.log(response.data);
-      if (role === "Student") {
-        setStudent(true);
-      } else if (role === "Admin") {
-        setAdmin(true);
-      } else {
-        setMember(true);
+    console.log(token);
+    if (token != null || token != undefined) {
+      try {
+        let config = {
+          headers: {
+            "Content-Type": "application/json",
+            "x-auth-token": token,
+          },
+        };
+        let response = await axios.get(
+          `https://grssprojectserver.herokuapp.com/user/getrole`,
+          config
+        );
+        setUser(response.data);
+        console.log(response.data);
+        if (role === "Student") {
+          setStudent(true);
+        } else if (role === "Admin") {
+          setAdmin(true);
+        } else {
+          setMember(true);
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
     }
   }, []);
 

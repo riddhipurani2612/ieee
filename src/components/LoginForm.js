@@ -1,5 +1,5 @@
 import React, { useState, setState } from "react";
-import { Button, Container, Form, Row, Col } from "react-bootstrap";
+import { Alert, Container, Form, Row, Col } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
@@ -8,6 +8,9 @@ const Styles = styled.div``;
 
 const Login = (props) => {
   const [formData, setFormData] = useState({});
+  const [error, setError] = useState("");
+  const [status, setStatus] = useState("");
+
   const history = useHistory();
   const valueChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -26,11 +29,20 @@ const Login = (props) => {
     };
     let response;
     try {
-      response = await axios.put("https://grssprojectserver.herokuapp.com/user", data, config);
-      console.log(response.data);
-      localStorage.setItem("token", response.data.token);
-      props.setLogin(true);
-      history.goBack();
+      response = await axios
+        .put("https://grssprojectserver.herokuapp.com/user", data, config)
+        .catch((err) => {
+          if (err.response) {
+            setStatus("Error");
+            setError(err.response.data.msg);
+            console.log(err.response.data.msg);
+          }
+        });
+      if (response.data && response.statusText === "OK") {
+        localStorage.setItem("token", response.data.token);
+        props.setLogin(true);
+        history.goBack();
+      }
     } catch (error) {
       console.log(error);
     }
@@ -79,6 +91,13 @@ const Login = (props) => {
                   </Col>
                 </Row>
               </Form.Group>
+              {status === "Error" ? (
+                <Alert variant="danger">
+                  <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                  {error}
+                </Alert>
+              ) : null}
+
               <button
                 className="member-button"
                 style={{

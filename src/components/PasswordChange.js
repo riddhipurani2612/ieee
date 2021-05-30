@@ -39,16 +39,21 @@ const PasswordChange = (props) => {
         },
       };
       try {
-        response = await axios.post(
-          `https://grssprojectserver.herokuapp.com/user/changepassword`,
-          data,
-          config
-        );
-        if (response.statusText === "OK") {
-          setStatus("Success");
-        } else {
-          setStatus("Warning");
-          setError(response.data.message);
+        response = await axios
+          .post(
+            `https://grssprojectserver.herokuapp.com/user/changepassword`,
+            data,
+            config
+          )
+          .catch((err) => {
+            if (err.response) {
+              setStatus("Error");
+              setError(err.response.data.msg);
+              console.log(err.response.data.msg);
+            }
+          });
+          if (response.data && response.statusText === "OK") {
+            setStatus("Success");
         }
       } catch (error) {
         console.log(error);
