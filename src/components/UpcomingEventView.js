@@ -97,13 +97,13 @@ const UpcomingEventView = (props) => {
       <Row className="mx-2">
         {props.eventimage != "undefined" && (
           <Col xs={{ span: 12, order: 2 }} md={{ span: 6, order: 2 }}>
-            <img
-              src={props.eventimage}
-              style={{ marginRight: "2rem", marginBottom: "2rem" }}
-              height="250rem"
-              width="200rem"
-              alt={props.eventimage}
-            />
+            <a href={props.eventimage} target="blank">
+              <img
+                className="event-img"
+                src={props.eventimage}
+                alt={props.eventimage}
+              />
+            </a>
           </Col>
         )}
 

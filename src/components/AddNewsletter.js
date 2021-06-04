@@ -1,46 +1,15 @@
-import React, { useState, useEffect, useRef } from "react";
-import {
-  Row,
-  Col,
-  Form,
-  Container,
-  Button,
-  ProgressBar,
-  Alert,
-} from "react-bootstrap";
-import axios from "axios";
+import React, { useState, useRef, useEffect } from "react";
+import { Row, Col, Container, Form, ProgressBar, Alert } from "react-bootstrap";
 import styled from "styled-components";
+import axios from "axios";
 import { useHistory } from "react-router-dom";
 import "./main.css";
 const Styles = styled.div``;
-const AddMaterial = () => {
-  let response;
+const AddNewsletter = () => {
   const history = useHistory();
-  const token = localStorage.getItem("token");
-  let config = {
-    headers: {
-      "Content-Type": "application/json",
-      "x-auth-token": token,
-    },
-  };
-  useEffect(async () => {
-    if (token === null) {
-      history.push("/");
-    }
-    try {
-      response = await axios.get(`https://grssprojectserver.herokuapp.com/user/getrole`, config);
-      console.log(response.data);
-      if (response.data === "Student") {
-        history.push("/");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
-  const [material, setMaterial] = useState({});
-  const valueChanged = (e) => {
-    setMaterial({ ...material, [e.target.name]: e.target.value });
-  };
+  const [error, setError] = useState("");
+  const [status, setStatus] = useState("");
+
   const [file, setFile] = useState("");
   const [checkFile, setCheckFile] = useState(false);
   const [progress, setProgess] = useState(0);
@@ -59,19 +28,27 @@ const AddMaterial = () => {
       e.target.value = null;
     }
   };
-  const [error, setError] = useState("");
-  const [status, setStatus] = useState("");
+
+  const [material, setMaterial] = useState({});
   const { title, about, publicationlink, materialtype } = material;
-  const uploadMaterial = async (e) => {
-    e.preventDefault();
-    let formData = new FormData();
-    console.log(title);
-    formData.append("title", title);
-    formData.append("about", about);
-    formData.append("publicationlink", publicationlink);
-    formData.append("materialtype", materialtype);
+
+  const valueChanged = (e) => {
+    setMaterial({ ...material, [e.target.name]: e.target.value });
+  };
+  const submit = async (e) => {
+    if (file === undefined) {
+      setCheckFile(false);
+    }
+    const token = localStorage.getItem("token");
+    console.log(materialtype);
     if (checkFile) {
+      e.preventDefault();
+      let formData = new FormData();
+      formData.append("title", title);
+      formData.append("about", about);
+      formData.append("materialtype", materialtype);
       formData.append("file", file);
+      console.log(token);
       const config = {
         headers: {
           "content-type": "multipart/form-data",
@@ -100,17 +77,20 @@ const AddMaterial = () => {
           setError(response.data.message);
         }
       } catch (err) {
-        console.log(err);
+        console.log(err.response);
+        console.log(err.request);
+        console.log(err.message);
       }
     } else {
+      e.preventDefault();
       let data = {
         title,
         about,
-        publicationlink,
         materialtype,
+        publicationlink,
       };
       console.log(data);
-      const config = {
+      let config = {
         headers: {
           "Content-Type": "application/json",
           "x-auth-token": token,
@@ -123,6 +103,7 @@ const AddMaterial = () => {
           data,
           config
         );
+        console.log(response.statusText);
         if (response.statusText === "OK") {
           setStatus("Success");
         } else {
@@ -130,21 +111,43 @@ const AddMaterial = () => {
           setError(response.data.message);
         }
       } catch (err) {
-        console.log(err);
+        console.log(err.response);
       }
     }
   };
+  useEffect(async () => {
+    const token = localStorage.getItem("token");
+    let config = {
+      headers: {
+        "Content-Type": "application/json",
+        "x-auth-token": token,
+      },
+    };
+    if (token === null) {
+      history.push("/");
+    }
+    try {
+      const response = await axios.get(
+        `https://grssprojectserver.herokuapp.com/user/getrole`,
+        config
+      );
+      console.log(response.data);
+      if (response.data.role.includes("Student")) {
+        history.goBack();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
   return (
     <Styles>
       <Container className="main-bg">
         <br></br>
         <div className="form-box w3-panel w3-border w3-border-white boxshadow">
-          <div className="material-header">
-            Add Newsletter/<br></br>Publication
-          </div>
+          <div className="material-header">Add Lecture</div>
           <br></br>
           <div class="material-form">
-            <form onSubmit={uploadMaterial}>
+            <form onSubmit={submit}>
               <Form.Group>
                 <Row>
                   <Col sm="4">
@@ -218,22 +221,40 @@ const AddMaterial = () => {
                   </Col>
                 </Row>
               </Form.Group>
+
               {checkFile && (
                 <ProgressBar now={progress} label={`${progress}%`} />
               )}
-              <center>
-                <Button
-                  className="material-button"
-                  style={{
-                    width: "100%",
-                    padding: "14px 28px",
-                    "font-size": "16px",
-                    cursor: "pointer",
-                  }}
-                >
-                  Upload
-                </Button>
-              </center>
+              {status === "Success" ? (
+                <Alert variant="success">
+                  <i class="fa fa-check-circle" aria-hidden="true"></i>
+                  Data Uploaded Successfully!!
+                </Alert>
+              ) : null}
+              {status === "Error" ? (
+                <Alert variant="danger">
+                  <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                  {error}
+                </Alert>
+              ) : null}
+              {status === "Warning" ? (
+                <Alert variant="warning">
+                  <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                  Uploaded file format not supported.
+                </Alert>
+              ) : null}
+
+              <button
+                className="material-button"
+                style={{
+                  width: "100%",
+                  padding: "14px 28px",
+                  "font-size": "16px",
+                  cursor: "pointer",
+                }}
+              >
+                Add
+              </button>
             </form>
           </div>
         </div>
@@ -242,4 +263,4 @@ const AddMaterial = () => {
     </Styles>
   );
 };
-export default AddMaterial;
+export default AddNewsletter;

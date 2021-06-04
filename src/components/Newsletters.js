@@ -57,19 +57,6 @@ const Newsletter = () => {
           <br></br>
           <div className="w3-panel w3-border w3-border-white boxshadow">
             <div className="material-header">Newsletter</div>
-            <div style={{ float: "right" }}>
-              Sort :
-              <select
-                onChange={(e) => setSort(e.target.value)}
-                style={{ float: "right" }}
-              >
-                <option value="" selected>
-                  -- Select --
-                </option>
-                <option value="Descending">Oldest First</option>
-                <option value="Ascending">Newst First</option>
-              </select>
-            </div>
             <br></br>
             <br></br>
             <ul className="material-content">

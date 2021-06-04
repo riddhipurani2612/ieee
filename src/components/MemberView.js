@@ -21,14 +21,13 @@ const MemberView = (props) => {
   };
   let response;
   useEffect(async () => {
-    if (props.about != null) {
+    if (props.about != null && props.about != "-" && props.about!="") {
       setViewReadMore(true);
       try {
         response = await axios.get(
           `https://grssprojectserver.herokuapp.com/user/getrole`,
           config
         );
-        console.log(response.data);
         if (response.data.role != "Admin") {
         } else if (response.data.role.includes("Admin")) {
           setAdmin(response.data.role);
@@ -73,26 +72,43 @@ const MemberView = (props) => {
           about={props.about}
         ></AboutView>
         <Card key={props.index} className="main-bg">
-          <Card.Img variant="top" src={props.profile} />
+          <Card.Img variant="top" src={props.profile} className="member-img" />
           <Card.Body className="member-content">
-            <Card.Title>
-              {props.first_name} {props.last_name}
-            </Card.Title>
             <Card.Text>
-              {props.designation} <br></br>
-              {props.workplace}
-              <br></br>
-              {props.contact} <br></br>
-              {props.email}
-              <br></br>
+              {props.first_name} {props.last_name}<br></br>
+              {props.designation != "" && props.designation != undefined ? (
+                <>
+                  Designation : {props.designation} <br></br>
+                </>
+              ) : null}
+              {props.workplace != "" && props.workplace != undefined ? (
+                <>
+                  Workplace : {props.workplace} <br></br>
+                </>
+              ) : null}
+              {props.contact != "" && props.contact != undefined ? (
+                <>
+                  Contact : {props.contact} <br></br>
+                </>
+              ) : null}
+              {props.memberid != "" && props.memberid != undefined ? (
+                <>
+                  Member ID : {props.memberid} <br></br>
+                </>
+              ) : null}
+              {props.email != "" && props.email != undefined ? (
+                <>
+                  Email : {props.email} <br></br>
+                </>
+              ) : null}
               <Row>
-                <Col sm="3">
+                <Col sm="4">
                   {viewReadMode && (
                     <button
                       className="member-button"
                       onClick={() => setModal(true)}
                     >
-                      Know More
+                      Biography
                     </button>
                   )}
                 </Col>

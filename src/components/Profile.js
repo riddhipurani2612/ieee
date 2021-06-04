@@ -137,11 +137,7 @@ const Profile = (e) => {
         try {
           console.log(user);
           response = await axios
-            .patch(
-              `https://grssprojectserver.herokuapp.com/user/update/${token}`,
-              user,
-              config
-            )
+            .patch(`https://grssprojectserver.herokuapp.com/user/update/${token}`, user, config)
             .catch((err) => {
               if (err.response) {
                 setStatus("Error");
@@ -183,20 +179,15 @@ const Profile = (e) => {
 
         try {
           response = await axios
-            .patch(
-              `https://grssprojectserver.herokuapp.com/user`,
-              formData,
-              config,
-              {
-                onUploadProgress: (ProgressEvent) => {
-                  let progress =
-                    Math.round(
-                      (ProgressEvent.loaded / ProgressEvent.total) * 100
-                    ) + "%";
-                  setProgess(progress);
-                },
-              }
-            )
+            .patch(`https://grssprojectserver.herokuapp.com/user`, formData, config, {
+              onUploadProgress: (ProgressEvent) => {
+                let progress =
+                  Math.round(
+                    (ProgressEvent.loaded / ProgressEvent.total) * 100
+                  ) + "%";
+                setProgess(progress);
+              },
+            })
             .catch((err) => {
               if (err.response) {
                 setStatus("Error");
@@ -235,14 +226,11 @@ const Profile = (e) => {
           if (response.data && response.statusText === "OK") {
             window.location.reload(false);
           }
-          window.location.reload(false);
         } catch (err) {
           console.log(err.response);
           console.log(err.request);
         }
       }
-      setEditable(false);
-      window.location.reload(false);
     }
   };
   const token = localStorage.getItem("token");
@@ -258,10 +246,7 @@ const Profile = (e) => {
       history.goBack();
     }
     try {
-      response = await axios.get(
-        `https://grssprojectserver.herokuapp.com/user/getrole`,
-        config
-      );
+      response = await axios.get(`https://grssprojectserver.herokuapp.com/user/getrole`, config);
       console.log(response.data);
     } catch (error) {
       console.log(error);
@@ -294,10 +279,7 @@ const Profile = (e) => {
       }
     } else {
       try {
-        response = await axios.get(
-          `https://grssprojectserver.herokuapp.com/user`,
-          config
-        );
+        response = await axios.get(`https://grssprojectserver.herokuapp.com/user`, config);
         setUser(response.data);
         setFile(response.data.profile);
         console.log(response.data);
@@ -325,10 +307,8 @@ const Profile = (e) => {
                     <img
                       src={links(profile)}
                       alt={profile}
-                      style={{ "border-radius": "50%" }}
-                      height="100rem"
-                      width="100rem"
-                    ></img>
+                      className="profile-img"
+                      ></img>
                   </div>
                 ) : (
                   <i class="fa fa-user-circle-o" aria-hidden="true"></i>
@@ -340,16 +320,18 @@ const Profile = (e) => {
               </Col>
               <Row>
                 <Col>
-                  <button
-                    style={{
-                      float: "right",
-                    }}
-                    className="member-button"
-                    onClick={() => setPasswordModal(true)}
-                    title="Change Password"
-                  >
-                    Change<br></br>Password
-                  </button>
+                  {!admin ? (
+                    <button
+                      style={{
+                        float: "right",
+                      }}
+                      className="member-button"
+                      onClick={() => setPasswordModal(true)}
+                      title="Change Password"
+                    >
+                      Change<br></br>Password
+                    </button>
+                  ) : null}
                   <button
                     onClick={clicked}
                     className="member-button"

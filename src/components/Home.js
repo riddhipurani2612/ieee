@@ -30,7 +30,6 @@ const Home = (props) => {
     return temp[0];
   };
   useEffect(async () => {
-    console.log("useEffect");
     let response;
     let config = {
       headers: {
@@ -64,7 +63,7 @@ const Home = (props) => {
     } else {
       return "https://grssprojectserver.herokuapp.com/" + temp;
     }
-  }
+  };
   const [showFeedbackModal, setFeedbackModal] = useState(false);
   return (
     <Styles>
@@ -106,7 +105,15 @@ const Home = (props) => {
             </Carousel.Item>
           </Carousel>
           <br></br>
-          <div className="home-intro" width="60%">
+          <div className="home-intro">
+            <Row>
+              <Col>
+                <img src={ieee} width="100px" />
+              </Col>
+              <Col>
+                <img src={grss} width="100px" />
+              </Col>
+            </Row>
             Welcome To IEEE<br></br>
             Gujarat Section<br></br> GRSS Chapter<br></br>
           </div>
@@ -182,7 +189,7 @@ const Home = (props) => {
                   <div className="home-intro2">Important Links</div>
                   <br></br>
                   <Row>
-                    <Col xs={{ span: 3, order: 1 }} md={{ span: 3, order: 1 }}>
+                    <Col>
                       <a
                         href="https://www.grss-ieee.org/"
                         target="blank"
@@ -191,7 +198,7 @@ const Home = (props) => {
                         IEEE - GRSS
                       </a>
                     </Col>
-                    <Col xs={{ span: 3, order: 2 }} md={{ span: 3, order: 2 }}>
+                    <Col>
                       <a
                         href="https://www.grss-ieee.org/about/membership/benefits-of-membership/"
                         target="blank"
@@ -200,22 +207,13 @@ const Home = (props) => {
                         Why Join Us?
                       </a>
                     </Col>
-                    <Col xs={{ span: 3, order: 3 }} md={{ span: 3, order: 3 }}>
+                    <Col>
                       <a
                         href="https://ieeexplore.ieee.org/Xplore/home.jsp"
                         target="blank"
                         className="links"
                       >
                         IEEE-Xplore Digital Library
-                      </a>
-                    </Col>
-                    <Col xs={{ span: 3, order: 4 }} md={{ span: 3, order: 4 }}>
-                      <a
-                        href="https://standards.ieee.org/"
-                        target="blank"
-                        className="links"
-                      >
-                        IEEE Standards
                       </a>
                     </Col>
                   </Row>

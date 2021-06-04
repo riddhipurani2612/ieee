@@ -34,11 +34,8 @@ const ContactUs = () => {
                   class="col-sm-4"
                 >
                   <img
+                    className="member-img"
                     src={shivmohan}
-                    style={{ marginRight: "2rem", marginBottom: "2rem" }}
-                    height="250rem"
-                    width="200rem"
-                    class="center"
                   />
                 </Col>
                 <Col
@@ -63,10 +60,8 @@ const ContactUs = () => {
               <Row>
                 <Col xs={{ span: 12, order: 1 }} md={{ span: 6, order: 2 }}>
                   <img
+                    className="member-img"
                     src={suchit}
-                    style={{ marginRight: "2rem", marginBottom: "2rem" }}
-                    height="250rem"
-                    width="200rem"
                   />
                 </Col>
                 <Col xs={{ span: 12, order: 2 }} md={{ span: 6, order: 1 }}>

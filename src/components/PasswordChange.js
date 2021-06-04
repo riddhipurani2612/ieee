@@ -52,7 +52,7 @@ const PasswordChange = (props) => {
               console.log(err.response.data.msg);
             }
           });
-          if (response.data && response.statusText === "OK") {
+          if (response!= undefined && response.data!=undefined && response.statusText === "OK") {
             setStatus("Success");
         }
       } catch (error) {

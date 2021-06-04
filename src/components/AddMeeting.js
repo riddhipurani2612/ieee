@@ -54,20 +54,20 @@ const AddMeeting = () => {
   const [file, setFile] = useState("");
   const [progress, setProgess] = useState(0);
   const el = useRef(); // accesing input element
+  let extension;
   const handleChange = (e) => {
     setProgess(0);
     const file = e.target.files[0]; // accesing file
     console.log(file);
-    const extension = file.name.split(".").pop() + "";
+    extension = file.name.split(".").pop() + "";
     if (
       extension === "jpg" ||
       extension === "jpeg" ||
       extension === "bmp" ||
       extension === "png" ||
-      extension === "xls" ||
-      extension === "xlsx" ||
-      extension === "ods"
-    ) {
+      extension === "zip" ||
+      extension === "rar" 
+      ) {
       setFile(file); // storing file
       setCheckFile(true);
     } else {
@@ -250,8 +250,7 @@ const AddMeeting = () => {
               {status === "Warning" ? (
                 <Alert variant="warning">
                   <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                  Uploaded file format not supported. Please upload only image
-                  file
+                  `${extension} file is not allowed`!! Please Upload Conpressed or Image file!!
                 </Alert>
               ) : null}
               <button

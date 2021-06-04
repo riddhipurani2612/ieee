@@ -221,15 +221,12 @@ const AddEvent = () => {
                         accept="image/*"
                         ref={el}
                         onChange={handleChange}
+                        required
                       />
                     </Col>
                   </Row>
                   <br></br>
                 </Form.Group>
-                {checkFile && (
-                  <ProgressBar now={progress} label={`${progress}%`} />
-                )}
-                <br></br>
                 {checkFile && (
                   <ProgressBar now={progress} label={`${progress}%`} />
                 )}

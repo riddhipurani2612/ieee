@@ -45,7 +45,7 @@ const ProfessionalMembers = () => {
   }, []);
   const links = (temp) => {
     if (temp === undefined) {
-      return "undefined";
+      return "https://grssprojectserver.herokuapp.com/profile.png";
     } else {
       return "https://grssprojectserver.herokuapp.com/" + temp;
     }
@@ -69,8 +69,11 @@ const ProfessionalMembers = () => {
                       workplace={memberObj.workplace}
                       contact={memberObj.contact}
                       email={memberObj.email}
+                      emails={memberObj.emails}
                       about={memberObj.about}
                       profile={links(memberObj.profile)}
+                      memberid={memberObj.memberid}
+                      designation={memberObj.designation}
                       index={index}
                     ></MemberView>
                   </Col>

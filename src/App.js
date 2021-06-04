@@ -33,8 +33,14 @@ import FounderMembers from "./components/FounderMembers";
 import UpdateNewsletter from "./components/UpdateNewsletter";
 import UpdateEvent from "./components/UpdateEvent";
 import Feedbacks from "./components/Feedbacks";
+import Members from "./components/Members";
 function App() {
-  console.log("App");
+  useEffect(async () => {
+    try {
+      const response = await axios.post(`https://grssprojectserver.herokuapp.com`,{});
+    } catch (err) {}
+  }, []);
+    console.log("App");
   const [isLoggedIn, setLoggedIn] = useState(false);
   const setLogin = (state) => setLoggedIn(state);
   return (
@@ -81,6 +87,7 @@ function App() {
           <Route path="/studentmembers" component={StudentMember} />
           <Route path="/updateevent" component={UpdateEvent}/>
           <Route path="/feedbacks"component={Feedbacks}/> 
+          <Route path= "/members" component={Members}/>
           <Route
             path="/logout"
             component={LogoutComp}

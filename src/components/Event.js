@@ -16,7 +16,7 @@ const Events = () => {
       },
     };
     try {
-      response = await axios.get("https://grssprojectserver.herokuapp.com/event", config);
+      response = await axios.get("https://grssprojectserver.herokuapp.com/event/passed", config);
       setEvents(response.data);
       console.log(response.data);
     } catch (err) {

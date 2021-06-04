@@ -26,7 +26,7 @@ const AddMaterial = () => {
       setStatus("Warning");
       alert(`${extension} file is not allowed`);
       e.target.value = null;
-     }
+    }
   };
 
   const [material, setMaterial] = useState({});
@@ -105,13 +105,14 @@ const AddMaterial = () => {
           data,
           config
         );
+        console.log(response.statusText);
         if (response.statusText === "OK") {
           setStatus("Success");
         } else {
           setStatus("Warning");
           setError(response.data.message);
         }
-     } catch (err) {
+      } catch (err) {
         console.log(err.response);
       }
     }
@@ -152,7 +153,8 @@ const AddMaterial = () => {
               <Form.Group>
                 <Row>
                   <Col sm="4">
-                    <label>Lecture Type : </label><span style={{color : "red"}}>*</span>
+                    <label>Lecture Type : </label>
+                    <span style={{ color: "red" }}>*</span>
                   </Col>
                   <Col>
                     <select
@@ -173,7 +175,8 @@ const AddMaterial = () => {
               <Form.Group>
                 <Row>
                   <Col sm="4">
-                    <label>Title : </label><span style={{color : "red"}}>*</span>
+                    <label>Title : </label>
+                    <span style={{ color: "red" }}>*</span>
                   </Col>
                   <Col>
                     <input
@@ -191,7 +194,8 @@ const AddMaterial = () => {
               <Form.Group>
                 <Row>
                   <Col sm="4">
-                    <label>About : </label><span style={{color : "red"}}>*</span>
+                    <label>About : </label>
+                    <span style={{ color: "red" }}>*</span>
                   </Col>
                   <Col>
                     <input
@@ -242,6 +246,26 @@ const AddMaterial = () => {
               {checkFile && (
                 <ProgressBar now={progress} label={`${progress}%`} />
               )}
+              {status === "Success" ? (
+                <Alert variant="success">
+                  <i class="fa fa-check-circle" aria-hidden="true"></i>
+                  Data Uploaded Successfully!!
+                </Alert>
+              ) : null}
+              {status === "Error" ? (
+                <Alert variant="danger">
+                  <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                  {error}
+                </Alert>
+              ) : null}
+              {status === "Warning" ? (
+                <Alert variant="warning">
+                  <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                  Uploaded file format not supported. Please upload only image
+                  file
+                </Alert>
+              ) : null}
+
               <button
                 className="material-button"
                 style={{

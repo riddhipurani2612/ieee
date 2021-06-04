@@ -74,34 +74,30 @@ const ViewNP = (props) => {
       <div className="material-content">
         <Row>
           <Col>
-            {props.materialtype==="Publication" && props.publicationlink!= undefined ? (
+            {props.materialtype === "Publication" &&
+            props.publicationlink != "undefined" ? (
               <a href={props.publicationlink} target="blank">
                 {props.title}
               </a>
             ) : null}
-            {props.materialtype==="Newsletter" && props.materialfile != "undefiend" ? (
+            {props.materialtype === "Newsletter" &&
+            props.materialfile != "undefiend" ? (
               <a href={props.materialfile} target="blank">
-                {props.title} 
+                {props.title}
               </a>
             ) : null}
           </Col>
           <Col xs lg="3">
-          {admin || member && (
+            {role==="Admin" ? (
               <button className="material-button" onClick={updatedetails}>
-                <i
-                  class="fa fa-edit"
-                  aria-hidden="true"
-                ></i>
+                <i class="fa fa-edit" aria-hidden="true"></i>
               </button>
-            )}
-            {admin || member && (
+            ) : null}
+            {role==="Admin" ? (
               <button onClick={deletedetails} className="material-button">
-                <i
-                  class="fa fa-trash"
-                  aria-hidden="true"
-                ></i>
+                <i class="fa fa-trash" aria-hidden="true"></i>
               </button>
-            )}
+            ) : null}
           </Col>
         </Row>
       </div>

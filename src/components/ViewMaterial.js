@@ -77,27 +77,18 @@ const ViewMaterial = (props) => {
             <b>{props.title}</b>
           </Col>
           <Col xs lg="3">
-            {admin || member && (
+            {role==="Admin" ? (
               <button className="material-button" onClick={updatedetails}>
-                <i
-                  class="fa fa-edit"
-                  aria-hidden="true"
-                ></i>
+                <i class="fa fa-edit" aria-hidden="true"></i>
               </button>
-            )}
-            {admin || member && (
-              <button onClick={deletedetails} className="material-button">
-                <i
-                  class="fa fa-trash"
-                  aria-hidden="true"
-                ></i>
-              </button>
-            )}
+            ) : null}
+            {role==="Admin" ? (
+                <button onClick={deletedetails} className="material-button">
+                  <i class="fa fa-trash" aria-hidden="true"></i>
+                </button>
+              ) : null}
             <button onClick={viewdetails} className="material-button">
-              <i
-                class="fa fa-eye"
-                aria-hidden="true"
-              ></i>
+              <i class="fa fa-eye" aria-hidden="true"></i>
             </button>
           </Col>
         </Row>

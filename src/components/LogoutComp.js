@@ -6,7 +6,7 @@ const LogoutComp = (props) => {
   const history = useHistory();
   return (
     <div>
-      {localStorage.clearAll()}
+      {localStorage.clear()}
       {history.goBack()}
     </div>
   );

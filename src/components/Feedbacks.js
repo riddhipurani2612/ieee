@@ -27,11 +27,7 @@ const Feedbacks = () => {
         `https://grssprojectserver.herokuapp.com/user/getrole`,
         config
       );
-
-      console.log(response.data);
-      setUser(response.data);
-      console.log(role);
-      if (role === "Admin") {
+      if (response.data.role === "Admin") {
         let response;
         let config = {
           headers: {

@@ -20,17 +20,13 @@ const ChairsDesk = () => {
         <Container>
           <br></br>
           <div className="w3-panel w3-border w3-border-white boxshadow">
-            <div
-              className="header-1"
-            >
-              Chair's Address
-            </div>
+            <div className="header-1">Chair's Address</div>
             <div className="content col-md-12 my-5">
               <div class="wrap">
                 <img
+                  className="member-img"
                   src={shivmohan}
                   style={{ marginRight: "2rem", marginBottom: "2rem" }}
-                  height="300rem"
                 />
               </div>
               <p className="wrap custom-text ">

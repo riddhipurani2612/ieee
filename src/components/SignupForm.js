@@ -7,29 +7,31 @@ const Styles = styled.div``;
 
 const SignUp = () => {
   const [file, setFile] = useState("");
-  const [checkFile, setCheckFile] = useState(false);
-  const [progress, setProgess] = useState(0);
   const [error, setError] = useState("");
   const [status, setStatus] = useState("");
 
+  const [checkFile, setCheckFile] = useState(false);
+  const [progress, setProgess] = useState(0);
   const el = useRef(); // accesing input element
   const handleChange = (e) => {
     setProgess(0);
     const file = e.target.files[0]; // accesing file
     console.log(file);
-    const extension = file.name.split(".").pop() + "";
-    if (
-      extension === "jpg" ||
-      extension === "jpeg" ||
-      extension === "bmp" ||
-      extension === "png"
-    ) {
-      setFile(file); // storing file
-      setCheckFile(true);
-    } else {
-      setStatus("Warning");
-      alert(`${extension} file is not allowed`);
-      e.target.value = null;
+    if (file != undefined) {
+      const extension = file.name.split(".").pop() + "";
+      if (
+        extension === "jpg" ||
+        extension === "jpeg" ||
+        extension === "bmp" ||
+        extension === "png"
+      ) {
+        setFile(file); // storing file
+        setCheckFile(true);
+      } else {
+        setStatus("Warning");
+        alert(`${extension} file is not allowed`);
+        e.target.value = null;
+      }
     }
   };
   const [signupData, setSignupData] = useState({});
@@ -71,6 +73,8 @@ const SignUp = () => {
     address,
     contact,
     email,
+    emails,
+    memberid,
     workplace,
     designation,
     about,
@@ -93,6 +97,8 @@ const SignUp = () => {
         formData.append("designation", designation);
         formData.append("workplace", workplace);
         formData.append("email", email);
+        formData.append("memberid", memberid);
+        formData.append("emails", emails);
         formData.append("contact", contact);
         formData.append("file", file);
         const config = {
@@ -119,12 +125,8 @@ const SignUp = () => {
                 console.log(err.response.data.msg);
               }
             });
-          if (
-            response != undefined &&
-            response.data != undefined &&
-            response.statusText === "OK"
-          ) {
-            history.goBack();
+          if (response.data && response.statusText === "OK") {
+            setStatus("Success");
           }
         } catch (err) {
           console.log(err);
@@ -136,12 +138,15 @@ const SignUp = () => {
           last_name,
           role,
           contact,
+          memberid,
           email,
+          emails,
           workplace,
           designation,
           password,
           about,
         };
+        console.log(data);
         let config = {
           headers: {
             "Content-Type": "application/json",
@@ -149,21 +154,14 @@ const SignUp = () => {
         };
         let response;
         try {
-          response = await axios
-            .post("https://grssprojectserver.herokuapp.com/user", data, config)
-            .catch((err) => {
-              if (err.response) {
-                setStatus("Error");
-                setError(err.response.data.msg);
-                console.log(err.response.data.msg);
-              }
-            });
-          if (
-            response != undefined &&
-            response.data != undefined &&
-            response.statusText === "OK"
-          ) {
-            history.goBack();
+          response = await axios.post(
+            "https://grssprojectserver.herokuapp.com/user",
+            data,
+            config
+          );
+          console.log(response.data);
+          if (response.status === "200") {
+            history.push("/login");
           }
         } catch (err) {
           console.log(err);
@@ -234,7 +232,6 @@ const SignUp = () => {
                         </option>
                         <option>Student</option>
                         <option>Professional Member</option>
-                        <option>Founder Member</option>
                       </select>
                     </Col>
                   </Row>
@@ -250,7 +247,7 @@ const SignUp = () => {
                         type="text"
                         value={contact}
                         name="contact"
-                        placeholder="+91-**********"
+                        placeholder="+91-**********, +91-**********, +91-**********"
                         onChange={signupValueChanged}
                       ></input>
                     </Col>
@@ -268,6 +265,22 @@ const SignUp = () => {
                         value={email}
                         name="email"
                         placeholder="example@xzy.com"
+                        onChange={signupValueChanged}
+                      ></input>
+                    </Col>
+                  </Row>
+                </Form.Group>
+                <Form.Group controlId="signup_email">
+                  <Row>
+                    <Col sm="4">
+                      <label>Other Email Addresses</label>
+                    </Col>
+                    <Col>
+                      <input
+                        type="text"
+                        value={emails}
+                        name="emails"
+                        placeholder="example@xzy.com,example@xzy.com"
                         onChange={signupValueChanged}
                       ></input>
                     </Col>
@@ -297,7 +310,6 @@ const SignUp = () => {
                     </Col>
                     <Col>
                       <input
-                        required
                         type="text"
                         value={designation}
                         name="designation"
@@ -313,13 +325,29 @@ const SignUp = () => {
                       <label>Short Biography</label>
                     </Col>
                     <Col>
-                      <input
+                      <textarea
                         required
-                        as="textarea"
+                        className="textarea"
                         row="4"
                         name="about"
                         value={about}
                         placeholder="Tell us more about you"
+                        onChange={signupValueChanged}
+                      ></textarea>
+                    </Col>
+                  </Row>
+                </Form.Group>
+                <Form.Group>
+                  <Row>
+                    <Col sm="4">
+                      <label>Member ID</label>
+                    </Col>
+                    <Col>
+                      <input
+                        type="text"
+                        value={memberid}
+                        name="memberid"
+                        placeholder="Enter IEEE Member ID"
                         onChange={signupValueChanged}
                       ></input>
                     </Col>

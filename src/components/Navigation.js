@@ -5,40 +5,41 @@ import styled from "styled-components";
 import axios from "axios";
 import * as ReactBootStrap from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 const Styles = styled.div`
-.navbar{
-  font-family:Century !important;
-  font-size : 1.2rem;
-}
-.dropdown-menu {
-  position: 1rem;
-}
-.dropdown-submenu {
-  position: relative;
-}
-.dropdown-submenu a::after {
-  transform: rotate(-90deg);
-  position: absolute;
-  right: 3px;
-  top: 40%;
-}
-.dropdown-submenu:hover .dropdown-menu,
-.dropdown-submenu:focus .dropdown-menu {
-  display: flex;
-  flex-direction: column;
-  position: absolute !important;
-  margin-top: -30px;
-  left: 100%;
-}
-@media (max-width: 992px) {
+  .navbar {
+    font-family: Century !important;
+    font-size: 1.2rem;
+  }
   .dropdown-menu {
-    width: 63%;
+    position: 1rem;
   }
-  .dropdown-menu .dropdown-submenu {
-    width: auto;
+  .dropdown-submenu {
+    position: relative;
   }
-}
+  .dropdown-submenu a::after {
+    transform: rotate(-90deg);
+    position: absolute;
+    right: 3px;
+    top: 40%;
+  }
+  .dropdown-submenu:hover .dropdown-menu,
+  .dropdown-submenu:focus .dropdown-menu {
+    display: flex;
+    flex-direction: column;
+    position: absolute !important;
+    margin-top: -30px;
+    left: 100%;
+  }
+  @media (max-width: 992px) {
+    .dropdown-menu {
+      width: 63%;
+    }
+    .dropdown-menu .dropdown-submenu {
+      width: auto;
+    }
+  }
 `;
 const Navigation = (props) => {
   const [admin, setAdmin] = useState(false);
@@ -69,7 +70,8 @@ const Navigation = (props) => {
           config
         );
         console.log(response.data);
-        setUser(response.data);
+        if(response.data!=null)
+          setUser(response.data);
 
         if (role === "Student") {
           setStudent(true);
@@ -112,30 +114,13 @@ const Navigation = (props) => {
           <ReactBootStrap.Navbar.Collapse id="responsive-navbar-nav">
             <ReactBootStrap.Nav className="mr-auto">
               <Link to="/">
-                <ReactBootStrap.Nav.Link
-                  href="/"
-                  activeStyle={{ color: "#CDA95B" }}
-                >
-                  Home
+                <ReactBootStrap.Nav.Link href="/">Home</ReactBootStrap.Nav.Link>
+              </Link>
+              <Link to="/chairs-desk">
+                <ReactBootStrap.Nav.Link href="/chairs-desk">
+                  Chair's Desk
                 </ReactBootStrap.Nav.Link>
               </Link>
-              <ReactBootStrap.NavDropdown
-                title="About"
-                id="collasible-nav-dropdown"
-              >
-                <ReactBootStrap.NavDropdown.Item
-                  activeStyle={{ color: "#CDA95B" }}
-                  href="/chairs-desk"
-                >
-                  Chair's Address
-                </ReactBootStrap.NavDropdown.Item>
-                <ReactBootStrap.NavDropdown.Item href="/faq">
-                  FAQs
-                </ReactBootStrap.NavDropdown.Item>
-                <ReactBootStrap.NavDropdown.Item href="/about">
-                  About Us
-                </ReactBootStrap.NavDropdown.Item>
-              </ReactBootStrap.NavDropdown>
 
               <ReactBootStrap.NavDropdown
                 title="Members"
@@ -187,20 +172,20 @@ const Navigation = (props) => {
                   Download Tarang Software
                 </ReactBootStrap.NavDropdown.Item>
                 <ReactBootStrap.NavDropdown.Item
-                  href="/addmaterail"
-                  hidden={!student}
+                  href="/addmaterial"
+                  hidden={!member}
                 >
                   Upload Lectures
                 </ReactBootStrap.NavDropdown.Item>
                 <ReactBootStrap.NavDropdown.Item
                   href="/addnewsletter"
-                  hidden={!student}
+                  hidden={!member}
                 >
                   Upload Newsletter / Publication
                 </ReactBootStrap.NavDropdown.Item>
               </ReactBootStrap.NavDropdown>
               <Link to="/events">
-                <ReactBootStrap.Nav.Link hidden={admin} href="/events">
+                <ReactBootStrap.Nav.Link href="/events" hidden={admin}>
                   Events
                 </ReactBootStrap.Nav.Link>
               </Link>
@@ -212,30 +197,23 @@ const Navigation = (props) => {
                 <ReactBootStrap.NavDropdown.Item href="/events">
                   Events
                 </ReactBootStrap.NavDropdown.Item>
-                <ReactBootStrap.NavDropdown.Divider />
-                <ReactBootStrap.NavDropdown.Item href="/addevent">
-                  Add Event
-                </ReactBootStrap.NavDropdown.Item>
-              </ReactBootStrap.NavDropdown>
-              <ReactBootStrap.NavDropdown
-                title="Meetings"
-                id="collasible-nav-dropdown"
-                hidden={!admin}
-              >
-                <ReactBootStrap.NavDropdown.Item href="/viewmeeting">
+                <ReactBootStrap.NavDropdown.Item href="/viewmeeting" hidden={!admin}>
                   View Meetings
                 </ReactBootStrap.NavDropdown.Item>
                 <ReactBootStrap.NavDropdown.Divider />
-                <ReactBootStrap.NavDropdown.Item href="/addmeeting">
+                <ReactBootStrap.NavDropdown.Item
+                  href="/addevent"
+                  hidden={!admin}
+                >
+                  Add Event
+                </ReactBootStrap.NavDropdown.Item>
+                <ReactBootStrap.NavDropdown.Item
+                  href="/addmeeting"
+                  hidden={!admin}
+                >
                   Add Meeting
                 </ReactBootStrap.NavDropdown.Item>
               </ReactBootStrap.NavDropdown>
-              <Link to="/viewmeeting">
-                <ReactBootStrap.Nav.Link hidden={!member} href="/viewmeeting">
-                  Meetings
-                </ReactBootStrap.Nav.Link>
-              </Link>
-
               <Link to="/contact">
                 <ReactBootStrap.Nav.Link href="/contact">
                   Contact
@@ -302,7 +280,7 @@ const Navigation = (props) => {
                 >
                   Feedbacks
                 </ReactBootStrap.NavDropdown.Item>
-           
+
                 <ReactBootStrap.NavDropdown.Divider />
                 <ReactBootStrap.NavDropdown.Item href="/logout">
                   Log Out

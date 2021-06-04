@@ -25,7 +25,7 @@ const StudentMember = () => {
         "Content-Type": "application/json",
       },
     };
-    const role = "Student";
+    const role = "Student Member";
     try {
       response = await axios.get(
         `https://grssprojectserver.herokuapp.com/user/getmembers/${role}`,
@@ -40,7 +40,7 @@ const StudentMember = () => {
 
   const links = (temp) => {
     if (temp === undefined) {
-      return "undefined";
+      return "https://grssprojectserver.herokuapp.com/profile.png";
     } else {
       return "https://grssprojectserver.herokuapp.com/" + temp;
     }
@@ -49,7 +49,6 @@ const StudentMember = () => {
   return (
     <Styles>
       <div className="main-bg">
-
         <Container>
           <br></br>
           <div className="w3-panel w3-border w3-border-white boxshadow">
@@ -65,6 +64,9 @@ const StudentMember = () => {
                       workplace={memberObj.workplace}
                       contact={memberObj.contact}
                       email={memberObj.email}
+                      memberid={memberObj.memberid}
+                      designation={memberObj.designation}
+                      emails={memberObj.emails}
                       about={memberObj.about}
                       profile={links(memberObj.profile)}
                       index={index}

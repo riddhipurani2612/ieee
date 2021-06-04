@@ -14,6 +14,7 @@ const FounderMembers = () => {
     address,
     contact,
     email,
+    emails,
     workplace,
     designation,
     about,
@@ -28,10 +29,7 @@ const FounderMembers = () => {
     };
     const role = "Founder Member";
     try {
-      response = await axios.get(
-        `https://grssprojectserver.herokuapp.com/user/getmembers/${role}`,
-        config
-      );
+      response = await axios.get(`https://grssprojectserver.herokuapp.com/user/founder`, config);
       setMembers(response.data);
       if (response.data.about != null) {
         setAbout(true);
@@ -69,6 +67,8 @@ const FounderMembers = () => {
                       workplace={memberObj.workplace}
                       contact={memberObj.contact}
                       email={memberObj.email}
+                      memberid={memberObj.memberid}
+                      designation={memberObj.designation}
                       about={memberObj.about}
                       profile={links(memberObj.profile)}
                       index={index}
