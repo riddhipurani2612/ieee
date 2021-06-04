@@ -48,7 +48,7 @@ const Navigation = (props) => {
   const [user, setUser] = useState({});
   const { first_name, last_name, role, profile } = user;
   let response;
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
   let config = {
     headers: {
       "Content-Type": "application/json",
@@ -63,12 +63,14 @@ const Navigation = (props) => {
     }
   };
   useEffect(async () => {
+    console.log(props)
     if (token != null) {
       try {
         response = await axios.get(
           `https://grssprojectserver.herokuapp.com/user/getrole`,
           config
         );
+
         console.log(response.data);
         if(response.data!=null)
           setUser(response.data);
@@ -87,12 +89,7 @@ const Navigation = (props) => {
         console.log(error);
       }
     }
-    if (localStorage.getItem("token") === null) {
-      props.setLogin(false);
-    } else {
-      props.setLogin(true);
-    }
-  }, [props.isLoggedIn, role]);
+   }, [props.isLoggedIn, role]);
   const welcome = "Welcome, " + first_name;
   const [click, setClick] = useState(false);
   const handleCilck = () => setClick(!click);

@@ -37,20 +37,22 @@ import Members from "./components/Members";
 function App() {
   useEffect(async () => {
     try {
-      const response = await axios.post(`https://grssprojectserver.herokuapp.com`,{});
+      localStorage.clear();
+      const response = await axios.post(
+        `https://grssprojectserver.herokuapp.com`,
+        {}
+      );
     } catch (err) {}
   }, []);
-    console.log("App");
+  console.log("App");
   const [isLoggedIn, setLoggedIn] = useState(false);
   const setLogin = (state) => setLoggedIn(state);
+  const [roleUser, setRole] = useState("");
+  const setRoleLog = (rolestate) => setRole(rolestate);
   return (
     <Router>
       <div className="App">
-        <Navigation
-          isLoggedIn={isLoggedIn}
-          setLogin={(state) => setLogin(state)}
-        />
-
+        <Navigation isLoggedIn={isLoggedIn} role={roleUser}/>
         <Switch>
           <Route path="/" exact component={Home} />
           <Route
@@ -59,6 +61,7 @@ function App() {
               <Login
                 routeProps={routeProps}
                 setLogin={(state) => setLogin(state)}
+                setRoleLog={(rolestate) => setRole(rolestate)}
               />
             )}
           />
@@ -83,11 +86,11 @@ function App() {
           <Route path="/detailedview" component={DetailedView} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/professionalmembers" component={ProfessionalMembers} />
-          <Route path="/foundermembers" component={FounderMembers}/>
+          <Route path="/foundermembers" component={FounderMembers} />
           <Route path="/studentmembers" component={StudentMember} />
-          <Route path="/updateevent" component={UpdateEvent}/>
-          <Route path="/feedbacks"component={Feedbacks}/> 
-          <Route path= "/members" component={Members}/>
+          <Route path="/updateevent" component={UpdateEvent} />
+          <Route path="/feedbacks" component={Feedbacks} />
+          <Route path="/members" component={Members} />
           <Route
             path="/logout"
             component={LogoutComp}
@@ -95,7 +98,10 @@ function App() {
           />
           <Route path="/viewmeeting" component={MeetingView} />
           <Route path="/updatemeeting" component={UpdateMeeting} />
-          <Route path="/updatenewsletter-publication" component={UpdateNewsletter}/>
+          <Route
+            path="/updatenewsletter-publication"
+            component={UpdateNewsletter}
+          />
         </Switch>
         <Footer />
       </div>
