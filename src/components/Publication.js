@@ -27,7 +27,7 @@ const Publication = () => {
     uploadedby,
     materialfile,
   } = material;
-
+  const [error, setError] = useState(false);
   useEffect(async () => {
     const materialtype1 = "Publication";
     try {
@@ -41,7 +41,12 @@ const Publication = () => {
         `https://grssprojectserver.herokuapp.com/techMaterial/materials/${materialtype1}`,
         config
       );
-      setMaterial(response.data);
+      if (response.data && response.statusText === "OK") {
+        setMaterial(response.data);
+      }
+      if (material === []) {
+        setError(true);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -54,17 +59,19 @@ const Publication = () => {
           "x-auth-token": token,
         },
       };
-      let response = await axios.get(
-        `https://grssprojectserver.herokuapp.com/user/getrole`,
-        config
-      );
-      setUser(response.data);
-      if (role === "Student") {
-        setStudent(true);
-      } else if (role === "Admin") {
-        setAdmin(true);
-      } else {
-        setMember(true);
+      if (token != null) {
+        let response = await axios.get(
+          `https://grssprojectserver.herokuapp.com/user/getrole`,
+          config
+        );
+        setUser(response.data);
+        if (role === "Student") {
+          setStudent(true);
+        } else if (role === "Admin") {
+          setAdmin(true);
+        } else {
+          setMember(true);
+        }
       }
     } catch (error) {
       console.log(error);
@@ -87,7 +94,6 @@ const Publication = () => {
         `https://grssprojectserver.herokuapp.com/techMaterial/`,
         config
       );
-      console.log(response.data);
       window.location.reload(false);
     } catch (err) {
       console.log(err);
@@ -103,16 +109,21 @@ const Publication = () => {
             <div className="material-header">Publications</div>
             <br></br>
             <br></br>
-            <ul className="material-content">
-              {material.map((materialObj, index) => (
-                <ViewNP 
-                  materialtype = "Publication"
-                  materialfile = {materialObj.materialfile}
-                  _id={materialObj._id}
-                  title={materialObj.title}
-                  publicationlink={materialObj.publicationlink}/>
-              ))}
-            </ul>
+            {error ? (
+              <div>Data Not Found </div>
+            ) : (
+              <ul className="material-content">
+                {material.map((materialObj, index) => (
+                  <ViewNP
+                    materialtype="Publication"
+                    materialfile={materialObj.materialfile}
+                    _id={materialObj._id}
+                    title={materialObj.title}
+                    publicationlink={materialObj.publicationlink}
+                  />
+                ))}
+              </ul>
+            )}
           </div>
           <br></br>
         </Container>

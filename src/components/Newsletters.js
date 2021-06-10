@@ -21,7 +21,7 @@ const Newsletter = () => {
     uploadedby,
     materialfile,
   } = material;
-
+  const [error, setError] = useState(false);
   useEffect(async () => {
     const materialtype1 = "Newsletter";
 
@@ -36,8 +36,12 @@ const Newsletter = () => {
         `https://grssprojectserver.herokuapp.com/techMaterial/materials/${materialtype1}`,
         config
       );
-      setMaterial(response.data);
-      console.log(material);
+      if (response.data && response.statusText === "OK") {
+        setMaterial(response.data);
+      }
+      if (material === []) {
+        setError(true);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -58,17 +62,20 @@ const Newsletter = () => {
           <div className="w3-panel w3-border w3-border-white boxshadow">
             <div className="material-header">Newsletter</div>
             <br></br>
-            <br></br>
-            <ul className="material-content">
-              {material.map((materialObj, index) => (
-                <ViewNP
-                  materialtype = "Newsletter"
-                  _id={materialObj._id}
-                  title={materialObj.title}
-                  materialfile={link(materialObj.materialfile)}
-                />
-              ))}
-            </ul>
+            {error ? (
+              <div>Data Not Found </div>
+            ) : (
+              <ul className="material-content">
+                {material.map((materialObj, index) => (
+                  <ViewNP
+                    materialtype="Newsletter"
+                    _id={materialObj._id}
+                    title={materialObj.title}
+                    materialfile={link(materialObj.materialfile)}
+                  />
+                ))}
+              </ul>
+            )}
           </div>
           <br></br>
         </Container>

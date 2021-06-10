@@ -1,15 +1,17 @@
-import React,{useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Accordion, Card, Button, Container } from "react-bootstrap";
 import axios from "axios";
 import ViewMaterial from "./ViewMaterial";
-const Styles = styled.div`
-`;
+const Styles = styled.div``;
 
 const ExpertLecture = () => {
   const [material, setMaterial] = useState([]);
-  const { title, about, youtubelink, materialtype,uploadedby, materialfile } = material;
-  useEffect(async()=>{
+  const { title, about, youtubelink, materialtype, uploadedby, materialfile } =
+    material;
+  const [error, setError] = useState(false);
+
+  useEffect(async () => {
     let response;
     let config = {
       headers: {
@@ -22,11 +24,16 @@ const ExpertLecture = () => {
         `https://grssprojectserver.herokuapp.com/techMaterial/materials/${materialtype}`,
         config
       );
-      setMaterial(response.data);
+      if (response.data && response.statusText === "OK") {
+        setMaterial(response.data);
+      }
+      if (material === []) {
+        setError(true);
+      }
     } catch (err) {
       console.log(err);
     }
-  },[]);
+  }, []);
   const youtubeOptions = {
     width: "95%",
   };
@@ -39,30 +46,32 @@ const ExpertLecture = () => {
   };
   return (
     <Styles>
-    <div className="main-bg">
-      <Container>
-        <br></br>
-        <div className="w3-panel w3-border w3-border-white boxshadow">
-          <div
-            className="material-header"
-          >
-            Expert Lectures
+      <div className="main-bg">
+        <Container>
+          <br></br>
+          <div className="w3-panel w3-border w3-border-white boxshadow">
+            <div className="material-header">Expert Lectures</div>
+            <br></br>
+            {error ? (
+              <div> Data Not Received</div>
+            ) : (
+              <div>
+                {material.map((materialObj, index) => (
+                  <ViewMaterial
+                    _id={materialObj._id}
+                    title={materialObj.title}
+                    about={materialObj.about}
+                    youtubelink={materialObj.youtubelink}
+                    publicationlink={materialObj.publicationlink}
+                    materialfile={links(materialObj.materialfile)}
+                    uploadedby={materialObj.uploadedby}
+                  />
+                ))}
+              </div>
+            )}
           </div>
           <br></br>
-          {material.map((materialObj, index) => (
-            <ViewMaterial
-              _id={materialObj._id}
-              title={materialObj.title}
-              about={materialObj.about}
-              youtubelink={materialObj.youtubelink}
-              publicationlink={materialObj.publicationlink}
-              materialfile={links(materialObj.materialfile)}
-              uploadedby={materialObj.uploadedby}
-            />
-          ))}
-        </div>
-        <br></br>
-      </Container>
+        </Container>
       </div>
     </Styles>
   );

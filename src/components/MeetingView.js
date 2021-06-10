@@ -13,7 +13,7 @@ const MeetingView = () => {
   const [student, setStudent] = useState(false);
   const [user, setUser] = useState({});
   const { first_name, last_name, role } = user;
-
+  const [error, setError] = useState(false);
   const [meetings, setMeetings] = useState([]);
   const { date, place, attendees, summary, purpose, minutes, sign } = meetings;
   useEffect(async () => {
@@ -25,17 +25,21 @@ const MeetingView = () => {
           "x-auth-token": token,
         },
       };
-      let response = await axios.get(
-        `https://grssprojectserver.herokuapp.com/user/getrole`,
-        config
-      );
-      setUser(response.data);
-      if (role === "Student") {
-        setStudent(true);
-      } else if (role === "Admin") {
-        setAdmin(true);
-      } else {
-        setMember(true);
+      if (token != null) {
+        let response = await axios.get(
+          `https://grssprojectserver.herokuapp.com/user/getrole`,
+          config
+        );
+        if (response.data && response.statusText === "OK") {
+          setUser(response.data);
+          if (role === "Student") {
+            setStudent(true);
+          } else if (role === "Admin") {
+            setAdmin(true);
+          } else {
+            setMember(true);
+          }
+        }
       }
     } catch (error) {
       console.log(error);
@@ -50,10 +54,16 @@ const MeetingView = () => {
             "Content-Type": "application/json",
           },
         };
-        response = await axios.get("https://grssprojectserver.herokuapp.com/meeting", config);
-        setMeetings(response.data);
-        console.log(meetings);
-        console.log(response.data);
+        response = await axios.get(
+          "https://grssprojectserver.herokuapp.com/meeting",
+          config
+        );
+        if (response.data && response.statusText === "OK") {
+          setMeetings(response.data);
+        }
+        if (meetings === []) {
+          setError(true);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -84,7 +94,7 @@ const MeetingView = () => {
               Meetings
             </div>
             <div style={{ float: "right" }}>
-              Sort : 
+              Sort :
               <select
                 onChange={(e) => setSort(e.target.value)}
                 style={{ float: "right" }}
@@ -97,40 +107,46 @@ const MeetingView = () => {
               </select>
             </div>
             <br></br>
-            {sort === "Ascending" ? (
-              <div>
-                {meetings
-                  .slice(0)
-                  .reverse()
-                  .map((meetingObj, index) => (
-                    <MeetingDetails
-                      _id={meetingObj._id}
-                      role={role}
-                      date={dateFormate(meetingObj.date)}
-                      place={meetingObj.place}
-                      attendees={meetingObj.attendees}
-                      summary={meetingObj.summary}
-                      purpose={meetingObj.purpose}
-                      minutes={meetingObj.minutes}
-                      sign={links(meetingObj.sign)}
-                    />
-                  ))}
-              </div>
+            {error ? (
+              <div> Data Not Received</div>
             ) : (
               <div>
-                {meetings.map((meetingObj, index) => (
-                  <MeetingDetails
-                    _id={meetingObj._id}
-                    role={role}
-                    date={dateFormate(meetingObj.date)}
-                    place={meetingObj.place}
-                    attendees={meetingObj.attendees}
-                    summary={meetingObj.summary}
-                    purpose={meetingObj.purpose}
-                    minutes={meetingObj.minutes}
-                    sign={links(meetingObj.sign)}
-                  />
-                ))}
+                {sort === "Ascending" ? (
+                  <div>
+                    {meetings
+                      .slice(0)
+                      .reverse()
+                      .map((meetingObj, index) => (
+                        <MeetingDetails
+                          _id={meetingObj._id}
+                          role={role}
+                          date={dateFormate(meetingObj.date)}
+                          place={meetingObj.place}
+                          attendees={meetingObj.attendees}
+                          summary={meetingObj.summary}
+                          purpose={meetingObj.purpose}
+                          minutes={meetingObj.minutes}
+                          sign={links(meetingObj.sign)}
+                        />
+                      ))}
+                  </div>
+                ) : (
+                  <div>
+                    {meetings.map((meetingObj, index) => (
+                      <MeetingDetails
+                        _id={meetingObj._id}
+                        role={role}
+                        date={dateFormate(meetingObj.date)}
+                        place={meetingObj.place}
+                        attendees={meetingObj.attendees}
+                        summary={meetingObj.summary}
+                        purpose={meetingObj.purpose}
+                        minutes={meetingObj.minutes}
+                        sign={links(meetingObj.sign)}
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
             )}
           </div>

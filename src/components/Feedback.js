@@ -29,16 +29,17 @@ const Feedback = (props) => {
     };
     let response;
     try {
-      response = await axios.post(
-        "https://grssprojectserver.herokuapp.com/feedback",
-        data,
-        config
-      );
-      if (response.statusText === "OK") {
+      response = await axios
+        .post("https://grssprojectserver.herokuapp.com/feedback", data, config)
+        .catch((err) => {
+          if (err.response) {
+            setStatus("Error");
+            setError(err.response.data.msg);
+            console.log(err.response.data.msg);
+          }
+        });
+      if (response.data && response.statusText === "OK") {
         setStatus("Success");
-      } else {
-        setStatus("Warning");
-        setError(response.data.message);
       }
     } catch (error) {
       console.log(error);

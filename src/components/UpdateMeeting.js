@@ -22,23 +22,24 @@ const UpdateMeeting = () => {
   const handleChange = (e) => {
     setProgess(0);
     const file = e.target.files[0]; // accesing file
-    console.log(file);
-    const extension = file.name.split(".").pop() + "";
-    if (
-      extension === "jpg" ||
-      extension === "jpeg" ||
-      extension === "bmp" ||
-      extension === "png" ||
-      extension === "xls" ||
-      extension === "xlsx" ||
-      extension === "ods"
-    ) {
-      setFile(file); // storing file
-      setCheckFile(true);
-    } else {
-      setStatus("Warning");
-      alert(`${extension} file is not allowed`);
-      e.target.value = null;
+    if (file != undefined && file != "") {
+      const extension = file.name.split(".").pop() + "";
+      if (
+        extension === "jpg" ||
+        extension === "jpeg" ||
+        extension === "bmp" ||
+        extension === "png" ||
+        extension === "xls" ||
+        extension === "xlsx" ||
+        extension === "ods"
+      ) {
+        setFile(file); // storing file
+        setCheckFile(true);
+      } else {
+        setStatus("Warning");
+        alert(`${extension} file is not allowed`);
+        e.target.value = null;
+      }
     }
   };
 
@@ -63,21 +64,29 @@ const UpdateMeeting = () => {
           "Content-Type": "multipart/form-data",
         },
       };
-      response = await axios.patch(
-        `https://grssprojectserver.herokuapp.com/meeting/${localStorage.getItem(
-          "meetingUpdate"
-        )}`,
-        data,
-        config,
-        {
-          onUploadProgress: (ProgressEvent) => {
-            let progress =
-              Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +
-              "%";
-            setProgess(progress);
-          },
-        }
-      );
+      response = await axios
+        .patch(
+          `https://grssprojectserver.herokuapp.com/meeting/${localStorage.getItem(
+            "meetingUpdate"
+          )}`,
+          data,
+          config,
+          {
+            onUploadProgress: (ProgressEvent) => {
+              let progress =
+                Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +
+                "%";
+              setProgess(progress);
+            },
+          }
+        )
+        .catch((err) => {
+          if (err.response) {
+            setStatus("Error");
+            setError(err.response.data.msg);
+          }
+        });
+
       if (response.statusText === "OK") {
         setStatus("Success");
       } else {
@@ -85,8 +94,7 @@ const UpdateMeeting = () => {
         setError(response.data.message);
       }
     } catch (err) {
-      console.log(err.request);
-      console.log(err.data);
+      console.log(err.message);
     }
   };
   useEffect(async () => {
@@ -107,7 +115,6 @@ const UpdateMeeting = () => {
           config
         );
         setMeetingData(response.data);
-        console.log(response.data);
       } catch (err) {
         console.log(err.response);
       }

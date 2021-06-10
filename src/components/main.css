@@ -1,6 +1,7 @@
 .main-bg {
   background-color: white;
   font-family: "Century";
+  text-transform: capitalize;
 }
 .carousel .carousel-item {
   height: 307px;

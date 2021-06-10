@@ -38,7 +38,6 @@ const UpcomingEventView = (props) => {
       setViewReadMore(true);
     }
     const token = localStorage.getItem("token");
-    console.log(token);
     if (token != null || token != undefined) {
       try {
         let config = {
@@ -51,14 +50,15 @@ const UpcomingEventView = (props) => {
           `https://grssprojectserver.herokuapp.com/user/getrole`,
           config
         );
-        setUser(response.data);
-        console.log(response.data);
-        if (role === "Student") {
-          setStudent(true);
-        } else if (role === "Admin") {
-          setAdmin(true);
-        } else {
-          setMember(true);
+        if (response.data && response.statusText === "OK") {
+          setUser(response.data);
+          if (role === "Student") {
+            setStudent(true);
+          } else if (role === "Admin") {
+            setAdmin(true);
+          } else {
+            setMember(true);
+          }
         }
       } catch (error) {
         console.log(error);
@@ -77,8 +77,9 @@ const UpcomingEventView = (props) => {
         `https://grssprojectserver.herokuapp.com/event/${props._id}`,
         config
       );
-      console.log(response.data);
-      window.location.reload(false);
+      if (response.data && response.statusText === "OK") {
+        window.location.reload(false);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -124,6 +125,11 @@ const UpcomingEventView = (props) => {
               >
                 Know More
               </button>
+            )}
+            {props.registrationlink && (
+              <a href={props.registrationlink} target="blank">
+                <button className="event-button" title="Register Here" />
+              </a>
             )}
             {role === "Admin" && (
               <button className="event-button" onClick={updatedetails}>

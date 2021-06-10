@@ -18,7 +18,8 @@ const Styles = styled.div`
     line-height: 2rem;
   }
 `;
-const ContactUs = () => {
+const ContactUs = (props) => {
+  console.log(props)
   return (
     <Styles>
       <div className="main-bg">

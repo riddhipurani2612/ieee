@@ -16,8 +16,7 @@ const SignUp = () => {
   const handleChange = (e) => {
     setProgess(0);
     const file = e.target.files[0]; // accesing file
-    console.log(file);
-    if (file != undefined) {
+    if (file != undefined && file != "") {
       const extension = file.name.split(".").pop() + "";
       if (
         extension === "jpg" ||
@@ -52,12 +51,15 @@ const SignUp = () => {
       setHeader("Sign Up");
     } else {
       try {
-        const response = await axios.get(
-          `https://grssprojectserver.herokuapp.com/user/getrole`,
-          config
-        );
-        console.log(response.data);
-        if (response.data.role.includes("Admin")) {
+        const response = await axios
+          .get(`https://grssprojectserver.herokuapp.com/user/getrole`, config)
+          .catch((err) => {
+            if (err.response) {
+              setStatus("Error");
+              setError(err.response.data.msg);
+            }
+          });
+        if (response.data && response.statusText === "OK") {
           setHeader("Add Member");
         }
       } catch (error) {
@@ -122,7 +124,6 @@ const SignUp = () => {
               if (err.response) {
                 setStatus("Error");
                 setError(err.response.data.msg);
-                console.log(err.response.data.msg);
               }
             });
           if (response.data && response.statusText === "OK") {
@@ -146,7 +147,6 @@ const SignUp = () => {
           password,
           about,
         };
-        console.log(data);
         let config = {
           headers: {
             "Content-Type": "application/json",
@@ -158,10 +158,14 @@ const SignUp = () => {
             "https://grssprojectserver.herokuapp.com/user",
             data,
             config
-          );
-          console.log(response.data);
-          if (response.status === "200") {
-            history.push("/login");
+          ) .catch((err) => {
+            if (err.response) {
+              setStatus("Error");
+              setError(err.response.data.msg);
+            }
+          });
+        if (response.data && response.statusText === "OK") {
+           history.push("/login");
           }
         } catch (err) {
           console.log(err);

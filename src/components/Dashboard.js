@@ -35,6 +35,9 @@ const Dashboard = () => {
   };
   const [role, setRole] = useState("");
   useEffect(async () => {
+    if(token===null){
+      history.goBack();
+    }
     try {
       response = await axios.get(`https://grssprojectserver.herokuapp.com/user`, config);
       console.log(response.data);

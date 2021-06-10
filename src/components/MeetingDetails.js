@@ -24,8 +24,12 @@ const MeetingDetails = (props) => {
         `https://grssprojectserver.herokuapp.com/meeting/${props._id}`,
         config
       );
-      console.log(response.data);
-      window.location.reload(false);
+      if (response.data && response.statusText === "OK") {
+        window.location.reload(false);
+      }
+      else{
+        alert("Error while deleting!! Try again!")
+      }
     } catch (err) {
       console.log(err);
     }
@@ -95,9 +99,7 @@ const MeetingDetails = (props) => {
                     </button>
                   </a>
                 </dvi>
-              ) : (
-                null
-              ))}
+              ) : null)}
           </Col>
           <Col xs lg="2">
             {admin && (

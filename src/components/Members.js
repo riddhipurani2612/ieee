@@ -3,6 +3,7 @@ import { Container, ListGroup, Row, Col } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
 import MemberView from "../components/MemberView";
+import MembersView from "./MembersView";
 
 const Styles = styled.div``;
 const Members = () => {
@@ -26,9 +27,13 @@ const Members = () => {
       },
     };
     try {
-      response = await axios.get(`https://grssprojectserver.herokuapp.com/user/view`, config);
-      setMembers(response.data);
-      console.log(response.data);
+      response = await axios.get(
+        `https://grssprojectserver.herokuapp.com/user/view`,
+        config
+      );
+      if (response.data && response.statusText === "OK") {
+        setMembers(response.data);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -53,17 +58,21 @@ const Members = () => {
 
   useEffect(async () => {
     try {
-      response = await axios.get(`https://grssprojectserver.herokuapp.com/user/getrole`, config);
-      if (response.data.role != "Admin") {
-      } else if (response.data.role.includes("Admin")) {
-        setAdmin(response.data.role);
+      response = await axios.get(
+        `https://grssprojectserver.herokuapp.com/user/getrole`,
+        config
+      );
+      if (response.data && response.statusText === "OK") {
+        if (response.data.role != "Admin") {
+        } else if (response.data.role.includes("Admin")) {
+          setAdmin(response.data.role);
+        }
       }
     } catch (error) {
       console.log(error);
     }
   }, []);
-  const deleteuser = async (temp) => {
-  };
+  const deleteuser = async (temp) => {};
 
   return (
     <Styles>
@@ -77,32 +86,15 @@ const Members = () => {
               {members.map((memberObj, index) => (
                 <>
                   <Row>
-                    <Col>
-                      Name : {memberObj.first_name} {memberObj.last_name}
-                      <br></br>
-                      Contact : {memberObj.contact}
-                      <br></br>
-                      Member Id : {memberObj.memberid}
-                      <br></br>
-                      Email : {memberObj.email}
-                      <br></br>
-                      Workplace : {memberObj.workplace}
-                      <br></br>
-                      Grade : {memberObj.designation}
-                      <br></br>
-                    </Col>
-                    <Col>
-                      {admin === "Admin" ? (
-                        <div>
-                          <button
-                            className="member-button"
-                            onClick={deleteuser(memberObj.email)}
-                          >
-                            <i class="fa fa-trash" aria-hidden="true"></i>
-                          </button>
-                        </div>
-                      ) : null}
-                    </Col>
+                    <MembersView
+                      first_name={memberObj.first_name}
+                      last_name={memberObj.last_name}
+                      memberid={memberObj.memberid}
+                      workplace={memberObj.workplace}
+                      designation={memberObj.designation}
+                      contact={memberObj.contact}
+                      email={memberObj.email}
+                    ></MembersView>
                   </Row>
                   <hr></hr>
                 </>

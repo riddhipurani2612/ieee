@@ -42,7 +42,7 @@ const Home = (props) => {
         config
       );
 
-      if (response.data.length) {
+      if (response.data.length && response.data && response.statusText==="OK") {
         setEvents(response.data);
         setEventValues(true);
       }

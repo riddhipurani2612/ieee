@@ -44,17 +44,14 @@ const DetailedView = () => {
           `https://grssprojectserver.herokuapp.com/techMaterial/${materialid}`,
           config
         );
-        setMaterial(response.data);
-        console.log(title);
-        console.log(about);
-        console.log(response.data);
-        console.log(material);
+        if (response.data && response.statusText === "OK") {
+          setMaterial(response.data);
+        }
       } catch (err) {
         console.log(err);
       }
       if (youtube != null) {
         setYoutube(true);
-        console.log(youtubelink);
       }
       if (publication != null) {
         setPublicationlink(true);

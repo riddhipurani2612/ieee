@@ -5,23 +5,15 @@ import YouTube from "react-youtube";
 import axios from "axios";
 import ViewMaterial from "./ViewMaterial";
 import "./main.css";
-const Styles = styled.div`
-`;
+const Styles = styled.div``;
 
 const DLP = () => {
   const [material, setMaterial] = useState([]);
-  const {
-    title,
-    about,
-    youtubelink,
-    materialtype,
-    uploadedby,
-    materialfile,
-  } = material;
-
+  const { title, about, youtubelink, materialtype, uploadedby, materialfile } =
+    material;
+  const [error, setError] = useState(false);
   useEffect(async () => {
     const materialtype = "Distinguished Lecture Program";
-
     try {
       let response;
       let config = {
@@ -33,7 +25,12 @@ const DLP = () => {
         `https://grssprojectserver.herokuapp.com/techMaterial/materials/${materialtype}`,
         config
       );
-      setMaterial(response.data);
+      if (response.data && response.statusText === "OK") {
+        setMaterial(response.data);
+      }
+      if (material === []) {
+        setError(true);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -50,30 +47,32 @@ const DLP = () => {
   };
   return (
     <Styles>
-    <div className="main-bg">
-      <Container>
-        <br></br>
-        <div className="w3-panel w3-border w3-border-white boxshadow">
-          <div
-            className="material-header"
-          >
-            Distinguished Lectures
+      <div className="main-bg">
+        <Container>
+          <br></br>
+          <div className="w3-panel w3-border w3-border-white boxshadow">
+            <div className="material-header">Distinguished Lectures</div>
+            <br></br>
+            {error ? (
+              <div> Data Not Received</div>
+            ) : (
+              <div>
+                {material.map((materialObj, index) => (
+                  <ViewMaterial
+                    _id={materialObj._id}
+                    title={materialObj.title}
+                    about={materialObj.about}
+                    youtubelink={materialObj.youtubelink}
+                    publicationlink={materialObj.publicationlink}
+                    materialfile={links(materialObj.materialfile)}
+                    uploadedby={materialObj.uploadedby}
+                  />
+                ))}
+              </div>
+            )}
           </div>
           <br></br>
-          {material.map((materialObj, index) => (
-            <ViewMaterial
-              _id={materialObj._id}
-              title={materialObj.title}
-              about={materialObj.about}
-              youtubelink={materialObj.youtubelink}
-              publicationlink={materialObj.publicationlink}
-              materialfile={links(materialObj.materialfile)}
-              uploadedby={materialObj.uploadedby}
-            />
-          ))}
-        </div>
-        <br></br>
-      </Container>
+        </Container>
       </div>
     </Styles>
   );

@@ -32,13 +32,15 @@ const UpcomingEventView = (props) => {
         `https://grssprojectserver.herokuapp.com/user/getrole`,
         config
       );
-      setUser(response.data);
-      if (role === "Student") {
-        setStudent(true);
-      } else if (role === "Admin") {
-        setAdmin(true);
-      } else {
-        setMember(true);
+      if (response.data && response.statusText === "OK") {
+        setUser(response.data);
+        if (role === "Student") {
+          setStudent(true);
+        } else if (role === "Admin") {
+          setAdmin(true);
+        } else {
+          setMember(true);
+        }
       }
     } catch (error) {
       console.log(error);

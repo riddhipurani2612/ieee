@@ -21,17 +21,18 @@ const MemberView = (props) => {
   };
   let response;
   useEffect(async () => {
-    if (props.about != null && props.about != "-" && props.about!="") {
+    if (props.about != null && props.about != "-" && props.about != "") {
       setViewReadMore(true);
       try {
         response = await axios.get(
           `https://grssprojectserver.herokuapp.com/user/getrole`,
           config
         );
-        if (response.data.role != "Admin") {
-        } else if (response.data.role.includes("Admin")) {
-          setAdmin(response.data.role);
-        }
+        if (response.data && response.statusText === "OK")
+          if (response.data.role != "Admin") {
+          } else if (response.data.role.includes("Admin")) {
+            setAdmin(response.data.role);
+          }
       } catch (error) {
         console.log(error);
       }
@@ -42,7 +43,6 @@ const MemberView = (props) => {
     history.push("/profile");
   };
   const deleteuser = async () => {
-    console.log("Delete");
     try {
       let config = {
         headers: {
@@ -53,8 +53,9 @@ const MemberView = (props) => {
         `https://grssprojectserver.herokuapp.com/user/${props.email}`,
         config
       );
-      console.log(response.data);
-      window.location.reload(false);
+      if (response.data && response.statusText === "OK") {
+        window.location.reload(false);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -75,7 +76,8 @@ const MemberView = (props) => {
           <Card.Img variant="top" src={props.profile} className="member-img" />
           <Card.Body className="member-content">
             <Card.Text>
-              {props.first_name} {props.last_name}<br></br>
+              {props.first_name} {props.last_name}
+              <br></br>
               {props.designation != "" && props.designation != undefined ? (
                 <>
                   Designation : {props.designation} <br></br>

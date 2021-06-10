@@ -17,15 +17,16 @@ const AddMaterial = () => {
   const handleChange = (e) => {
     setProgess(0);
     const file = e.target.files[0]; // accesing file
-    console.log(file);
-    const extension = file.name.split(".").pop() + "";
-    if (extension === "pdf") {
-      setFile(file); // storing file
-      setCheckFile(true);
-    } else {
-      setStatus("Warning");
-      alert(`${extension} file is not allowed`);
-      e.target.value = null;
+    if (file != undefined && file != "") {
+      const extension = file.name.split(".").pop() + "";
+      if (extension === "pdf") {
+        setFile(file); // storing file
+        setCheckFile(true);
+      } else {
+        setStatus("Warning");
+        alert(`${extension} file is not allowed`);
+        e.target.value = null;
+      }
     }
   };
 
@@ -40,7 +41,9 @@ const AddMaterial = () => {
       setCheckFile(false);
     }
     const token = localStorage.getItem("token");
-    console.log(materialtype);
+    if (token === null) {
+      history.goBack();
+    }
     if (checkFile) {
       e.preventDefault();
       let formData = new FormData();
@@ -49,7 +52,6 @@ const AddMaterial = () => {
       formData.append("youtubelink", youtubelink);
       formData.append("materialtype", materialtype);
       formData.append("file", file);
-      console.log(token);
       const config = {
         headers: {
           "content-type": "multipart/form-data",
@@ -58,28 +60,34 @@ const AddMaterial = () => {
       };
       let response;
       try {
-        response = await axios.post(
-          "https://grssprojectserver.herokuapp.com/techMaterial",
-          formData,
-          config,
-          {
-            onUploadProgress: (ProgressEvent) => {
-              let progress =
-                Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +
-                "%";
-              setProgess(progress);
-            },
-          }
-        );
-        if (response.statusText === "OK") {
+        response = await axios
+          .post(
+            "https://grssprojectserver.herokuapp.com/techMaterial",
+            formData,
+            config,
+            {
+              onUploadProgress: (ProgressEvent) => {
+                let progress =
+                  Math.round(
+                    (ProgressEvent.loaded / ProgressEvent.total) * 100
+                  ) + "%";
+                setProgess(progress);
+              },
+            }
+          )
+          .catch((err) => {
+            if (err.response) {
+              setStatus("Error");
+              setError(err.response.data.msg);
+            }
+          });
+        if (response.data && response.statusText === "OK") {
           setStatus("Success");
         } else {
           setStatus("Warning");
           setError(response.data.message);
         }
       } catch (err) {
-        console.log(err.response);
-        console.log(err.request);
         console.log(err.message);
       }
     } else {
@@ -91,7 +99,6 @@ const AddMaterial = () => {
         materialtype,
         publicationlink,
       };
-      console.log(data);
       let config = {
         headers: {
           "Content-Type": "application/json",
@@ -100,13 +107,19 @@ const AddMaterial = () => {
       };
       let response;
       try {
-        response = await axios.post(
-          "https://grssprojectserver.herokuapp.com/techMaterial",
-          data,
-          config
-        );
-        console.log(response.statusText);
-        if (response.statusText === "OK") {
+        response = await axios
+          .post(
+            "https://grssprojectserver.herokuapp.com/techMaterial",
+            data,
+            config
+          )
+          .catch((err) => {
+            if (err.response) {
+              setStatus("Error");
+              setError(err.response.data.msg);
+            }
+          });
+        if (response.data && response.statusText === "OK") {
           setStatus("Success");
         } else {
           setStatus("Warning");
@@ -133,9 +146,10 @@ const AddMaterial = () => {
         `https://grssprojectserver.herokuapp.com/user/getrole`,
         config
       );
-      console.log(response.data);
-      if (response.data.role.includes("Student")) {
-        history.goBack();
+      if (response.data && response.statusText === "OK") {
+        if (response.data.role.includes("Student")) {
+          history.goBack();
+        }
       }
     } catch (error) {
       console.log(error);
@@ -261,7 +275,7 @@ const AddMaterial = () => {
               {status === "Warning" ? (
                 <Alert variant="warning">
                   <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                  Uploaded file format not supported. Please upload only image
+                  Uploaded file format not supported. Please upload only pdf
                   file
                 </Alert>
               ) : null}

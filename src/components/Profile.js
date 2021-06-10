@@ -15,6 +15,7 @@ import { useHistory } from "react-router";
 import "./main.css";
 const Styles = styled.div``;
 const Profile = (e) => {
+  const [showPasswordModal, setPasswordModal] = useState(false);
   const history = useHistory();
   const [error, setError] = useState("");
   const [status, setStatus] = useState("");
@@ -26,20 +27,20 @@ const Profile = (e) => {
   const handleChange = (e) => {
     setProgess(0);
     const file = e.target.files[0]; // accesing file
-    console.log(file);
-    const extension = file.name.split(".").pop();
-    if (
-      extension === "jpg" ||
-      extension === "jpeg" ||
-      extension === "bmp" ||
-      extension === "png"
-    ) {
-      setFile(file); // storing file
-      setCheckFile(true);
-    } else {
-      setStatus("Warning");
-      alert(`${extension} file is not allowed`);
-      e.target.value = null;
+    if (file != undefined) {
+      const extension = file.name.split(".").pop();
+      if (
+        extension === "jpg" ||
+        extension === "jpeg" ||
+        extension === "bmp" ||
+        extension === "png"
+      ) {
+        setFile(file); // storing file
+        setCheckFile(true);
+      } else {
+        setStatus("Warning");
+        e.target.value = null;
+      }
     }
   };
   const [editable, setEditable] = useState(true);
@@ -60,6 +61,7 @@ const Profile = (e) => {
     workplace,
     designation,
     about,
+    memberid,
     profile,
   } = user;
   const [admin, setAdmin] = useState(false);
@@ -73,113 +75,37 @@ const Profile = (e) => {
       return "https://grssprojectserver.herokuapp.com/" + temp;
     }
   };
-
   const updateUser = async (e) => {
+    e.preventDefault();
     if (admin) {
-      const token = localStorage.getItem("userEmailUpdate");
-      if (checkFile) {
-        e.preventDefault();
-        let config = {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        };
-        let response;
-        let formData = new FormData();
-        formData.append("first_name", first_name);
-        formData.append("last_name", last_name);
-        formData.append("role", role);
-        formData.append("designation", designation);
-        formData.append("workplace", workplace);
-        formData.append("email", email);
-        formData.append("contact", contact);
-        formData.append("about", about);
-        formData.append("file", file);
-
-        try {
-          response = await axios
-            .patch(
-              `https://grssprojectserver.herokuapp.com/user/update/${token}`,
-              formData,
-              config,
-              {
-                onUploadProgress: (ProgressEvent) => {
-                  let progress =
-                    Math.round(
-                      (ProgressEvent.loaded / ProgressEvent.total) * 100
-                    ) + "%";
-                  setProgess(progress);
-                },
-              }
-            )
-            .catch((err) => {
-              if (err.response) {
-                setStatus("Error");
-                setError(err.response.data.msg);
-                console.log(err.response.data.msg);
-              }
-            });
-          if (response.data && response.statusText === "OK") {
-            window.location.reload(false);
-          }
-        } catch (err) {
-          console.log(err.request);
-          console.log(err.response);
-        }
+      const email = localStorage.getItem("userEmailUpdate");
+      let config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      let response;
+      let formData = new FormData();
+      formData.append("first_name", first_name);
+      formData.append("last_name", last_name);
+      formData.append("role", role);
+      formData.append("designation", designation);
+      formData.append("workplace", workplace);
+      formData.append("email", email);
+      formData.append("contact", contact);
+      formData.append("about", about);
+      formData.append("memberid", memberid);
+      if (file === undefined) {
+        formData.append("file", profile);
       } else {
-        e.preventDefault();
-        let config = {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        };
-        let response;
-        try {
-          console.log(user);
-          response = await axios
-            .patch(`https://grssprojectserver.herokuapp.com/user/update/${token}`, user, config)
-            .catch((err) => {
-              if (err.response) {
-                setStatus("Error");
-                setError(err.response.data.msg);
-                console.log(err.response.data.msg);
-              }
-            });
-          if (response.data && response.statusText === "OK") {
-            window.location.reload(false);
-          }
-        } catch (err) {
-          console.log(err.response);
-          console.log(err.request);
-        }
-      }
-      setEditable(false);
-      window.location.reload(false);
-    } else {
-      const token = localStorage.getItem("token");
-      if (checkFile) {
-        e.preventDefault();
-        let config = {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            "x-auth-token": token,
-          },
-        };
-        let response;
-        let formData = new FormData();
-        formData.append("first_name", first_name);
-        formData.append("last_name", last_name);
-        formData.append("role", role);
-        formData.append("designation", designation);
-        formData.append("workplace", workplace);
-        formData.append("email", email);
-        formData.append("contact", contact);
-        formData.append("about", about);
         formData.append("file", file);
-
-        try {
-          response = await axios
-            .patch(`https://grssprojectserver.herokuapp.com/user`, formData, config, {
+      }
+      try {
+        response = await axios
+          .patch(
+            `https://grssprojectserver.herokuapp.com/user/update/${email}`,
+            formData,
+            {
               onUploadProgress: (ProgressEvent) => {
                 let progress =
                   Math.round(
@@ -187,108 +113,129 @@ const Profile = (e) => {
                   ) + "%";
                 setProgess(progress);
               },
-            })
-            .catch((err) => {
-              if (err.response) {
-                setStatus("Error");
-                setError(err.response.data.msg);
-                console.log(err.response.data.msg);
-              }
-            });
-          if (response.data && response.statusText === "OK") {
-            window.location.reload(false);
-          }
-        } catch (err) {
-          console.log(err.request);
-          console.log(err.response);
+            }
+          )
+          .catch((err) => {
+            if (err.response) {
+              setStatus("Error");
+              setError(err.response.data.msg);
+            }
+          });
+        if (response.data && response.statusText === "OK") {
+          window.location.reload(false);
         }
-      } else {
-        e.preventDefault();
-        let config = {
-          headers: {
-            "Content-Type": "application/json",
-            "x-auth-token": token,
-          },
-        };
-        let response;
-        try {
-          console.log(user);
-          response = await axios
-            .patch(`https://grssprojectserver.herokuapp.com/user`, user, config)
-            .catch((err) => {
-              if (err.response) {
-                setStatus("Error");
-                setError(err.response.data.msg);
-                console.log(err.response.data.msg);
-              }
-            });
-
-          if (response.data && response.statusText === "OK") {
-            window.location.reload(false);
-          }
-        } catch (err) {
-          console.log(err.response);
-          console.log(err.request);
-        }
-      }
-    }
-  };
-  const token = localStorage.getItem("token");
-  let response;
-  let config = {
-    headers: {
-      "Content-Type": "application/json",
-      "x-auth-token": token,
-    },
-  };
-  useEffect(async () => {
-    if (token === null) {
-      history.goBack();
-    }
-    try {
-      response = await axios.get(`https://grssprojectserver.herokuapp.com/user/getrole`, config);
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-    if (response.data.role === "Admin") {
-      setAdmin(true);
-      if (localStorage.getItem("userEmailUpdate") === null) {
-        alert("User Not selected");
-        history.goBack();
-      } else {
-        console.log("UPDATE");
-        let temp_config = {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        };
-        try {
-          const temp_response = await axios.get(
-            `https://grssprojectserver.herokuapp.com/user/get/${localStorage.getItem(
-              "userEmailUpdate"
-            )}`,
-            temp_config
-          );
-          setUser(temp_response.data);
-          setFile(temp_response.data.profile);
-          console.log(temp_response.data);
-        } catch (err) {
-          console.log(err);
-        }
+      } catch (err) {
+        console.log(err.response);
       }
     } else {
+      const token = localStorage.getItem("token");
+      let config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "x-auth-token": token,
+        },
+      };
+      let response;
+      let formData = new FormData();
+      formData.append("first_name", first_name);
+      formData.append("last_name", last_name);
+      formData.append("role", role);
+      formData.append("designation", designation);
+      formData.append("workplace", workplace);
+      formData.append("email", email);
+      formData.append("contact", contact);
+      formData.append("about", about);
+      formData.append("memberid", memberid);
+      if (file === undefined) {
+        formData.append("file", profile);
+      } else {
+        formData.append("file", file);
+      }
       try {
-        response = await axios.get(`https://grssprojectserver.herokuapp.com/user`, config);
-        setUser(response.data);
-        setFile(response.data.profile);
-        console.log(response.data);
-      } catch (error) {
-        console.log(error);
+        response = await axios
+          .patch(
+            `https://grssprojectserver.herokuapp.com/user/update/${email}`,
+            formData,
+            config,
+            {
+              onUploadProgress: (ProgressEvent) => {
+                let progress =
+                  Math.round(
+                    (ProgressEvent.loaded / ProgressEvent.total) * 100
+                  ) + "%";
+                setProgess(progress);
+              },
+            }
+          )
+          .catch((err) => {
+            if (err.response) {
+              setStatus("Error");
+              setError(err.response.data.msg);
+            }
+          });
+        if (response.data && response.statusText === "OK") {
+          window.location.reload(false);
+        }
+      }
+      catch(err){
+        console.log(err);
+      }
+    }
+  };
+  useEffect(async () => {
+    const token = localStorage.getItem("token");
+    if (token === null) {
+      history.goBack();
+    } else {
+      let config = {
+        headers: {
+          "Content-Type": "application/json",
+          "x-auth-token": token,
+        },
+      };
+      try {
+        let response = await axios.get(
+          `https://grssprojectserver.herokuapp.com/user/getrole`,
+          config
+        );
+        if (response.data && response.data.role === "Admin") {
+          setAdmin(true);
+          if (localStorage.getItem("userEmailUpdate") === null) {
+            alert("User Not Selected");
+            history.goBack();
+          } else {
+            let temp_config = {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            };
+            try {
+              const temp_response = await axios.get(
+                `https://grssprojectserver.herokuapp.com/user/get/${localStorage.getItem(
+                  "userEmailUpdate"
+                )}`,
+                temp_config
+              );
+              setUser(temp_response.data);
+              setFile(temp_response.data.profile);
+            } catch (err) {
+              console.log(err);
+            }
+          }
+        } else {
+          try {
+            response = await axios.get(`https://grssprojectserver.herokuapp.com/user`, config);
+            setUser(response.data);
+            setFile(response.data.profile);
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      } catch (err) {
+        console.log(err.message);
       }
     }
   }, []);
-  const [showPasswordModal, setPasswordModal] = useState(false);
   return (
     <Styles>
       <PasswordChange
@@ -308,7 +255,7 @@ const Profile = (e) => {
                       src={links(profile)}
                       alt={profile}
                       className="profile-img"
-                      ></img>
+                    ></img>
                   </div>
                 ) : (
                   <i class="fa fa-user-circle-o" aria-hidden="true"></i>
@@ -383,6 +330,7 @@ const Profile = (e) => {
                         onChange={(e) => {
                           setUser({ ...user, contact: e.target.value });
                         }}
+                        required
                       ></input>
                     </Col>
                   </Row>
@@ -400,6 +348,7 @@ const Profile = (e) => {
                         onChange={(e) => {
                           setUser({ ...user, workplace: e.target.value });
                         }}
+                        required
                       ></input>
                     </Col>
                   </Row>
@@ -418,6 +367,7 @@ const Profile = (e) => {
                         onChange={(e) => {
                           setUser({ ...user, designation: e.target.value });
                         }}
+                        required
                       ></input>
                     </Col>
                   </Row>
@@ -461,8 +411,7 @@ const Profile = (e) => {
                   </Alert>
                 ) : null}
 
-                <Button
-                  onClick={updateUser}
+                <button
                   style={{
                     width: "100%",
                     padding: "14px 28px",
@@ -471,9 +420,10 @@ const Profile = (e) => {
                   }}
                   className="mt-5 member-button"
                   disabled={editable}
+                  type="submit"
                 >
                   Update
-                </Button>
+                </button>
               </form>
             </div>
           </div>

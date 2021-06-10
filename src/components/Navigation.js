@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Navbar, Nav, NavDropdown, Image } from "react-bootstrap";
-import logo from "../assets/grss_logo.png";
 import styled from "styled-components";
 import axios from "axios";
 import * as ReactBootStrap from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-import { FaBars, FaTimes } from "react-icons/fa";
+import logo from "../assets/grss_logo_white.png";
 const Styles = styled.div`
   .navbar {
     font-family: Century !important;
@@ -48,7 +46,7 @@ const Navigation = (props) => {
   const [user, setUser] = useState({});
   const { first_name, last_name, role, profile } = user;
   let response;
-  const token = sessionStorage.getItem("token");
+  const token = localStorage.getItem("token");
   let config = {
     headers: {
       "Content-Type": "application/json",
@@ -63,18 +61,13 @@ const Navigation = (props) => {
     }
   };
   useEffect(async () => {
-    console.log(props)
     if (token != null) {
       try {
         response = await axios.get(
           `https://grssprojectserver.herokuapp.com/user/getrole`,
           config
         );
-
-        console.log(response.data);
-        if(response.data!=null)
-          setUser(response.data);
-
+        setUser(response.data);
         if (role === "Student") {
           setStudent(true);
         } else if (role === "Admin") {
@@ -89,7 +82,12 @@ const Navigation = (props) => {
         console.log(error);
       }
     }
-   }, [props.isLoggedIn, role]);
+    if (localStorage.getItem("token") === null) {
+      props.setLogin(false);
+    } else {
+      props.setLogin(true);
+    }
+  }, [props.isLoggedIn, role]);
   const welcome = "Welcome, " + first_name;
   const [click, setClick] = useState(false);
   const handleCilck = () => setClick(!click);
@@ -104,8 +102,8 @@ const Navigation = (props) => {
           variant="dark"
           bg="dark"
         >
-          <ReactBootStrap.Navbar.Brand href="#home">
-            IEEE GRSS Gujarat Section
+          <ReactBootStrap.Navbar.Brand>
+            <img src={logo} width="40rem" height="40rem" alt="logo" />
           </ReactBootStrap.Navbar.Brand>
           <ReactBootStrap.Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <ReactBootStrap.Navbar.Collapse id="responsive-navbar-nav">
@@ -115,7 +113,7 @@ const Navigation = (props) => {
               </Link>
               <Link to="/chairs-desk">
                 <ReactBootStrap.Nav.Link href="/chairs-desk">
-                  Chair's Desk
+                  Chair's Address
                 </ReactBootStrap.Nav.Link>
               </Link>
 
@@ -169,20 +167,20 @@ const Navigation = (props) => {
                   Download Tarang Software
                 </ReactBootStrap.NavDropdown.Item>
                 <ReactBootStrap.NavDropdown.Item
-                  href="/addmaterial"
-                  hidden={!member}
+                  href="/addmaterail"
+                  hidden={!student}
                 >
                   Upload Lectures
                 </ReactBootStrap.NavDropdown.Item>
                 <ReactBootStrap.NavDropdown.Item
                   href="/addnewsletter"
-                  hidden={!member}
+                  hidden={!student}
                 >
                   Upload Newsletter / Publication
                 </ReactBootStrap.NavDropdown.Item>
               </ReactBootStrap.NavDropdown>
               <Link to="/events">
-                <ReactBootStrap.Nav.Link href="/events" hidden={admin}>
+                <ReactBootStrap.Nav.Link hidden={admin} href="/events">
                   Events
                 </ReactBootStrap.Nav.Link>
               </Link>
@@ -194,23 +192,12 @@ const Navigation = (props) => {
                 <ReactBootStrap.NavDropdown.Item href="/events">
                   Events
                 </ReactBootStrap.NavDropdown.Item>
-                <ReactBootStrap.NavDropdown.Item href="/viewmeeting" hidden={!admin}>
-                  View Meetings
-                </ReactBootStrap.NavDropdown.Item>
                 <ReactBootStrap.NavDropdown.Divider />
-                <ReactBootStrap.NavDropdown.Item
-                  href="/addevent"
-                  hidden={!admin}
-                >
+                <ReactBootStrap.NavDropdown.Item href="/addevent">
                   Add Event
                 </ReactBootStrap.NavDropdown.Item>
-                <ReactBootStrap.NavDropdown.Item
-                  href="/addmeeting"
-                  hidden={!admin}
-                >
-                  Add Meeting
-                </ReactBootStrap.NavDropdown.Item>
               </ReactBootStrap.NavDropdown>
+
               <Link to="/contact">
                 <ReactBootStrap.Nav.Link href="/contact">
                   Contact

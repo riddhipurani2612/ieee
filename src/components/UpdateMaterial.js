@@ -30,22 +30,22 @@ const UpdateMaterial = (props) => {
   const handleChange = (e) => {
     setProgess(0);
     const file = e.target.files[0]; // accesing file
-    console.log(file);
-    const extension = file.name.split(".").pop() + "";
-    if (extension === "pdf") {
-      setFile(file); // storing file
-      setCheckFile(true);
-    } else {
-      setStatus("Warning");
-      alert(`${extension} file is not allowed`);
-      e.target.value = null;
+    if (file != undefined && file != "") {
+      const extension = file.name.split(".").pop() + "";
+      if (extension === "pdf") {
+        setFile(file); // storing file
+        setCheckFile(true);
+      } else {
+        setStatus("Warning");
+        alert(`${extension} file is not allowed`);
+        e.target.value = null;
+      }
     }
   };
 
   const updatedetails = async (e) => {
     e.preventDefault();
     let formData = new FormData();
-    console.log(title);
     formData.append("title", title);
     formData.append("about", about);
     formData.append("youtubelink", youtubelink);
@@ -65,21 +65,29 @@ const UpdateMaterial = (props) => {
       };
       let response;
       try {
-        response = await axios.patch(
-          `https://grssprojectserver.herokuapp.com/techMaterial/${localStorage.getItem(
-            "materialIdUpdate"
-          )}`,
-          formData,
-          config,
-          {
-            onUploadProgress: (ProgressEvent) => {
-              let progress =
-                Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +
-                "%";
-              setProgess(progress);
-            },
-          }
-        );
+        response = await axios
+          .patch(
+            `https://grssprojectserver.herokuapp.com/techMaterial/${localStorage.getItem(
+              "materialIdUpdate"
+            )}`,
+            formData,
+            config,
+            {
+              onUploadProgress: (ProgressEvent) => {
+                let progress =
+                  Math.round(
+                    (ProgressEvent.loaded / ProgressEvent.total) * 100
+                  ) + "%";
+                setProgess(progress);
+              },
+            }
+          )
+          .catch((err) => {
+            if (err.response) {
+              setStatus("Error");
+              setError(err.response.data.msg);
+            }
+          });
         if (response.statusText === "OK") {
           setStatus("Success");
         } else {
@@ -96,7 +104,6 @@ const UpdateMaterial = (props) => {
         youtubelink,
         materialtype,
       };
-      console.log(data);
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -105,13 +112,20 @@ const UpdateMaterial = (props) => {
       };
       let response;
       try {
-        response = await axios.patch(
-          `https://grssprojectserver.herokuapp.com/techMaterial/${localStorage.getItem(
-            "materialIdUpdate"
-          )}`,
-          formData,
-          config
-        );
+        response = await axios
+          .patch(
+            `https://grssprojectserver.herokuapp.com/techMaterial/${localStorage.getItem(
+              "materialIdUpdate"
+            )}`,
+            formData,
+            config
+          )
+          .catch((err) => {
+            if (err.response) {
+              setStatus("Error");
+              setError(err.response.data.msg);
+            }
+          });
         if (response.statusText === "OK") {
           setStatus("Success");
         } else {
@@ -140,8 +154,9 @@ const UpdateMaterial = (props) => {
           )}`,
           config
         );
-        setMaterial(response.data);
-        console.log(response.data);
+        if (response.data && response.statusText === "OK") {
+          setMaterial(response.data);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -152,9 +167,7 @@ const UpdateMaterial = (props) => {
       <Container className="main-bg text">
         <br></br>
         <div className="form-box w3-panel w3-border w3-border-white boxshadow">
-          <div className="material-header">
-            Update Lecture
-          </div>
+          <div className="material-header">Update Lecture</div>
           <br></br>
           <Form onSubmit={updatedetails} className="material-form">
             <Form.Group>

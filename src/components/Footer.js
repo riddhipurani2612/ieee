@@ -20,8 +20,12 @@ const Footer = (props) => {
   const [count, setCount] = useState("");
   useEffect(async () => {
     try {
-      const response = await axios.get(`https://grssprojectserver.herokuapp.com/`);
-      setCount(response.data[0].count);
+      const response = await axios.get(
+        `https://grssprojectserver.herokuapp.com/`
+      );
+      if (response.data && response.statusText === "OK") {
+        setCount(response.data[0].count);
+      }
     } catch (err) {}
   }, []);
   return (
@@ -98,5 +102,4 @@ const Footer = (props) => {
     </Styles>
   );
 };
-
 export default Footer;

@@ -19,6 +19,7 @@ const ProfessionalMembers = () => {
     about,
   } = members;
   const [userabout, setAbout] = useState(false);
+  const [error, setError] = useState(false);
   useEffect(async () => {
     let response;
     let config = {
@@ -32,12 +33,16 @@ const ProfessionalMembers = () => {
         `https://grssprojectserver.herokuapp.com/user/getmembers/${role}`,
         config
       );
-      setMembers(response.data);
-      if (response.data.about != null) {
-        setAbout(true);
-        console.log(`About ${about}`);
-      } else {
-        console.log(`About null`);
+      if (response.data && response.statusText === "OK") {
+        if (response.data.length) {
+          setMembers(response.data);
+        }
+        if (members === []) {
+          setError(true);
+        }
+        if (response.data.about != null) {
+          setAbout(true);
+        }
       }
     } catch (err) {
       console.log(err);
@@ -60,25 +65,27 @@ const ProfessionalMembers = () => {
             <div className="member-header">Professional Members</div>
             <br></br>
             <div>
-              <Row>
-                {members.map((memberObj, index) => (
-                  <Col sm="4">
-                    <MemberView
-                      first_name={memberObj.first_name}
-                      last_name={memberObj.last_name}
-                      workplace={memberObj.workplace}
-                      contact={memberObj.contact}
-                      email={memberObj.email}
-                      emails={memberObj.emails}
-                      about={memberObj.about}
-                      profile={links(memberObj.profile)}
-                      memberid={memberObj.memberid}
-                      designation={memberObj.designation}
-                      index={index}
-                    ></MemberView>
-                  </Col>
-                ))}
-              </Row>
+              {error === true ? (
+                <div> Data Not Received</div>
+              ) : (
+                <Row>
+                  {members.map((memberObj, index) => (
+                    <Col sm="4">
+                      <MemberView
+                        first_name={memberObj.first_name}
+                        last_name={memberObj.last_name}
+                        workplace={memberObj.workplace}
+                        contact={memberObj.contact}
+                        email={memberObj.email}
+                        memberid={memberObj.memberid}
+                        designation={memberObj.designation}
+                        about={memberObj.about}
+                        profile={links(memberObj.profile)}
+                      ></MemberView>
+                    </Col>
+                  ))}
+                </Row>
+              )}
             </div>
             <br></br>
           </div>

@@ -14,18 +14,19 @@ const AddNewsletter = () => {
   const [checkFile, setCheckFile] = useState(false);
   const [progress, setProgess] = useState(0);
   const el = useRef(); // accesing input element
+  let extension;
   const handleChange = (e) => {
     setProgess(0);
     const file = e.target.files[0]; // accesing file
-    console.log(file);
-    const extension = file.name.split(".").pop() + "";
-    if (extension === "pdf") {
-      setFile(file); // storing file
-      setCheckFile(true);
-    } else {
-      setStatus("Warning");
-      alert(`${extension} file is not allowed`);
-      e.target.value = null;
+    if (file != undefined && file != "") {
+      extension = file.name.split(".").pop() + "";
+      if (extension === "pdf") {
+        setFile(file); // storing file
+        setCheckFile(true);
+      } else {
+        setStatus("Warning");
+        e.target.value = null;
+      }
     }
   };
 
@@ -40,7 +41,6 @@ const AddNewsletter = () => {
       setCheckFile(false);
     }
     const token = localStorage.getItem("token");
-    console.log(materialtype);
     if (checkFile) {
       e.preventDefault();
       let formData = new FormData();
@@ -48,7 +48,6 @@ const AddNewsletter = () => {
       formData.append("about", about);
       formData.append("materialtype", materialtype);
       formData.append("file", file);
-      console.log(token);
       const config = {
         headers: {
           "content-type": "multipart/form-data",
@@ -57,28 +56,34 @@ const AddNewsletter = () => {
       };
       let response;
       try {
-        response = await axios.post(
-          "https://grssprojectserver.herokuapp.com/techMaterial",
-          formData,
-          config,
-          {
-            onUploadProgress: (ProgressEvent) => {
-              let progress =
-                Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +
-                "%";
-              setProgess(progress);
-            },
-          }
-        );
-        if (response.statusText === "OK") {
+        response = await axios
+          .post(
+            "https://grssprojectserver.herokuapp.com/techMaterial",
+            formData,
+            config,
+            {
+              onUploadProgress: (ProgressEvent) => {
+                let progress =
+                  Math.round(
+                    (ProgressEvent.loaded / ProgressEvent.total) * 100
+                  ) + "%";
+                setProgess(progress);
+              },
+            }
+          )
+          .catch((err) => {
+            if (err.response) {
+              setStatus("Error");
+              setError(err.response.data.msg);
+            }
+          });
+        if (response.data && response.statusText === "OK") {
           setStatus("Success");
         } else {
           setStatus("Warning");
           setError(response.data.message);
         }
       } catch (err) {
-        console.log(err.response);
-        console.log(err.request);
         console.log(err.message);
       }
     } else {
@@ -98,12 +103,18 @@ const AddNewsletter = () => {
       };
       let response;
       try {
-        response = await axios.post(
-          "https://grssprojectserver.herokuapp.com/techMaterial",
-          data,
-          config
-        );
-        console.log(response.statusText);
+        response = await axios
+          .post(
+            "https://grssprojectserver.herokuapp.com/techMaterial",
+            data,
+            config
+          )
+          .catch((err) => {
+            if (err.response) {
+              setStatus("Error");
+              setError(err.response.data.msg);
+            }
+          });
         if (response.statusText === "OK") {
           setStatus("Success");
         } else {
@@ -124,14 +135,13 @@ const AddNewsletter = () => {
       },
     };
     if (token === null) {
-      history.push("/");
+      history.goBack();
     }
     try {
       const response = await axios.get(
         `https://grssprojectserver.herokuapp.com/user/getrole`,
         config
       );
-      console.log(response.data);
       if (response.data.role.includes("Student")) {
         history.goBack();
       }
@@ -144,7 +154,9 @@ const AddNewsletter = () => {
       <Container className="main-bg">
         <br></br>
         <div className="form-box w3-panel w3-border w3-border-white boxshadow">
-          <div className="material-header">Add Lecture</div>
+          <div className="material-header">
+            Add Newsletter/<br></br>Publication
+          </div>
           <br></br>
           <div class="material-form">
             <form onSubmit={submit}>
@@ -240,7 +252,8 @@ const AddNewsletter = () => {
               {status === "Warning" ? (
                 <Alert variant="warning">
                   <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                  Uploaded file format not supported.
+                  `${extension} file is not allowed`!! Please Upload Compressed
+                  or Image file!!
                 </Alert>
               ) : null}
 

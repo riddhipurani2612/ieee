@@ -8,6 +8,7 @@ const Styles = styled.div``;
 const Events = () => {
   const [events, setEvents] = useState([]);
   const { eventname, date, about, hostedby } = events;
+  const [error, setError] = useState(false);
   useEffect(async () => {
     let response;
     let config = {
@@ -16,9 +17,16 @@ const Events = () => {
       },
     };
     try {
-      response = await axios.get("https://grssprojectserver.herokuapp.com/event/passed", config);
-      setEvents(response.data);
-      console.log(response.data);
+      response = await axios.get(
+        "https://grssprojectserver.herokuapp.com/event/passed",
+        config
+      );
+      if (response.data && response.statusText === "OK") {
+        setEvents(response.data);
+      }
+      if (events === []) {
+        setError(true);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -41,17 +49,24 @@ const Events = () => {
           <br></br>
           <div className="w3-panel w3-border w3-border-white boxshadow">
             <div className="event-header"> Events</div>
-
-            {events.map((eventObj, index) => (
-              <EventView
-                _id={eventObj._id}
-                name={eventObj.eventname}
-                date={dateFormate(eventObj.date)}
-                about={eventObj.about}
-                hostedby={eventObj.hostedby}
-                eventimage={links(eventObj.eventimage)}
-              />
-            ))}
+            <div>
+              {error ? (
+                <div> Data Not Received</div>
+              ) : (
+                <div>
+                  {events.map((eventObj, index) => (
+                    <EventView
+                      _id={eventObj._id}
+                      name={eventObj.eventname}
+                      date={dateFormate(eventObj.date)}
+                      about={eventObj.about}
+                      hostedby={eventObj.hostedby}
+                      eventimage={links(eventObj.eventimage)}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
           <br></br>
         </Container>

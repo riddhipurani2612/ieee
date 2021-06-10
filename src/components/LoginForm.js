@@ -46,8 +46,6 @@ const Login = (props) => {
       if (response.data && response.statusText === "OK") {
         localStorage.setItem("token", response.data.token);
         props.setLogin(true);
-        console.log(response.data);
-        props.setRoleLog(response.data.role);
         history.goBack();
       }
     } catch (error) {

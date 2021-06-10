@@ -25,20 +25,21 @@ const UpdateEvent = (props) => {
   const handleChange = (e) => {
     setProgess(0);
     const file = e.target.files[0]; // accesing file
-    console.log(file);
-    const extension = file.name.split(".").pop() + "";
-    if (
-      extension === "jpg" ||
-      extension === "jpeg" ||
-      extension === "bmp" ||
-      extension === "png"
-    ) {
-      setFile(file); // storing file
-      setCheckFile(true);
-    } else {
-      setStatus("Warning");
-      alert(`${extension} file is not allowed`);
-      e.target.value = null;
+    if (file != undefined && file != "") {
+      const extension = file.name.split(".").pop() + "";
+      if (
+        extension === "jpg" ||
+        extension === "jpeg" ||
+        extension === "bmp" ||
+        extension === "png"
+      ) {
+        setFile(file); // storing file
+        setCheckFile(true);
+      } else {
+        setStatus("Warning");
+        alert(`${extension} file is not allowed`);
+        e.target.value = null;
+      }
     }
   };
   const updatedetails = async (e) => {
@@ -62,30 +63,34 @@ const UpdateEvent = (props) => {
       };
       let response;
       try {
-        response = await axios.patch(
-          `https://grssprojectserver.herokuapp.com/event/${localStorage.getItem(
-            "eventIdUpdate"
-          )}`,
-          formData,
-          config,
-          {
-            onUploadProgress: (ProgressEvent) => {
-              let progress =
-                Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +
-                "%";
-              setProgess(progress);
-            },
-          }
-        );
-        if (response.statusText === "OK") {
+        response = await axios
+          .patch(
+            `https://grssprojectserver.herokuapp.com/event/${localStorage.getItem(
+              "eventIdUpdate"
+            )}`,
+            formData,
+            config,
+            {
+              onUploadProgress: (ProgressEvent) => {
+                let progress =
+                  Math.round(
+                    (ProgressEvent.loaded / ProgressEvent.total) * 100
+                  ) + "%";
+                setProgess(progress);
+              },
+            }
+          )
+          .catch((err) => {
+            if (err.response) {
+              setStatus("Error");
+              setError(err.response.data.msg);
+              console.log(err.response.data.msg);
+            }
+          });
+        if (response.data && response.statusText === "OK") {
           setStatus("Success");
-        } else {
-          setStatus("Warning");
-          setError(response.data.message);
         }
       } catch (err) {
-        console.log(err.response);
-        console.log(err.request);
         console.log(err.message);
       }
     } catch (err) {
@@ -95,9 +100,7 @@ const UpdateEvent = (props) => {
 
   useEffect(async () => {
     let response;
-    console.log("event");
     if (localStorage.getItem("eventIdUpdate")) {
-      console.log("gg");
       let config = {
         headers: {
           "Content-Type": "application/json",
@@ -110,10 +113,9 @@ const UpdateEvent = (props) => {
           )}`,
           config
         );
-        console.log(localStorage.getItem("eventIdUpdate"));
-        console.log("response");
-        setEvents(response.data);
-        console.log(response.data);
+        if (response.data && response.statusText === "OK") {
+          setEvents(response.data);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -273,7 +275,7 @@ const UpdateEvent = (props) => {
                   <Alert variant="warning">
                     <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
                     Uploaded file format not supported. Please upload only image
-                    file
+                    or zip file
                   </Alert>
                 ) : null}
                 <button
