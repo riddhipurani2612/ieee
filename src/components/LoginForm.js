@@ -30,7 +30,7 @@ const Login = (props) => {
     let response;
     try {
       response = await axios
-        .put("http://localhost:5000/user", data, config)
+        .put("https://grssprojectserver.herokuapp.com/user", data, config)
         .catch((err) => {
           if (err.response) {
             setStatus("Error");

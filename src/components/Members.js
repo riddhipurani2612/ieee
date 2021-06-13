@@ -28,7 +28,7 @@ const Members = () => {
     };
     try {
       response = await axios.get(
-        `http://localhost:5000/user/view`,
+        `https://grssprojectserver.herokuapp.com/user/view`,
         config
       );
       if (response.data && response.statusText === "OK") {
@@ -41,9 +41,9 @@ const Members = () => {
 
   const links = (temp) => {
     if (temp === undefined) {
-      return "http://localhost:5000/profile.png";
+      return "https://grssprojectserver.herokuapp.com/profile.png";
     } else {
-      return "http://localhost:5000/" + temp;
+      return "https://grssprojectserver.herokuapp.com/" + temp;
     }
   };
   const token = localStorage.getItem("token");
@@ -59,7 +59,7 @@ const Members = () => {
   useEffect(async () => {
     try {
       response = await axios.get(
-        `http://localhost:5000/user/getrole`,
+        `https://grssprojectserver.herokuapp.com/user/getrole`,
         config
       );
       if (response.data && response.statusText === "OK") {

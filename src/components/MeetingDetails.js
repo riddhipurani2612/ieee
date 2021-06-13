@@ -21,7 +21,7 @@ const MeetingDetails = (props) => {
         },
       };
       let response = axios.delete(
-        `http://localhost:5000/meeting/${props._id}`,
+        `https://grssprojectserver.herokuapp.com/meeting/${props._id}`,
         config
       );
       if (response.data && response.statusText === "OK") {

@@ -38,7 +38,7 @@ const Home = (props) => {
     };
     try {
       response = await axios.get(
-        "http://localhost:5000/event/upcoming",
+        "https://grssprojectserver.herokuapp.com/event/upcoming",
         config
       );
 
@@ -61,7 +61,7 @@ const Home = (props) => {
     if (temp === undefined) {
       return "undefined";
     } else {
-      return "http://localhost:5000/" + temp;
+      return "https://grssprojectserver.herokuapp.com/" + temp;
     }
   };
   const [showFeedbackModal, setFeedbackModal] = useState(false);

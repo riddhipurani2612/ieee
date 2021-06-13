@@ -18,7 +18,7 @@ const Events = () => {
     };
     try {
       response = await axios.get(
-        "http://localhost:5000/event/passed",
+        "https://grssprojectserver.herokuapp.com/event/passed",
         config
       );
       if (response.data && response.statusText === "OK") {
@@ -35,7 +35,7 @@ const Events = () => {
     if (temp === undefined) {
       return "undefined";
     } else {
-      return "http://localhost:5000/" + temp;
+      return "https://grssprojectserver.herokuapp.com/" + temp;
     }
   };
   const dateFormate = (date) => {

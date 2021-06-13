@@ -23,7 +23,7 @@ const MembersView = (props) => {
 
   useEffect(async () => {
     try {
-      response = await axios.get(`http://localhost:5000/user/getrole`, config);
+      response = await axios.get(`https://grssprojectserver.herokuapp.com/user/getrole`, config);
       if (response.data && response.statusText === "OK") {
         if (response.data.role != "Admin") {
         } else if (response.data.role.includes("Admin")) {
@@ -47,7 +47,7 @@ const MembersView = (props) => {
         },
       };
       let response = axios
-        .delete(`http://localhost:5000/user/${props.email}`, config)
+        .delete(`https://grssprojectserver.herokuapp.com/user/${props.email}`, config)
         .then(window.location.reload(false));
       console.log(response.data);
       if (response.data.msg === "Deleted" && response.statusText === "OK") {

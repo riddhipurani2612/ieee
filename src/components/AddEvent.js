@@ -38,7 +38,7 @@ const AddEvent = () => {
     } else {
       try {
         response = await axios.get(
-          `http://localhost:5000/user/getrole`,
+          `https://grssprojectserver.herokuapp.com/user/getrole`,
           config
         );
         if (response.data && response.statusText === "OK") {
@@ -107,7 +107,7 @@ const AddEvent = () => {
     let response;
     try {
       response = await axios
-        .post("http://localhost:5000/event", formData, {
+        .post("https://grssprojectserver.herokuapp.com/event", formData, {
           onUploadProgress: (ProgressEvent) => {
             let progress =
               Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +

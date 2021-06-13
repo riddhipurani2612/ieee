@@ -21,7 +21,7 @@ const Footer = (props) => {
   useEffect(async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/counter`
+        `https://grssprojectserver.herokuapp.com/counter`
       );
       if (response.data && response.statusText === "OK") {
         setCount(response.data[0].count);

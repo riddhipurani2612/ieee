@@ -47,7 +47,7 @@ const UpcomingEventView = (props) => {
           },
         };
         let response = await axios.get(
-          `http://localhost:5000/user/getrole`,
+          `https://grssprojectserver.herokuapp.com/user/getrole`,
           config
         );
         if (response.data && response.statusText === "OK") {
@@ -74,7 +74,7 @@ const UpcomingEventView = (props) => {
         },
       };
       let response = axios
-        .delete(`http://localhost:5000/event/${props._id}`, config)
+        .delete(`https://grssprojectserver.herokuapp.com/event/${props._id}`, config)
         .then(history.push("/"));
       if (response.data && response.statusText === "OK") {
         history.push("/");

@@ -58,7 +58,7 @@ const AddNewsletter = () => {
       try {
         response = await axios
           .post(
-            "http://localhost:5000/techMaterial",
+            "https://grssprojectserver.herokuapp.com/techMaterial",
             formData,
             config,
             {
@@ -105,7 +105,7 @@ const AddNewsletter = () => {
       try {
         response = await axios
           .post(
-            "http://localhost:5000/techMaterial",
+            "https://grssprojectserver.herokuapp.com/techMaterial",
             data,
             config
           )
@@ -139,7 +139,7 @@ const AddNewsletter = () => {
     }
     try {
       const response = await axios.get(
-        `http://localhost:5000/user/getrole`,
+        `https://grssprojectserver.herokuapp.com/user/getrole`,
         config
       );
       if (response.data.role.includes("Student")) {

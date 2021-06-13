@@ -25,7 +25,7 @@ const MemberView = (props) => {
       setViewReadMore(true);
       try {
         response = await axios.get(
-          `http://localhost:5000/user/getrole`,
+          `https://grssprojectserver.herokuapp.com/user/getrole`,
           config
         );
         if (response.data && response.statusText === "OK")
@@ -50,7 +50,7 @@ const MemberView = (props) => {
         },
       };
       let response = axios.delete(
-        `http://localhost:5000/user/${props.email}`,
+        `https://grssprojectserver.herokuapp.com/user/${props.email}`,
         config
       );
       if (response.data && response.statusText === "OK") {

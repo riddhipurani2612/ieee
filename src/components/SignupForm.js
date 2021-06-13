@@ -52,7 +52,7 @@ const SignUp = () => {
     } else {
       try {
         const response = await axios
-          .get(`http://localhost:5000/user/getrole`, config)
+          .get(`https://grssprojectserver.herokuapp.com/user/getrole`, config)
           .catch((err) => {
             if (err.response) {
               setStatus("Error");
@@ -114,7 +114,7 @@ const SignUp = () => {
         let response;
         try {
           response = await axios
-            .post("http://localhost:5000/user", formData, {
+            .post("https://grssprojectserver.herokuapp.com/user", formData, {
               onUploadProgress: (ProgressEvent) => {
                 let progress =
                   Math.round(
@@ -158,7 +158,7 @@ const SignUp = () => {
         let response;
         try {
           response = await axios
-            .post("http://localhost:5000/user", data, config)
+            .post("https://grssprojectserver.herokuapp.com/user", data, config)
             .catch((err) => {
               if (err.response) {
                 setStatus("Error");

@@ -33,7 +33,7 @@ const ViewMaterial = (props) => {
         },
       };
       let response = axios.delete(
-        `http://localhost:5000/techMaterial/${props._id}`,
+        `https://grssprojectserver.herokuapp.com/techMaterial/${props._id}`,
         config
       );
       console.log(response.data);
@@ -54,7 +54,7 @@ const ViewMaterial = (props) => {
         },
       };
       let response = await axios.get(
-        `http://localhost:5000/user/getrole`,
+        `https://grssprojectserver.herokuapp.com/user/getrole`,
         config
       );
       setUser(response.data);
