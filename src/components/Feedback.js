@@ -30,7 +30,7 @@ const Feedback = (props) => {
     let response;
     try {
       response = await axios
-        .post("https://grssprojectserver.herokuapp.com/feedback", data, config)
+        .post("http://localhost:5000/feedback", data, config)
         .catch((err) => {
           if (err.response) {
             setStatus("Error");

@@ -29,7 +29,7 @@ const UpcomingEventView = (props) => {
         },
       };
       let response = await axios.get(
-        `https://grssprojectserver.herokuapp.com/user/getrole`,
+        `http://localhost:5000/user/getrole`,
         config
       );
       if (response.data && response.statusText === "OK") {
@@ -59,7 +59,7 @@ const UpcomingEventView = (props) => {
         },
       };
       let response = axios.delete(
-        `https://grssprojectserver.herokuapp.com/event/${props._id}`,
+        `http://localhost:5000/event/${props._id}`,
         config
       );
       console.log(response.data);

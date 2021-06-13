@@ -33,7 +33,7 @@ const Newsletter = () => {
         },
       };
       response = await axios.get(
-        `https://grssprojectserver.herokuapp.com/techMaterial/materials/${materialtype1}`,
+        `http://localhost:5000/techMaterial/materials/${materialtype1}`,
         config
       );
       if (response.data && response.statusText === "OK") {
@@ -43,12 +43,12 @@ const Newsletter = () => {
         setError(true);
       }
     } catch (err) {
-      console.log(err);
+      setError(true)
     }
   }, []);
   const link = (link) => {
     if (link != undefined) {
-      return "https://grssprojectserver.herokuapp.com/" + link;
+      return "http://localhost:5000/" + link;
     } else {
       return "undefined";
     }

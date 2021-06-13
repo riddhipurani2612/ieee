@@ -33,10 +33,18 @@ import FounderMembers from "./components/FounderMembers";
 import UpdateNewsletter from "./components/UpdateNewsletter";
 import UpdateEvent from "./components/UpdateEvent";
 import Feedbacks from "./components/Feedbacks";
+import Members from "./components/Members";
 function App() {
   console.log("App");
   const [isLoggedIn, setLoggedIn] = useState(false);
   const setLogin = (state) => setLoggedIn(state);
+  useEffect(async () =>{
+    try{  
+      const response = await axios.post("http://localhost:5000/counter")
+    }catch(err){
+      console.log(err);
+    }
+  },[]);
   return (
     <Router>
       <div className="App">
@@ -81,6 +89,7 @@ function App() {
           <Route path="/studentmembers" component={StudentMember} />
           <Route path="/updateevent" component={UpdateEvent}/>
           <Route path="/feedbacks"component={Feedbacks}/> 
+          <Route path="/members" component={Members}/>
           <Route
             path="/logout"
             component={LogoutComp}

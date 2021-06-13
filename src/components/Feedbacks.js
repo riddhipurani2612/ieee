@@ -29,7 +29,7 @@ const Feedbacks = () => {
         history.goBack();
       }
       let response = await axios.get(
-        `https://grssprojectserver.herokuapp.com/user/getrole`,
+        `http://localhost:5000/user/getrole`,
         config
       );
       if (response.data && response.data.role === "Admin") {
@@ -41,7 +41,7 @@ const Feedbacks = () => {
         };
         try {
           response = await axios.get(
-            "https://grssprojectserver.herokuapp.com/feedback",
+            "http://localhost:5000/feedback",
             config
           );
           setFormData(response.data);
@@ -55,7 +55,7 @@ const Feedbacks = () => {
         history.goBack();
       }
     } catch (error) {
-      console.log(error);
+      setError(true)
     }
   }, []);
   return (

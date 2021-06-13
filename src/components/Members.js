@@ -28,7 +28,7 @@ const Members = () => {
     };
     try {
       response = await axios.get(
-        `https://grssprojectserver.herokuapp.com/user/view`,
+        `http://localhost:5000/user/view`,
         config
       );
       if (response.data && response.statusText === "OK") {
@@ -41,9 +41,9 @@ const Members = () => {
 
   const links = (temp) => {
     if (temp === undefined) {
-      return "https://grssprojectserver.herokuapp.com/profile.png";
+      return "http://localhost:5000/profile.png";
     } else {
-      return "https://grssprojectserver.herokuapp.com/" + temp;
+      return "http://localhost:5000/" + temp;
     }
   };
   const token = localStorage.getItem("token");
@@ -59,7 +59,7 @@ const Members = () => {
   useEffect(async () => {
     try {
       response = await axios.get(
-        `https://grssprojectserver.herokuapp.com/user/getrole`,
+        `http://localhost:5000/user/getrole`,
         config
       );
       if (response.data && response.statusText === "OK") {
@@ -72,8 +72,6 @@ const Members = () => {
       console.log(error);
     }
   }, []);
-  const deleteuser = async (temp) => {};
-
   return (
     <Styles>
       <div className="main-bg">
@@ -94,6 +92,7 @@ const Members = () => {
                       designation={memberObj.designation}
                       contact={memberObj.contact}
                       email={memberObj.email}
+                      role = {memberObj.role}
                     ></MembersView>
                   </Row>
                   <hr></hr>

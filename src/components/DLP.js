@@ -22,7 +22,7 @@ const DLP = () => {
         },
       };
       response = await axios.get(
-        `https://grssprojectserver.herokuapp.com/techMaterial/materials/${materialtype}`,
+        `http://localhost:5000/techMaterial/materials/${materialtype}`,
         config
       );
       if (response.data && response.statusText === "OK") {
@@ -32,7 +32,7 @@ const DLP = () => {
         setError(true);
       }
     } catch (err) {
-      console.log(err);
+      setError(true)
     }
   }, []);
   const youtubeOptions = {
@@ -42,7 +42,7 @@ const DLP = () => {
     if (temp === undefined) {
       return "undefined";
     } else {
-      return "https://grssprojectserver.herokuapp.com/" + temp;
+      return "http://localhost:5000/" + temp;
     }
   };
   return (

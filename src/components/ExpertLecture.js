@@ -20,18 +20,17 @@ const ExpertLecture = () => {
     };
     const materialtype = "Expert Lecture Program";
     try {
-      response = await axios.get(
-        `https://grssprojectserver.herokuapp.com/techMaterial/materials/${materialtype}`,
-        config
-      );
+      response = await axios
+        .get(
+          `http://localhost:5000/techMaterial/materials/${materialtype}`,
+          config
+        )
+        console.log(response)
       if (response.data && response.statusText === "OK") {
         setMaterial(response.data);
       }
-      if (material === []) {
-        setError(true);
-      }
     } catch (err) {
-      console.log(err);
+      setError(true)
     }
   }, []);
   const youtubeOptions = {
@@ -41,7 +40,7 @@ const ExpertLecture = () => {
     if (temp === undefined) {
       return "undefined";
     } else {
-      return "https://grssprojectserver.herokuapp.com/" + temp;
+      return "http://localhost:5000/" + temp;
     }
   };
   return (

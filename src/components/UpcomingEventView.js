@@ -47,7 +47,7 @@ const UpcomingEventView = (props) => {
           },
         };
         let response = await axios.get(
-          `https://grssprojectserver.herokuapp.com/user/getrole`,
+          `http://localhost:5000/user/getrole`,
           config
         );
         if (response.data && response.statusText === "OK") {
@@ -73,12 +73,11 @@ const UpcomingEventView = (props) => {
           "Content-Type": "application/json",
         },
       };
-      let response = axios.delete(
-        `https://grssprojectserver.herokuapp.com/event/${props._id}`,
-        config
-      );
+      let response = axios
+        .delete(`http://localhost:5000/event/${props._id}`, config)
+        .then(history.push("/"));
       if (response.data && response.statusText === "OK") {
-        window.location.reload(false);
+        history.push("/");
       }
     } catch (err) {
       console.log(err);
@@ -126,11 +125,15 @@ const UpcomingEventView = (props) => {
                 Know More
               </button>
             )}
-            {props.registrationlink && (
+            {props.registrationlink != "undefined" &&
+            props.registrationlink != undefined &&
+            props.registrationlink != "" ? (
               <a href={props.registrationlink} target="blank">
-                <button className="event-button" title="Register Here" />
+                <button className="event-button" title="Register Here">
+                  Registration Link
+                </button>
               </a>
-            )}
+            ) : null}
             {role === "Admin" && (
               <button className="event-button" onClick={updatedetails}>
                 <i class="fa fa-edit" aria-hidden="true"></i>

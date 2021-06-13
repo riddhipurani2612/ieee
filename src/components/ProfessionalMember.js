@@ -30,7 +30,7 @@ const ProfessionalMembers = () => {
     const role = "Professional Member";
     try {
       response = await axios.get(
-        `https://grssprojectserver.herokuapp.com/user/getmembers/${role}`,
+        `http://localhost:5000/user/getmembers/${role}`,
         config
       );
       if (response.data && response.statusText === "OK") {
@@ -45,14 +45,14 @@ const ProfessionalMembers = () => {
         }
       }
     } catch (err) {
-      console.log(err);
+      setError(true)
     }
   }, []);
   const links = (temp) => {
     if (temp === undefined) {
-      return "https://grssprojectserver.herokuapp.com/profile.png";
+      return "http://localhost:5000/profile.png";
     } else {
-      return "https://grssprojectserver.herokuapp.com/" + temp;
+      return "http://localhost:5000/" + temp;
     }
   };
 

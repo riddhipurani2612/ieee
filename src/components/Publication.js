@@ -38,7 +38,7 @@ const Publication = () => {
         },
       };
       response = await axios.get(
-        `https://grssprojectserver.herokuapp.com/techMaterial/materials/${materialtype1}`,
+        `http://localhost:5000/techMaterial/materials/${materialtype1}`,
         config
       );
       if (response.data && response.statusText === "OK") {
@@ -48,7 +48,7 @@ const Publication = () => {
         setError(true);
       }
     } catch (err) {
-      console.log(err);
+      setError(true)
     }
     const token = localStorage.getItem("token");
 
@@ -61,7 +61,7 @@ const Publication = () => {
       };
       if (token != null) {
         let response = await axios.get(
-          `https://grssprojectserver.herokuapp.com/user/getrole`,
+          `http://localhost:5000/user/getrole`,
           config
         );
         setUser(response.data);
@@ -91,7 +91,7 @@ const Publication = () => {
         },
       };
       let response = axios.delete(
-        `https://grssprojectserver.herokuapp.com/techMaterial/`,
+        `http://localhost:5000/techMaterial/`,
         config
       );
       window.location.reload(false);

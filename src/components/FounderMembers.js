@@ -31,7 +31,7 @@ const FounderMembers = () => {
     const role = "Founder Member";
     try {
       response = await axios.get(
-        `https://grssprojectserver.herokuapp.com/user/founder`,
+        `http://localhost:5000/user/founder`,
         config
       );
       if (response.data && response.statusText === "OK") {
@@ -46,14 +46,14 @@ const FounderMembers = () => {
         }
       }
     } catch (err) {
-      console.log(err);
+      setError(true)
     }
   }, []);
   const links = (temp) => {
     if (temp === undefined) {
       return "undefined";
     } else {
-      return "https://grssprojectserver.herokuapp.com/" + temp;
+      return "http://localhost:5000/" + temp;
     }
   };
 

@@ -27,7 +27,7 @@ const MeetingView = () => {
       };
       if (token != null) {
         let response = await axios.get(
-          `https://grssprojectserver.herokuapp.com/user/getrole`,
+          `http://localhost:5000/user/getrole`,
           config
         );
         if (response.data && response.statusText === "OK") {
@@ -55,7 +55,7 @@ const MeetingView = () => {
           },
         };
         response = await axios.get(
-          "https://grssprojectserver.herokuapp.com/meeting",
+          "http://localhost:5000/meeting",
           config
         );
         if (response.data && response.statusText === "OK") {
@@ -73,7 +73,7 @@ const MeetingView = () => {
     if (temp === undefined) {
       return "undefined";
     } else {
-      return "https://grssprojectserver.herokuapp.com/" + temp;
+      return "http://localhost:5000/" + temp;
     }
   };
   const dateFormate = (date) => {

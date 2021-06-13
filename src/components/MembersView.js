@@ -6,8 +6,11 @@ import "animate.css/animate.min.css";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import "./main.css";
+
 const Styles = styled.div``;
 const MembersView = (props) => {
+  const history = useHistory();
+
   const token = localStorage.getItem("token");
   let config = {
     headers: {
@@ -20,10 +23,7 @@ const MembersView = (props) => {
 
   useEffect(async () => {
     try {
-      response = await axios.get(
-        `https://grssprojectserver.herokuapp.com/user/getrole`,
-        config
-      );
+      response = await axios.get(`http://localhost:5000/user/getrole`, config);
       if (response.data && response.statusText === "OK") {
         if (response.data.role != "Admin") {
         } else if (response.data.role.includes("Admin")) {
@@ -34,6 +34,10 @@ const MembersView = (props) => {
       console.log(error);
     }
   }, []);
+  const updateuser = async () => {
+    localStorage.setItem("userEmailUpdate", props.email);
+    history.push("/profile");
+  };
 
   const deleteuser = async () => {
     try {
@@ -42,43 +46,59 @@ const MembersView = (props) => {
           "Content-Type": "application/json",
         },
       };
-      let response = axios.delete(
-        `https://grssprojectserver.herokuapp.com/user/${props.email}`,
-        config
-      );
-      if (response.data && response.statusText === "OK") {
-        window.location.reload(false);
+      let response = axios
+        .delete(`http://localhost:5000/user/${props.email}`, config)
+        .then(window.location.reload(false));
+      console.log(response.data);
+      if (response.data.msg === "Deleted" && response.statusText === "OK") {
+        history.push("/members");
       }
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
   };
 
   return (
     <Styles>
-      <Col className="member-content">
-        Name : {props.first_name} {props.last_name}
-        <br></br>
-        Contact : {props.contact}
-        <br></br>
-        Member Id : {props.memberid}
-        <br></br>
-        Email : {props.email}
-        <br></br>
-        Workplace : {props.workplace}
-        <br></br>
-        Grade : {props.designation}
-        <br></br>
-      </Col>
-      <Col>
+      <Row>
+        <Col className="member-content" sm="9">
+          Name : {props.first_name} {props.last_name}
+          <br></br>
+          Contact : {props.contact}
+          <br></br>
+          Member Id : {props.memberid}
+          <br></br>
+          Email : {props.email}
+          <br></br>
+          Workplace : {props.workplace}
+          <br></br>
+          Grade : {props.designation}
+          <br></br>
+          Role : {props.role}
+        </Col>
         {admin === "Admin" ? (
-          <div>
-            <button className="member-button" onClick={deleteuser(props.email)}>
-              <i class="fa fa-trash" aria-hidden="true"></i>
-            </button>
-          </div>
-        ) : null}
-      </Col>
+          <Col>
+            <div>
+              <button className="member-button" onClick={deleteuser}>
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </button>
+            </div>
+          </Col>
+        ) : (
+          ""
+        )}
+        {admin === "Admin" ? (
+          <Col>
+            <div>
+              <button onClick={updateuser} className="member-button">
+                <i class="fa fa-edit" aria-hidden="true"></i>
+              </button>
+            </div>
+          </Col>
+        ) : (
+          ""
+        )}
+      </Row>
     </Styles>
   );
 };

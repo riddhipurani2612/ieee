@@ -57,14 +57,14 @@ const Navigation = (props) => {
     if (temp === undefined) {
       return "undefined";
     } else {
-      return "https://grssprojectserver.herokuapp.com/" + temp;
+      return "http://localhost:5000/" + temp;
     }
   };
   useEffect(async () => {
     if (token != null) {
       try {
         response = await axios.get(
-          `https://grssprojectserver.herokuapp.com/user/getrole`,
+          `http://localhost:5000/user/getrole`,
           config
         );
         setUser(response.data);

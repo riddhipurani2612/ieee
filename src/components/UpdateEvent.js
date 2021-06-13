@@ -65,7 +65,7 @@ const UpdateEvent = (props) => {
       try {
         response = await axios
           .patch(
-            `https://grssprojectserver.herokuapp.com/event/${localStorage.getItem(
+            `http://localhost:5000/event/${localStorage.getItem(
               "eventIdUpdate"
             )}`,
             formData,
@@ -108,7 +108,7 @@ const UpdateEvent = (props) => {
       };
       try {
         response = await axios.get(
-          `https://grssprojectserver.herokuapp.com/event/get/${localStorage.getItem(
+          `http://localhost:5000/event/get/${localStorage.getItem(
             "eventIdUpdate"
           )}`,
           config

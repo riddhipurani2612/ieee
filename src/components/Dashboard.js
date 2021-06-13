@@ -39,7 +39,7 @@ const Dashboard = () => {
       history.goBack();
     }
     try {
-      response = await axios.get(`https://grssprojectserver.herokuapp.com/user`, config);
+      response = await axios.get(`http://localhost:5000/user`, config);
       console.log(response.data);
       if (response.data.role != "Admin") {
         history.goBack();

@@ -33,7 +33,7 @@ const ViewNP = (props) => {
         },
       };
       let response = axios.delete(
-        `https://grssprojectserver.herokuapp.com/techMaterial/${props._id}`,
+        `http://localhost:5000/techMaterial/${props._id}`,
         config
       );
       console.log(response.data);
@@ -54,7 +54,7 @@ const ViewNP = (props) => {
         },
       };
       let response = await axios.get(
-        `https://grssprojectserver.herokuapp.com/user/getrole`,
+        `http://localhost:5000/user/getrole`,
         config
       );
       setUser(response.data);

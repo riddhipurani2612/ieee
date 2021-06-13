@@ -9,7 +9,7 @@ const SignUp = () => {
   const [file, setFile] = useState("");
   const [error, setError] = useState("");
   const [status, setStatus] = useState("");
-
+  const [rolee, setRole] = useState("");
   const [checkFile, setCheckFile] = useState(false);
   const [progress, setProgess] = useState(0);
   const el = useRef(); // accesing input element
@@ -52,7 +52,7 @@ const SignUp = () => {
     } else {
       try {
         const response = await axios
-          .get(`https://grssprojectserver.herokuapp.com/user/getrole`, config)
+          .get(`http://localhost:5000/user/getrole`, config)
           .catch((err) => {
             if (err.response) {
               setStatus("Error");
@@ -60,6 +60,9 @@ const SignUp = () => {
             }
           });
         if (response.data && response.statusText === "OK") {
+          if (response.data.role === "Admin") {
+            setRole("Admin");
+          }
           setHeader("Add Member");
         }
       } catch (error) {
@@ -111,7 +114,7 @@ const SignUp = () => {
         let response;
         try {
           response = await axios
-            .post("https://grssprojectserver.herokuapp.com/user", formData, {
+            .post("http://localhost:5000/user", formData, {
               onUploadProgress: (ProgressEvent) => {
                 let progress =
                   Math.round(
@@ -154,18 +157,16 @@ const SignUp = () => {
         };
         let response;
         try {
-          response = await axios.post(
-            "https://grssprojectserver.herokuapp.com/user",
-            data,
-            config
-          ) .catch((err) => {
-            if (err.response) {
-              setStatus("Error");
-              setError(err.response.data.msg);
-            }
-          });
-        if (response.data && response.statusText === "OK") {
-           history.push("/login");
+          response = await axios
+            .post("http://localhost:5000/user", data, config)
+            .catch((err) => {
+              if (err.response) {
+                setStatus("Error");
+                setError(err.response.data.msg);
+              }
+            });
+          if (response.data && response.statusText === "OK") {
+            setStatus("Success");
           }
         } catch (err) {
           console.log(err);
@@ -234,7 +235,7 @@ const SignUp = () => {
                         <option selected="true" value="">
                           --Select--
                         </option>
-                        <option>Student</option>
+                        <option>Student Member</option>
                         <option>Professional Member</option>
                       </select>
                     </Col>
@@ -274,22 +275,6 @@ const SignUp = () => {
                     </Col>
                   </Row>
                 </Form.Group>
-                <Form.Group controlId="signup_email">
-                  <Row>
-                    <Col sm="4">
-                      <label>Other Email Addresses</label>
-                    </Col>
-                    <Col>
-                      <input
-                        type="text"
-                        value={emails}
-                        name="emails"
-                        placeholder="example@xzy.com,example@xzy.com"
-                        onChange={signupValueChanged}
-                      ></input>
-                    </Col>
-                  </Row>
-                </Form.Group>
                 <Form.Group controlId="signup_workplace">
                   <Row>
                     <Col sm="4">
@@ -314,6 +299,7 @@ const SignUp = () => {
                     </Col>
                     <Col>
                       <input
+                        required
                         type="text"
                         value={designation}
                         name="designation"
@@ -348,11 +334,14 @@ const SignUp = () => {
                     </Col>
                     <Col>
                       <input
+                        required
                         type="text"
                         value={memberid}
                         name="memberid"
+                        title="Only numericals allowed"
                         placeholder="Enter IEEE Member ID"
                         onChange={signupValueChanged}
+                        pattern="[0-9]+"
                       ></input>
                     </Col>
                   </Row>
@@ -367,9 +356,11 @@ const SignUp = () => {
                         required
                         type="password"
                         value={password}
+                        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                         name="password"
                         placeholder="Enter Password"
                         onChange={signupValueChanged}
+                        title="Password length should be 8 character and include one small and capital latter"
                       ></input>
                     </Col>
                   </Row>
@@ -384,6 +375,7 @@ const SignUp = () => {
                         required
                         type="password"
                         value={confirmpassword}
+                        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                         name="confirmpassword"
                         placeholder="Enter Password"
                         onChange={signupValueChanged}

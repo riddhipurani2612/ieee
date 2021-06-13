@@ -72,7 +72,7 @@ const Profile = (e) => {
     if (temp === undefined) {
       return "undefined";
     } else {
-      return "https://grssprojectserver.herokuapp.com/" + temp;
+      return "http://localhost:5000/" + temp;
     }
   };
   const updateUser = async (e) => {
@@ -103,7 +103,7 @@ const Profile = (e) => {
       try {
         response = await axios
           .patch(
-            `https://grssprojectserver.herokuapp.com/user/update/${email}`,
+            `http://localhost:5000/user/update/${email}`,
             formData,
             {
               onUploadProgress: (ProgressEvent) => {
@@ -154,7 +154,7 @@ const Profile = (e) => {
       try {
         response = await axios
           .patch(
-            `https://grssprojectserver.herokuapp.com/user/update/${email}`,
+            `http://localhost:5000/user/update/${email}`,
             formData,
             config,
             {
@@ -195,7 +195,7 @@ const Profile = (e) => {
       };
       try {
         let response = await axios.get(
-          `https://grssprojectserver.herokuapp.com/user/getrole`,
+          `http://localhost:5000/user/getrole`,
           config
         );
         if (response.data && response.data.role === "Admin") {
@@ -211,7 +211,7 @@ const Profile = (e) => {
             };
             try {
               const temp_response = await axios.get(
-                `https://grssprojectserver.herokuapp.com/user/get/${localStorage.getItem(
+                `http://localhost:5000/user/get/${localStorage.getItem(
                   "userEmailUpdate"
                 )}`,
                 temp_config
@@ -224,7 +224,7 @@ const Profile = (e) => {
           }
         } else {
           try {
-            response = await axios.get(`https://grssprojectserver.herokuapp.com/user`, config);
+            response = await axios.get(`http://localhost:5000/user`, config);
             setUser(response.data);
             setFile(response.data.profile);
           } catch (error) {

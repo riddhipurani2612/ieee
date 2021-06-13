@@ -62,7 +62,7 @@ const AddMaterial = () => {
       try {
         response = await axios
           .post(
-            "https://grssprojectserver.herokuapp.com/techMaterial",
+            "http://localhost:5000/techMaterial",
             formData,
             config,
             {
@@ -109,7 +109,7 @@ const AddMaterial = () => {
       try {
         response = await axios
           .post(
-            "https://grssprojectserver.herokuapp.com/techMaterial",
+            "http://localhost:5000/techMaterial",
             data,
             config
           )
@@ -143,7 +143,7 @@ const AddMaterial = () => {
     }
     try {
       const response = await axios.get(
-        `https://grssprojectserver.herokuapp.com/user/getrole`,
+        `http://localhost:5000/user/getrole`,
         config
       );
       if (response.data && response.statusText === "OK") {
