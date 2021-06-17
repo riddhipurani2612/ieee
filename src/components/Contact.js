@@ -19,7 +19,6 @@ const Styles = styled.div`
   }
 `;
 const ContactUs = (props) => {
-  console.log(props)
   return (
     <Styles>
       <div className="main-bg">

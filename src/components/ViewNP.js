@@ -45,28 +45,29 @@ const ViewNP = (props) => {
 
   useEffect(async () => {
     const token = localStorage.getItem("token");
-
-    try {
-      let config = {
-        headers: {
-          "Content-Type": "application/json",
-          "x-auth-token": token,
-        },
-      };
-      let response = await axios.get(
-        `https://grssprojectserver.herokuapp.com/user/getrole`,
-        config
-      );
-      setUser(response.data);
-      if (role === "Student") {
-        setStudent(true);
-      } else if (role === "Admin") {
-        setAdmin(true);
-      } else {
-        setMember(true);
+    if (token != null) {
+      try {
+        let config = {
+          headers: {
+            "Content-Type": "application/json",
+            "x-auth-token": token,
+          },
+        };
+        let response = await axios.get(
+          `https://grssprojectserver.herokuapp.com/user/getrole`,
+          config
+        );
+        setUser(response.data);
+        if (role === "Student") {
+          setStudent(true);
+        } else if (role === "Admin") {
+          setAdmin(true);
+        } else {
+          setMember(true);
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
     }
   }, []);
   return (
@@ -88,12 +89,12 @@ const ViewNP = (props) => {
             ) : null}
           </Col>
           <Col xs lg="3">
-            {role==="Admin" ? (
+            {role === "Admin" ? (
               <button className="material-button" onClick={updatedetails}>
                 <i class="fa fa-edit" aria-hidden="true"></i>
               </button>
             ) : null}
-            {role==="Admin" ? (
+            {role === "Admin" ? (
               <button onClick={deletedetails} className="material-button">
                 <i class="fa fa-trash" aria-hidden="true"></i>
               </button>

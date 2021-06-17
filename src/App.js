@@ -40,7 +40,7 @@ function App() {
   const setLogin = (state) => setLoggedIn(state);
   useEffect(async () =>{
     try{  
-      const response = await axios.post("http://localhost:5000/counter")
+      const response = await axios.post("https://grssprojectserver.herokuapp.com/counter")
     }catch(err){
       console.log(err);
     }
@@ -79,7 +79,6 @@ function App() {
           <Route path="/sar" component={SAR} />
           <Route path="/profile" component={Profile} />
           <Route path="/faq" component={FAQ} />
-          <Route path="/addmeeting" component={AddMeeting} />
           <Route path="/addnewsletter" component={AddNewsletter} />
           <Route path="/expertlecture" component={ExpertLecture} />
           <Route path="/detailedview" component={DetailedView} />

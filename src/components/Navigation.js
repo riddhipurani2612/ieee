@@ -180,23 +180,10 @@ const Navigation = (props) => {
                 </ReactBootStrap.NavDropdown.Item>
               </ReactBootStrap.NavDropdown>
               <Link to="/events">
-                <ReactBootStrap.Nav.Link hidden={admin} href="/events">
+                <ReactBootStrap.Nav.Link href="/events">
                   Events
                 </ReactBootStrap.Nav.Link>
               </Link>
-              <ReactBootStrap.NavDropdown
-                title="Events"
-                id="collasible-nav-dropdown"
-                hidden={!admin}
-              >
-                <ReactBootStrap.NavDropdown.Item href="/events">
-                  Events
-                </ReactBootStrap.NavDropdown.Item>
-                <ReactBootStrap.NavDropdown.Divider />
-                <ReactBootStrap.NavDropdown.Item href="/addevent">
-                  Add Event
-                </ReactBootStrap.NavDropdown.Item>
-              </ReactBootStrap.NavDropdown>
 
               <Link to="/contact">
                 <ReactBootStrap.Nav.Link href="/contact">
@@ -257,12 +244,6 @@ const Navigation = (props) => {
                   hidden={!admin}
                 >
                   Dashboard
-                </ReactBootStrap.NavDropdown.Item>
-                <ReactBootStrap.NavDropdown.Item
-                  href="/feedbacks"
-                  hidden={!admin}
-                >
-                  Feedbacks
                 </ReactBootStrap.NavDropdown.Item>
 
                 <ReactBootStrap.NavDropdown.Divider />

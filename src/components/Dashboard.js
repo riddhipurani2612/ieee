@@ -237,17 +237,17 @@ const Dashboard = () => {
               <Card style={{backgroundColor : "#D94F20"}}>
                 <center>
                   <br></br>
-                  <i class="fa fa-handshake-o fa-4x" style={{color : "white"}} aria-hidden="true"></i>
+                  <i class="fa fa-comments-o fa-4x" style={{color : "white"}} aria-hidden="true"></i>
                 </center>
                 <Card.Body>
                   <Card.Title className="meeting-dash">
-                    <center>Meetings</center>
+                    <center>Feedbacks</center>
                   </Card.Title>
                   <Card.Text>
                     <center>
                       <Row>
                         <Col>
-                          <a href="/viewmeeting">
+                          <a href="/feedbacks">
                             <Button
                               variant="outline-light"
                               style={{
@@ -256,21 +256,7 @@ const Dashboard = () => {
                                 cursor: "pointer",
                               }}
                             >
-                              View Meetings
-                            </Button>
-                          </a>
-                        </Col>
-                        <Col>
-                          <a href="/addmeeting">
-                            <Button
-                              variant="outline-light"
-                              style={{
-                                padding: "7px 7px",
-                                "font-size": "20px",
-                                cursor: "pointer",
-                              }}
-                            >
-                              Add Meeting
+                              View Feedbacks
                             </Button>
                           </a>
                         </Col>
