@@ -177,7 +177,7 @@ const Profile = (e) => {
           window.location.reload(false);
         }
       }
-      catch(err){
+      catch (err) {
         console.log(err);
       }
     }
@@ -295,31 +295,48 @@ const Profile = (e) => {
           <div class="member-form">
             <div>
               <form onSubmit={updateUser}>
-                <Form.Group>
+                <Form.Group controlId="signup_fisrtname">
                   <Row>
                     <Col sm="4">
-                      <label>About</label>
+                      <label>First name</label>
                     </Col>
                     <Col>
-                      <textarea
-                        required
-                        className="textarea"
-                        row={30}
+                      <input
                         type="text"
-                        name="about"
-                        value={about}
+                        name="first)name"
                         disabled={editable}
+                        value={first_name}
                         onChange={(e) => {
-                          setUser({ ...user, about: e.target.value });
+                          setUser({ ...user, first_name: e.target.value });
                         }}
-                      ></textarea>
+                        required
+                      ></input>
+                    </Col>
+                  </Row>
+                </Form.Group>
+                <Form.Group controlId="signup_lastname">
+                  <Row>
+                    <Col sm="4">
+                      <label>Last name</label>
+                    </Col>
+                    <Col>
+                      <input
+                        type="text"
+                        name="last_name"
+                        disabled={editable}
+                        value={last_name}
+                        onChange={(e) => {
+                          setUser({ ...user, last_name: e.target.value });
+                        }}
+                        required
+                      ></input>
                     </Col>
                   </Row>
                 </Form.Group>
                 <Form.Group>
                   <Row>
                     <Col sm="4">
-                      <label>Contact</label>
+                      <label>Contact No</label>
                     </Col>
                     <Col>
                       <input
@@ -338,7 +355,26 @@ const Profile = (e) => {
                 <Form.Group>
                   <Row>
                     <Col sm="4">
-                      <label>Work Place</label>
+                      <label>Email</label>
+                    </Col>
+                    <Col>
+                      <input
+                        type="text"
+                        name="email"
+                        disabled={editable}
+                        value={email}
+                        onChange={(e) => {
+                          setUser({ ...user, email: e.target.value });
+                        }}
+                        required
+                      ></input>
+                    </Col>
+                  </Row>
+                </Form.Group>
+                <Form.Group>
+                  <Row>
+                    <Col sm="4">
+                      <label>Work Place/University</label>
                     </Col>
                     <Col>
                       <input
@@ -372,6 +408,50 @@ const Profile = (e) => {
                     </Col>
                   </Row>
                 </Form.Group>
+                <Form.Group>
+                  <Row>
+                    <Col sm="4">
+                      <label>Short Biography</label>
+                    </Col>
+                    <Col>
+                      <textarea
+                        required
+                        className="textarea"
+                        row={30}
+                        type="text"
+                        name="about"
+                        value={about}
+                        disabled={editable}
+                        onChange={(e) => {
+                          setUser({ ...user, about: e.target.value });
+                        }}
+                      ></textarea>
+                    </Col>
+                  </Row>
+                </Form.Group>
+                <Form.Group>
+                  <Row>
+                    <Col sm="4">
+                      <label>Member ID</label>
+                    </Col>
+                    <Col>
+                      <input
+                        type="text"
+                        name="memberid"
+                        disabled={editable}
+                        value={memberid}
+                        onChange={(e) => {
+                          setUser({ ...user, memberid: e.target.value });
+                        }}
+                        title="Only numericals allowed"
+                        placeholder="Enter IEEE Member ID"
+                        pattern="[0-9]+"
+                        required
+                      ></input>
+                    </Col>
+                  </Row>
+                </Form.Group>
+          
                 <Form.Group>
                   <Row>
                     <Col sm="4">

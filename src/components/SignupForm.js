@@ -75,10 +75,8 @@ const SignUp = () => {
     first_name,
     last_name,
     role,
-    address,
     contact,
     email,
-    emails,
     memberid,
     workplace,
     designation,
@@ -103,7 +101,6 @@ const SignUp = () => {
         formData.append("workplace", workplace);
         formData.append("email", email);
         formData.append("memberid", memberid);
-        formData.append("emails", emails);
         formData.append("contact", contact);
         formData.append("file", file);
         const config = {
@@ -144,7 +141,6 @@ const SignUp = () => {
           contact,
           memberid,
           email,
-          emails,
           workplace,
           designation,
           password,
@@ -278,7 +274,7 @@ const SignUp = () => {
                 <Form.Group controlId="signup_workplace">
                   <Row>
                     <Col sm="4">
-                      <label>Work_Place/University</label>
+                      <label>Work Place/University</label>
                     </Col>
                     <Col>
                       <input
