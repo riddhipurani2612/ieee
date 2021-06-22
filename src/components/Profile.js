@@ -65,6 +65,7 @@ const Profile = (e) => {
     profile,
   } = user;
   const [admin, setAdmin] = useState(false);
+  const [oldmail, setOldmail] = useState("");
   const onChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
@@ -95,6 +96,12 @@ const Profile = (e) => {
       formData.append("contact", contact);
       formData.append("about", about);
       formData.append("memberid", memberid);
+      if (oldemail === email) {
+        formData.append("changed", "true");
+      }
+      else {
+        formData.append("changed", "false");
+      }
       if (file === undefined) {
         formData.append("file", profile);
       } else {
@@ -146,6 +153,12 @@ const Profile = (e) => {
       formData.append("contact", contact);
       formData.append("about", about);
       formData.append("memberid", memberid);
+      if (oldemail === email) {
+        formData.append("changed", "true");
+      }
+      else {
+        formData.append("changed", "false");
+      }
       if (file === undefined) {
         formData.append("file", profile);
       } else {
@@ -217,6 +230,7 @@ const Profile = (e) => {
                 temp_config
               );
               setUser(temp_response.data);
+              setOldmail(temp_response.data.email)
               setFile(temp_response.data.profile);
             } catch (err) {
               console.log(err);
@@ -226,6 +240,7 @@ const Profile = (e) => {
           try {
             response = await axios.get(`https://grssprojectserver.herokuapp.com/user`, config);
             setUser(response.data);
+            setOldmail(response.data.email);
             setFile(response.data.profile);
           } catch (error) {
             console.log(error);
@@ -451,7 +466,7 @@ const Profile = (e) => {
                     </Col>
                   </Row>
                 </Form.Group>
-          
+
                 <Form.Group>
                   <Row>
                     <Col sm="4">
