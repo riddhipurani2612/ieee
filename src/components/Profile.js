@@ -65,7 +65,7 @@ const Profile = (e) => {
     profile,
   } = user;
   const [admin, setAdmin] = useState(false);
-  const [oldmail, setOldmail] = useState("");
+  const [oldemail, setOldmail] = useState("");
   const onChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
