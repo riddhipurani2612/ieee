@@ -96,7 +96,7 @@ const Profile = (e) => {
       formData.append("contact", contact);
       formData.append("about", about);
       formData.append("memberid", memberid);
-      if (oldemail === email) {
+      if (oldemail != email) {
         formData.append("changed", "true");
       }
       else {
@@ -230,7 +230,7 @@ const Profile = (e) => {
                 temp_config
               );
               setUser(temp_response.data);
-              setOldmail(temp_response.data.email)
+              setOldmail(temp_response.data.email);
               setFile(temp_response.data.profile);
             } catch (err) {
               console.log(err);
