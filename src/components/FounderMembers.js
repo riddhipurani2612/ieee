@@ -56,7 +56,14 @@ const FounderMembers = () => {
       return "https://grssprojectserver.herokuapp.com/" + temp;
     }
   };
-
+  const link = (temp) => {
+    if (temp === undefined) {
+      return "undefined"
+    }
+    else {
+      return "https://grssprojectserver.herokuapp.com/" + temp;
+    }
+  }
   return (
     <Styles>
       <div className="main-bg">
@@ -82,6 +89,7 @@ const FounderMembers = () => {
                         designation={memberObj.designation}
                         about={memberObj.about}
                         profile={links(memberObj.profile)}
+                        detailedbio={link(memberObj.detailedbio)}
                       ></MemberView>
                     </Col>
                   ))}

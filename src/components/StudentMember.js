@@ -54,7 +54,14 @@ const StudentMember = () => {
       return "https://grssprojectserver.herokuapp.com/" + temp;
     }
   };
-
+  const link = (temp) => {
+    if (temp === undefined) {
+      return "undefined"
+    }
+    else {
+      return "https://grssprojectserver.herokuapp.com/" + temp;
+    }
+  }
   return (
     <Styles>
       <div className="main-bg">
@@ -80,6 +87,7 @@ const StudentMember = () => {
                         designation={memberObj.designation}
                         about={memberObj.about}
                         profile={links(memberObj.profile)}
+                        detailedbio={link(memberObj.detailedbio)}
                       ></MemberView>
                     </Col>
                   ))}
@@ -88,11 +96,12 @@ const StudentMember = () => {
             </div>
             <br></br>
           </div>
-          <br></br>
         </Container>
+        <br></br>
       </div>
     </Styles>
   );
+
 };
 
 export default StudentMember;

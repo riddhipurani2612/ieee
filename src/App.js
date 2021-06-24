@@ -40,7 +40,7 @@ function App() {
   const setLogin = (state) => setLoggedIn(state);
   useEffect(async () =>{
     try{  
-      const response = await axios.post("https://grssprojectserver.herokuapp.com/counter")
+      const response = await axios.post("https://grssprojectserver.herokuapp.com/counter");
     }catch(err){
       console.log(err);
     }

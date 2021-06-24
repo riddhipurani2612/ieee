@@ -2,6 +2,7 @@ import { React, useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
+var geocoding = new require('reverse-geocoding');
 const Styles = styled.div`
   .icon {
     color: black;
@@ -18,6 +19,8 @@ const Styles = styled.div`
 
 const Footer = (props) => {
   const [count, setCount] = useState("");
+  const [location,setLocation] = useState("");
+  const key="AIzaSyB8muO7AkTwxcpl9WuUt61DA6-rtLPmCgI";
   useEffect(async () => {
     try {
       const response = await axios.get(
@@ -27,6 +30,23 @@ const Footer = (props) => {
         setCount(response.data[0].count);
       }
     } catch (err) {}
+    navigator.geolocation.getCurrentPosition(async function(position){
+      const longitude = position.coords.longitude;
+      const latitude = position.coords.latitude;
+      console.log("Longitude : ",position.coords.longitude);
+      console.log("Latitude : ",position.coords.latitude);
+      const config = {
+        'latitude': position.coords.longitude,
+        'longitude': position.coords.latitude
+      }
+      try{
+        const response = await axios.get(`http://maps.googleapis.com/maps/api/geocode/json?latlng=${longitude},${latitude}&sensor=true&key=${key}`)
+        console.log(response.data);
+      }
+      catch(err){
+        console.log(err);
+      }
+    })
   }, []);
   return (
     <Styles>
@@ -94,6 +114,8 @@ const Footer = (props) => {
                 style={{ color: "white", "font-size": "0.8rem" }}
               >
                 {count}
+                <br></br>
+
               </div>
             </Col>
           </Row>

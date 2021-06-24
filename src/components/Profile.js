@@ -4,18 +4,21 @@ import axios from "axios";
 import {
   Form,
   Container,
-  Button,
+  Dropdown,
   ProgressBar,
   Row,
   Col,
   Alert,
 } from "react-bootstrap";
 import PasswordChange from "./PasswordChange";
+import AddDetailedBiography from "./AddDetailedBiography";
 import { useHistory } from "react-router";
 import "./main.css";
 const Styles = styled.div``;
 const Profile = (e) => {
   const [showPasswordModal, setPasswordModal] = useState(false);
+  const [showBioModal, setBioModal] = useState(false);
+
   const history = useHistory();
   const [error, setError] = useState("");
   const [status, setStatus] = useState("");
@@ -92,12 +95,13 @@ const Profile = (e) => {
       formData.append("role", role);
       formData.append("designation", designation);
       formData.append("workplace", workplace);
-      formData.append("email", email);
       formData.append("contact", contact);
       formData.append("about", about);
       formData.append("memberid", memberid);
       if (oldemail != email) {
         formData.append("changed", "true");
+        formData.append("oldemail", oldemail);
+        formData.append("newemail", email);
       }
       else {
         formData.append("changed", "false");
@@ -149,12 +153,14 @@ const Profile = (e) => {
       formData.append("role", role);
       formData.append("designation", designation);
       formData.append("workplace", workplace);
-      formData.append("email", email);
       formData.append("contact", contact);
       formData.append("about", about);
       formData.append("memberid", memberid);
-      if (oldemail === email) {
+      if (oldemail != email) {
+        console.log("Changed");
         formData.append("changed", "true");
+        formData.append("oldemail", oldemail);
+        formData.append("newemail", email);
       }
       else {
         formData.append("changed", "false");
@@ -167,7 +173,7 @@ const Profile = (e) => {
       try {
         response = await axios
           .patch(
-            `https://grssprojectserver.herokuapp.com/user/update/${email}`,
+            `https://grssprojectserver.herokuapp.com/user`,
             formData,
             config,
             {
@@ -258,6 +264,10 @@ const Profile = (e) => {
         closeModal={() => setPasswordModal(false)}
         onHide={() => setPasswordModal(false)}
       />
+      <AddDetailedBiography
+        show={showBioModal}
+        closeModal={() => setBioModal(false)}
+        onHide={() => setBioModal(false)} />
       <Container className="main-bg">
         <br></br>
         <div className="form-box w3-panel w3-border w3-border-white boxshadow">
@@ -282,26 +292,40 @@ const Profile = (e) => {
               </Col>
               <Row>
                 <Col>
-                  {!admin ? (
-                    <button
-                      style={{
-                        float: "right",
-                      }}
-                      className="member-button"
-                      onClick={() => setPasswordModal(true)}
-                      title="Change Password"
-                    >
-                      Change<br></br>Password
-                    </button>
-                  ) : null}
-                  <button
-                    onClick={clicked}
-                    className="member-button"
-                    style={{ float: "right" }}
-                    title="Edit profile"
-                  >
-                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </button>
+                  <Dropdown>
+                    <Dropdown.Toggle variant="secondary" className="member-button">Edit Profile</Dropdown.Toggle>
+                    <Dropdown.Menu>
+
+                      {!admin ? (
+                        <button
+                          style={{
+                            float: "right",
+                          }}
+                          className="member-button"
+                          onClick={() => setPasswordModal(true)}
+                          title="Change Password"
+                        >
+                          Change<br></br>Password
+                        </button>
+                      ) : null}
+                      <button
+                        onClick={clicked}
+                        className="member-button"
+                        style={{ float: "right" }}
+                        title="Edit profile"
+                      >
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>Edit
+                      </button>
+                      <button
+                        onClick={()=>setBioModal(true)}
+                        className="member-button"
+                        style={{ float: "right" }}
+                        title="Edit profile"
+                      >
+                        Add detailed biography
+                      </button>
+                    </Dropdown.Menu>
+                  </Dropdown>
                 </Col>
               </Row>
             </Row>

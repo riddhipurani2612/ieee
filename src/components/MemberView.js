@@ -56,7 +56,7 @@ const MemberView = (props) => {
       if (response.data && response.statusText === "OK") {
         console.log(response.data);
         history.goBack();
-        
+
       }
     } catch (err) {
       console.log(err);
@@ -105,17 +105,23 @@ const MemberView = (props) => {
                   Email : {props.email} <br></br>
                 </>
               ) : null}
+              {viewReadMode && (
+                <button
+                  className="member-button"
+                  onClick={() => setModal(true)}
+                >
+                  Short Biography
+                </button>
+              )}
+              {
+                props.detailedbio != "undefined" ? (
+                  <a href={props.detailedbio} target="blank">
+                    <button className="member-button">Detailed Biography</button>
+                  </a>
+                ) : null
+              }
+
               <Row>
-                <Col sm="4">
-                  {viewReadMode && (
-                    <button
-                      className="member-button"
-                      onClick={() => setModal(true)}
-                    >
-                      Biography
-                    </button>
-                  )}
-                </Col>
                 <Col sm="2">
                   {admin === "Admin" ? (
                     <div>
