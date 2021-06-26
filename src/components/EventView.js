@@ -58,12 +58,13 @@ const UpcomingEventView = (props) => {
           "Content-Type": "application/json",
         },
       };
-      let response = axios.delete(
-        `https://grssprojectserver.herokuapp.com/event/${props._id}`,
-        config
-      );
+      let response = axios
+        .delete(
+          `https://grssprojectserver.herokuapp.com/event/${props._id}`,
+          config
+        )
+        .then(window.location.reload(false));
       console.log(response.data);
-      window.location.reload(false);
     } catch (err) {
       console.log(err);
     }

@@ -35,7 +35,7 @@ const ViewMaterial = (props) => {
       let response = axios.delete(
         `https://grssprojectserver.herokuapp.com/techMaterial/${props._id}`,
         config
-      );
+      ).then(window.location.reload(false));
       console.log(response.data);
     } catch (err) {
       console.log(err);

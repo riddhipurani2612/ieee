@@ -79,7 +79,6 @@ const AddProfile = (props) => {
         response.statusText === "OK"
       ) {
         setStatus("Success");
-        localStorage.removeItem("email");
         if (localStorage.getItem("token") != null) {
           history.goBack();
         } else {
@@ -91,8 +90,11 @@ const AddProfile = (props) => {
     }
   };
   const skip = (e) => {
-    localStorage.removeItem("email");
-    history.push("/login");
+    if (localStorage.getItem("token") != null) {
+      history.goBack();
+    } else {
+      history.push("/login");
+    }
   };
   return (
     <Styles>

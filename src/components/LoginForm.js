@@ -45,7 +45,7 @@ const Login = (props) => {
         console.log(response.data);
         localStorage.setItem("token", response.data.token);
         props.setLogin(true);
-        history.goBack();
+        history.push("/");
       }
     } catch (error) {
       console.log(error);

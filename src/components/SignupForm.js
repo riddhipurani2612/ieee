@@ -121,7 +121,7 @@ const SignUp = () => {
               }
             });
           if (response.data != undefined && response.statusText === "OK") {
-            localStorage.setItem("token", response.data.token);
+            localStorage.setItem("email", response.data.email);
             history.push("/addprofilepicture");
           }
         } catch (err) {

@@ -211,7 +211,7 @@ const UpdateMaterial = (props) => {
                     onChange={(e) => {
                       setMaterial({ ...material, title: e.target.value });
                     }}
-                    reuired
+                    required
                   ></input>
                 </Col>
               </Row>
@@ -284,7 +284,7 @@ const UpdateMaterial = (props) => {
             {status === "Warning" ? (
               <Alert variant="warning">
                 <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                Uploaded file format not supported. Please upload only image
+                Uploaded file format not supported. Please upload only pdf
                 file
               </Alert>
             ) : null}

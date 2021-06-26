@@ -222,13 +222,13 @@ const UpdateNewsletter = (props) => {
                     className="w3-input w3-animate-input"
                     type="text"
                     name="publicationlink"
-                    value={(e) => {
+                    value={publicationlink}
+                    onChange={(e) => {
                       setMaterial({
                         ...material,
                         publicationlink: e.target.value,
                       });
                     }}
-                    onChange={valueChanged}
                   ></input>
                 </Col>
               </Row>
@@ -264,8 +264,7 @@ const UpdateNewsletter = (props) => {
             {status === "Warning" ? (
               <Alert variant="warning">
                 <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                Uploaded file format not supported. Please upload only pdf
-                file
+                Uploaded file format not supported. Please upload only pdf file
               </Alert>
             ) : null}
 

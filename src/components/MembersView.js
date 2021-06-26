@@ -50,15 +50,11 @@ const MembersView = (props) => {
         },
       };
       let response = axios
-        .delete(
-          `https://grssprojectserver.herokuapp.com/user/${props.email}`,
-          config
-        )
+        .delete(`http://localhost:5000/user/${props.email}`, config)
+        .catch((err) => {
+          alert(err);
+        })
         .then(window.location.reload(false));
-      console.log(response.data);
-      if (response.data.msg === "Deleted" && response.statusText === "OK") {
-        history.push("/members");
-      }
     } catch (err) {
       console.log(err);
     }
