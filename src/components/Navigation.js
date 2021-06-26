@@ -61,7 +61,7 @@ const Navigation = (props) => {
     }
   };
   useEffect(async () => {
-    if (token != null) {
+    if (token != null && token != undefined) {
       try {
         response = await axios.get(
           `https://grssprojectserver.herokuapp.com/user/getrole`,
@@ -87,7 +87,7 @@ const Navigation = (props) => {
     } else {
       props.setLogin(true);
     }
-  }, [props.isLoggedIn, role]);
+  }, [props.isLoggedIn]);
   const welcome = "Welcome, " + first_name;
   const [click, setClick] = useState(false);
   const handleCilck = () => setClick(!click);
@@ -108,14 +108,10 @@ const Navigation = (props) => {
           <ReactBootStrap.Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <ReactBootStrap.Navbar.Collapse id="responsive-navbar-nav">
             <ReactBootStrap.Nav className="mr-auto">
-              <Link to="/">
-                <ReactBootStrap.Nav.Link href="/">Home</ReactBootStrap.Nav.Link>
-              </Link>
-              <Link to="/chairs-desk">
-                <ReactBootStrap.Nav.Link href="/chairs-desk">
-                  Chair's Address
-                </ReactBootStrap.Nav.Link>
-              </Link>
+              <ReactBootStrap.Nav.Link href="/">Home</ReactBootStrap.Nav.Link>
+              <ReactBootStrap.Nav.Link href="/chairs-desk">
+                Chair's Address
+              </ReactBootStrap.Nav.Link>
 
               <ReactBootStrap.NavDropdown
                 title="Members"
@@ -136,19 +132,19 @@ const Navigation = (props) => {
                 title="Materials"
                 id="collasible-nav-dropdown"
               >
-                <li class="dropdown-submenu">
+                <li className="dropdown-submenu">
                   <a
-                    class="dropdown-item dropdown-toggle"
+                    className="dropdown-item dropdown-toggle"
                     data-toggle="dropdown"
                     href="#"
                   >
                     Lectures
                   </a>
-                  <ul class="dropdown-menu">
-                    <a class="dropdown-item" href="/dlp">
+                  <ul className="dropdown-menu">
+                    <a className="dropdown-item" href="/dlp">
                       Distiguished<br></br>Lectures
                     </a>
-                    <a class="dropdown-item" href="/expertlecture">
+                    <a className="dropdown-item" href="/expertlecture">
                       Expert <br></br>Lectures
                     </a>
                   </ul>
@@ -179,39 +175,35 @@ const Navigation = (props) => {
                   Upload Newsletter / Publication
                 </ReactBootStrap.NavDropdown.Item>
               </ReactBootStrap.NavDropdown>
-              <Link to="/events">
-                <ReactBootStrap.Nav.Link href="/events">
-                  Events
-                </ReactBootStrap.Nav.Link>
-              </Link>
+              <ReactBootStrap.Nav.Link href="/events">
+                Events
+              </ReactBootStrap.Nav.Link>
 
-              <Link to="/contact">
-                <ReactBootStrap.Nav.Link href="/contact">
-                  Contact
-                </ReactBootStrap.Nav.Link>
-              </Link>
+              <ReactBootStrap.Nav.Link href="/contact">
+                Contact
+              </ReactBootStrap.Nav.Link>
             </ReactBootStrap.Nav>
             <ReactBootStrap.Nav>
-              <li class="nav-item">
+              <li className="nav-item">
                 <a
-                  class="nav-link"
+                  className="nav-link"
                   href="https://twitter.com/IEEE_GRSS"
                   target="blank"
                 >
                   <i className="fa fa-twitter" style={{ color: "#afbbd0" }}></i>
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="" target="blank">
+              <li className="nav-item">
+                <a className="nav-link" href="" target="blank">
                   <i
                     className="fa fa-linkedin"
                     style={{ color: "#afbbd0" }}
                   ></i>
                 </a>
               </li>
-              <li class="nav-item">
+              <li className="nav-item">
                 <a
-                  class="nav-link"
+                  className="nav-link"
                   href="https://www.facebook.com/groups/546023775454229/"
                   target="blank"
                 >
@@ -221,15 +213,13 @@ const Navigation = (props) => {
                   ></i>
                 </a>
               </li>
-              <Link to="/login">
-                <ReactBootStrap.Nav.Link
-                  eventKey={2}
-                  href="/login"
-                  hidden={props.isLoggedIn}
-                >
-                  Login
-                </ReactBootStrap.Nav.Link>
-              </Link>
+              <ReactBootStrap.Nav.Link
+                eventKey={2}
+                href="/login"
+                hidden={props.isLoggedIn}
+              >
+                Login
+              </ReactBootStrap.Nav.Link>
               <ReactBootStrap.NavDropdown
                 title={welcome}
                 id="collasible-nav-dropdown"
@@ -239,11 +229,18 @@ const Navigation = (props) => {
                 <ReactBootStrap.NavDropdown.Item href="/profile" hidden={admin}>
                   Profile
                 </ReactBootStrap.NavDropdown.Item>
+
                 <ReactBootStrap.NavDropdown.Item
                   href="/dashboard"
                   hidden={!admin}
                 >
                   Dashboard
+                </ReactBootStrap.NavDropdown.Item>
+                <ReactBootStrap.NavDropdown.Item
+                  href="/changepassword"
+                  hidden={admin}
+                >
+                  Change Password
                 </ReactBootStrap.NavDropdown.Item>
 
                 <ReactBootStrap.NavDropdown.Divider />

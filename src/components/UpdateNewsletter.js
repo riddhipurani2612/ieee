@@ -61,22 +61,30 @@ const UpdateNewsletter = (props) => {
       };
       let response;
       try {
-        response = await axios.patch(
-          `https://grssprojectserver.herokuapp.com/techMaterial/${localStorage.getItem(
-            "materialIdUpdate"
-          )}`,
-          formData,
-          config,
-          {
-            onUploadProgress: (ProgressEvent) => {
-              let progress =
-                Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +
-                "%";
-              setProgess(progress);
-            },
-          }
-        );
-        if (response.statusText === "OK") {
+        response = await axios
+          .patch(
+            `https://grssprojectserver.herokuapp.com/techMaterial/${localStorage.getItem(
+              "materialIdUpdate"
+            )}`,
+            formData,
+            config,
+            {
+              onUploadProgress: (ProgressEvent) => {
+                let progress =
+                  Math.round(
+                    (ProgressEvent.loaded / ProgressEvent.total) * 100
+                  ) + "%";
+                setProgess(progress);
+              },
+            }
+          )
+          .catch((err) => {
+            if (err.response) {
+              setStatus("Error");
+              setError(err.response.data.msg);
+            }
+          });
+        if (response.data != undefined && response.statusText === "OK") {
           setStatus("Success");
         } else {
           setStatus("Warning");
@@ -101,14 +109,21 @@ const UpdateNewsletter = (props) => {
       };
       let response;
       try {
-        response = await axios.patch(
-          `https://grssprojectserver.herokuapp.com/techMaterial/${localStorage.getItem(
-            "materialIdUpdate"
-          )}`,
-          formData,
-          config
-        );
-        if (response.statusText === "OK") {
+        response = await axios
+          .patch(
+            `https://grssprojectserver.herokuapp.com/techMaterial/${localStorage.getItem(
+              "materialIdUpdate"
+            )}`,
+            formData,
+            config
+          )
+          .catch((err) => {
+            if (err.response) {
+              setStatus("Error");
+              setError(err.response.data.msg);
+            }
+          });
+        if (response.data != undefined && response.statusText === "OK") {
           setStatus("Success");
         } else {
           setStatus("Error");
@@ -162,7 +177,12 @@ const UpdateNewsletter = (props) => {
                   <select
                     name="materialtype"
                     value={materialtype}
-                    onChange={valueChanged}
+                    onChange={(e) => {
+                      setMaterial({
+                        ...material,
+                        materialtype: e.target.value,
+                      });
+                    }}
                     className="w3-select"
                     required
                   >
@@ -180,11 +200,13 @@ const UpdateNewsletter = (props) => {
                 </Col>
                 <Col>
                   <input
-                    class="w3-input w3-animate-input"
+                    className="w3-input w3-animate-input"
                     type="text"
                     name="title"
                     value={title}
-                    onChange={valueChanged}
+                    onChange={(e) => {
+                      setMaterial({ ...material, title: e.target.value });
+                    }}
                     required
                   ></input>
                 </Col>
@@ -197,13 +219,17 @@ const UpdateNewsletter = (props) => {
                 </Col>
                 <Col>
                   <input
-                    class="w3-input w3-animate-input"
+                    className="w3-input w3-animate-input"
                     type="text"
                     name="publicationlink"
-                    value={publicationlink}
+                    value={(e) => {
+                      setMaterial({
+                        ...material,
+                        publicationlink: e.target.value,
+                      });
+                    }}
                     onChange={valueChanged}
-                    required
-                  ></input>{" "}
+                  ></input>
                 </Col>
               </Row>
             </Form.Group>
@@ -238,7 +264,7 @@ const UpdateNewsletter = (props) => {
             {status === "Warning" ? (
               <Alert variant="warning">
                 <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                Uploaded file format not supported. Please upload only image
+                Uploaded file format not supported. Please upload only pdf
                 file
               </Alert>
             ) : null}
@@ -248,7 +274,7 @@ const UpdateNewsletter = (props) => {
               style={{
                 width: "100%",
                 padding: "14px 28px",
-                "font-size": "16px",
+                fontSize: "16px",
                 cursor: "pointer",
               }}
               onClick={updatedetails}

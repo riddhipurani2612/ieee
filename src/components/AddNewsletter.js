@@ -134,7 +134,7 @@ const AddNewsletter = () => {
         "x-auth-token": token,
       },
     };
-    if (token === null) {
+    if (token === null || token=== undefined) {
       history.goBack();
     }
     try {
@@ -158,7 +158,7 @@ const AddNewsletter = () => {
             Add Newsletter/<br></br>Publication
           </div>
           <br></br>
-          <div class="material-form">
+          <div className="material-form">
             <form onSubmit={submit}>
               <Form.Group>
                 <Row>
@@ -169,7 +169,7 @@ const AddNewsletter = () => {
                   <Col>
                     <select
                       required
-                      class="w3-select"
+                      className="w3-select"
                       name="materialtype"
                       value={materialtype}
                       onChange={valueChanged}
@@ -191,7 +191,7 @@ const AddNewsletter = () => {
                   <Col>
                     <input
                       placeholder="Enter Title"
-                      class="w3-input w3-animate-input"
+                      className="w3-input w3-animate-input"
                       type="text"
                       name="title"
                       value={title}
@@ -209,7 +209,7 @@ const AddNewsletter = () => {
                   <Col>
                     <input
                       placeholder="Enter URL"
-                      class="w3-input w3-animate-input"
+                      className="w3-input w3-animate-input"
                       type="url"
                       name="publicationlink"
                       value={publicationlink}
@@ -262,7 +262,7 @@ const AddNewsletter = () => {
                 style={{
                   width: "100%",
                   padding: "14px 28px",
-                  "font-size": "16px",
+                  fontSize: "16px",
                   cursor: "pointer",
                 }}
               >

@@ -45,7 +45,7 @@ const ViewNP = (props) => {
 
   useEffect(async () => {
     const token = localStorage.getItem("token");
-    if (token != null) {
+    if (token != null && token!= undefined) {
       try {
         let config = {
           headers: {

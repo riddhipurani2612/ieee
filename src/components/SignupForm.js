@@ -18,17 +18,11 @@ const SignUp = () => {
     const file = e.target.files[0]; // accesing file
     if (file != undefined && file != "") {
       const extension = file.name.split(".").pop() + "";
-      if (
-        extension === "jpg" ||
-        extension === "jpeg" ||
-        extension === "bmp" ||
-        extension === "png"
-      ) {
+      if (extension === "pdf") {
         setFile(file); // storing file
         setCheckFile(true);
       } else {
         setStatus("Warning");
-        alert(`${extension} file is not allowed`);
         e.target.value = null;
       }
     }
@@ -47,7 +41,7 @@ const SignUp = () => {
         "x-auth-token": token,
       },
     };
-    if (token === null) {
+    if (token === null || token === undefined) {
       setHeader("Sign Up");
     } else {
       try {
@@ -59,7 +53,7 @@ const SignUp = () => {
               setError(err.response.data.msg);
             }
           });
-        if (response.data && response.statusText === "OK") {
+        if (response.data!= undefined && response.statusText === "OK") {
           if (response.data.role === "Admin") {
             setRole("Admin");
           }
@@ -126,8 +120,9 @@ const SignUp = () => {
                 setError(err.response.data.msg);
               }
             });
-          if (response.data && response.statusText === "OK") {
-            setStatus("Success");
+          if (response.data != undefined && response.statusText === "OK") {
+            localStorage.setItem("token", response.data.token);
+            history.push("/addprofilepicture");
           }
         } catch (err) {
           console.log(err);
@@ -161,8 +156,9 @@ const SignUp = () => {
                 setError(err.response.data.msg);
               }
             });
-          if (response.data && response.statusText === "OK") {
-            setStatus("Success");
+          if (response.data != undefined && response.statusText === "OK") {
+            localStorage.setItem("email", response.data.email);
+            history.push("/addprofilepicture");
           }
         } catch (err) {
           console.log(err);
@@ -189,7 +185,7 @@ const SignUp = () => {
                       <input
                         required
                         type="text"
-                        class="w3-input"
+                        className="w3-input"
                         value={first_name}
                         name="first_name"
                         placeholder="Enter first name"
@@ -228,7 +224,7 @@ const SignUp = () => {
                         onChange={signupValueChanged}
                         required
                       >
-                        <option selected="true" value="">
+                        <option selected value="">
                           --Select--
                         </option>
                         <option>Student Member</option>
@@ -382,7 +378,7 @@ const SignUp = () => {
                 <Form.Group>
                   <Row>
                     <Col sm="4">
-                      <label>Upload Profile Picture </label>
+                      <label>Upload Detailed Biography </label>
                     </Col>
                     <Col>
                       <input
@@ -423,7 +419,7 @@ const SignUp = () => {
                   style={{
                     width: "100%",
                     padding: "14px 28px",
-                    "font-size": "20px",
+                    fontSize: "20px",
                     cursor: "pointer",
                   }}
                 >

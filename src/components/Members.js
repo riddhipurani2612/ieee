@@ -64,6 +64,7 @@ const Members = () => {
       );
       if (response.data && response.statusText === "OK") {
         if (response.data.role != "Admin") {
+          history.goBack();
         } else if (response.data.role.includes("Admin")) {
           setAdmin(response.data.role);
         }

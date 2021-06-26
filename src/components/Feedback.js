@@ -57,7 +57,7 @@ const Feedback = (props) => {
       </Modal.Header>
       <Modal.Body>
         <Form>
-          <Form.Group controlID="feedback_form.name">
+          <Form.Group controlId="feedback_form.name">
             <Form.Label>Name</Form.Label>
             <Form.Control
               type="text"
@@ -67,7 +67,7 @@ const Feedback = (props) => {
               onChange={valueChange}
             />
           </Form.Group>
-          <Form.Group controlID="feedback_form.email">
+          <Form.Group controlId="feedback_form.email">
             <Form.Label>Email</Form.Label>
             <Form.Control
               type="email"
@@ -77,7 +77,7 @@ const Feedback = (props) => {
               onChange={valueChange}
             />
           </Form.Group>
-          <Form.Group controlID="feedback_form.contact">
+          <Form.Group controlId="feedback_form.contact">
             <Form.Label>Contact No</Form.Label>
             <Form.Control
               type="text"
@@ -87,7 +87,7 @@ const Feedback = (props) => {
               onChange={valueChange}
             />
           </Form.Group>
-          <Form.Group controlID="feedback_form.address">
+          <Form.Group controlId="feedback_form.address">
             <Form.Label>Address</Form.Label>
             <Form.Control
               type="textarea"
@@ -98,7 +98,7 @@ const Feedback = (props) => {
               onChange={valueChange}
             />
           </Form.Group>
-          <Form.Group controlID="feedback_form.subject">
+          <Form.Group controlId="feedback_form.subject">
             <Form.Label>Subject</Form.Label>
             <Form.Control
               type="text"
@@ -108,7 +108,7 @@ const Feedback = (props) => {
               onChange={valueChange}
             />
           </Form.Group>
-          <Form.Group controlID="feedback_form.message">
+          <Form.Group controlId="feedback_form.message">
             <Form.Label>Feedback Message</Form.Label>
             <Form.Control
               type="textarea"

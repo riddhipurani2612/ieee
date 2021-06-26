@@ -303,7 +303,7 @@ const UpdateMeeting = () => {
                 style={{
                   width: "100%",
                   padding: "14px 28px",
-                  "font-size": "16px",
+                  fontSize: "16px",
                   cursor: "pointer",
                 }}
               >

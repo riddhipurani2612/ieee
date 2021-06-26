@@ -130,6 +130,7 @@
   color: #971823;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+
 .event-img{
   width:500px;
   height:300px;
@@ -547,7 +548,6 @@
 .form-box {
   max-width: 700px;
   margin: auto;
-  padding: 50px;
 }
 input:invalid {
   padding: 8px;

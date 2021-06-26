@@ -22,7 +22,7 @@ const AboutView = (props) => {
         <Modal.Body>
           <div className="main-bg content">
             {props.eventimg && (
-              <div class="wrap">
+              <div className="wrap">
                 <img
                   src={props.eventimg}
                   style={{ marginRight: "2rem", marginBottom: "2rem" }}

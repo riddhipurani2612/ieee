@@ -17,6 +17,7 @@ const StudentMember = () => {
     workplace,
     designation,
     about,
+    detailedbio,
   } = members;
   const [userabout, setAbout] = useState(false);
   const [error, setError] = useState(false);
@@ -37,6 +38,7 @@ const StudentMember = () => {
       if (response.data && response.statusText === "OK") {
         if (response.data.length) {
           setMembers(response.data);
+          console.log(response.data);
         }
         if (response.data.about != null) {
           setAbout(true);

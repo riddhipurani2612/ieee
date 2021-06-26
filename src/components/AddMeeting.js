@@ -35,7 +35,7 @@ const AddMeeting = () => {
         "x-auth-token": token,
       },
     };
-    if (token === null) {
+    if (token === null || token=== undefined) {
       history.push("/");
     }
     try {
@@ -130,7 +130,7 @@ const AddMeeting = () => {
         <div className="form-box w3-panel w3-border w3-border-white boxshadow">
           <div className="meeting-header">Add Meeting</div>
           <br></br>
-          <div class="meeting-form">
+          <div className="meeting-form">
             <form onSubmit={addMeeting}>
               <Form.Group>
                 <Row>
@@ -196,7 +196,7 @@ const AddMeeting = () => {
                   <Col>
                     <input
                       placeholder="2"
-                      class="w3-input w3-animate-input"
+                      className="w3-input w3-animate-input"
                       type="number"
                       min="2"
                       name="attendees"
@@ -216,7 +216,7 @@ const AddMeeting = () => {
                   <Col>
                     <textarea
                       placeholder="Summary of meeting"
-                      class="textarea"
+                      className="textarea"
                       name="summary"
                       value={summary}
                       onChange={meetingValueChanged}
@@ -273,7 +273,7 @@ const AddMeeting = () => {
                 style={{
                   width: "100%",
                   padding: "14px 28px",
-                  "font-size": "16px",
+                  fontSize: "16px",
                   cursor: "pointer",
                 }}
               >

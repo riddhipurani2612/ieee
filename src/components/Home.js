@@ -30,6 +30,16 @@ const Home = (props) => {
     return temp[0];
   };
   useEffect(async () => {
+    try {
+      const response = await axios.post(
+        "https://grssprojectserver.herokuapp.com/counter"
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
+  useEffect(async () => {
     let response;
     let config = {
       headers: {
@@ -42,7 +52,11 @@ const Home = (props) => {
         config
       );
 
-      if (response.data.length && response.data && response.statusText==="OK") {
+      if (
+        response.data.length &&
+        response.data &&
+        response.statusText === "OK"
+      ) {
         setEvents(response.data);
         setEventValues(true);
       }

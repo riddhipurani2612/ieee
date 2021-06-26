@@ -33,7 +33,7 @@ const AddEvent = () => {
     },
   };
   useEffect(async () => {
-    if (token === null) {
+    if (token === null || token=== undefined) {
       history.goBack();
     } else {
       try {
@@ -185,7 +185,7 @@ const AddEvent = () => {
                     <Col>
                       <input
                         placeholder="Enter Details of Event"
-                        class="w3-input w3-animate-input"
+                        className="w3-input w3-animate-input"
                         type="text"
                         name="about"
                         value={about}
@@ -204,7 +204,7 @@ const AddEvent = () => {
                     <Col>
                       <input
                         placeholder="Enter Host Name"
-                        class="w3-input w3-animate-input"
+                        className="w3-input w3-animate-input"
                         type="text"
                         name="hostedby"
                         value={hostedby}
@@ -223,7 +223,7 @@ const AddEvent = () => {
                     <Col>
                       <input
                         placeholder="Enter URL"
-                        class="w3-input w3-animate-input"
+                        className="w3-input w3-animate-input"
                         type="text"
                         name="registrationlink"
                         value={registrationlink}
@@ -241,7 +241,7 @@ const AddEvent = () => {
                     <Col>
                       <input
                         placeholder="2"
-                        class="w3-input w3-animate-input"
+                        className="w3-input w3-animate-input"
                         type="number"
                         min="2"
                         name="attendees"
@@ -296,7 +296,7 @@ const AddEvent = () => {
                   style={{
                     width: "100%",
                     padding: "14px 28px",
-                    "font-size": "2rem",
+                    fontSize: "2rem",
                     cursor: "pointer",
                   }}
                 >

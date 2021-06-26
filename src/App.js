@@ -34,17 +34,11 @@ import UpdateNewsletter from "./components/UpdateNewsletter";
 import UpdateEvent from "./components/UpdateEvent";
 import Feedbacks from "./components/Feedbacks";
 import Members from "./components/Members";
+import AddProfile from "./components/AddProfile";
+import PasswordChange from "./components/PasswordChange";
 function App() {
-  console.log("App");
   const [isLoggedIn, setLoggedIn] = useState(false);
   const setLogin = (state) => setLoggedIn(state);
-  useEffect(async () =>{
-    try{  
-      const response = await axios.post("https://grssprojectserver.herokuapp.com/counter");
-    }catch(err){
-      console.log(err);
-    }
-  },[]);
   return (
     <Router>
       <div className="App">
@@ -64,11 +58,11 @@ function App() {
               />
             )}
           />
+          <Route path="/changepassword" component={PasswordChange}/>
           <Route path="/addmaterial" component={AddMaterial} />
           <Route path="/updatematerial" component={UpdateMaterial} />
           <Route path="/addevent" component={AddEvent} />
           <Route path="/chairs-desk" component={ChairsDesk} />
-          <Route path="/about" component={AboutUs} />
           <Route path="/contact" component={ContactUs} />
           <Route path="/events" component={Events} />
           <Route path="/newsletter" component={Newsletter} />
@@ -78,7 +72,6 @@ function App() {
           <Route path="/addmember" component={SignUp} />
           <Route path="/sar" component={SAR} />
           <Route path="/profile" component={Profile} />
-          <Route path="/faq" component={FAQ} />
           <Route path="/addnewsletter" component={AddNewsletter} />
           <Route path="/expertlecture" component={ExpertLecture} />
           <Route path="/detailedview" component={DetailedView} />
@@ -89,13 +82,12 @@ function App() {
           <Route path="/updateevent" component={UpdateEvent}/>
           <Route path="/feedbacks"component={Feedbacks}/> 
           <Route path="/members" component={Members}/>
+          <Route path="/addprofilepicture" component={AddProfile}/>
           <Route
             path="/logout"
             component={LogoutComp}
             setLogin={(state) => setLogin(state)}
           />
-          <Route path="/viewmeeting" component={MeetingView} />
-          <Route path="/updatemeeting" component={UpdateMeeting} />
           <Route path="/updatenewsletter-publication" component={UpdateNewsletter}/>
         </Switch>
         <Footer />

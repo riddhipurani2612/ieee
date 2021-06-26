@@ -56,7 +56,6 @@ const MemberView = (props) => {
       if (response.data && response.statusText === "OK") {
         console.log(response.data);
         history.goBack();
-
       }
     } catch (err) {
       console.log(err);
@@ -75,7 +74,13 @@ const MemberView = (props) => {
           about={props.about}
         ></AboutView>
         <Card key={props.index} className="main-bg">
-          <Card.Img variant="top" src={props.profile} className="member-img" />
+          {props.profile != "undefined" ? (
+            <div style={{ float: "left" }}>
+              <img src={props.profile} className="member-img"></img>
+            </div>
+          ) : (
+            <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+          )}
           <Card.Body className="member-content">
             <Card.Text>
               {props.first_name} {props.last_name}
@@ -113,38 +118,11 @@ const MemberView = (props) => {
                   Short Biography
                 </button>
               )}
-              {
-                props.detailedbio != "undefined" ? (
-                  <a href={props.detailedbio} target="blank">
-                    <button className="member-button">Detailed Biography</button>
-                  </a>
-                ) : null
-              }
-
-              <Row>
-                <Col sm="2">
-                  {admin === "Admin" ? (
-                    <div>
-                      <button className="member-button" onClick={deleteuser}>
-                        <i class="fa fa-trash" aria-hidden="true"></i>
-                      </button>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                </Col>
-                <Col>
-                  {admin === "Admin" ? (
-                    <div>
-                      <button onClick={updateuser} className="member-button">
-                        <i class="fa fa-edit" aria-hidden="true"></i>
-                      </button>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                </Col>
-              </Row>
+              {props.detailedbio != "undefined" ? (
+                <a href={props.detailedbio} target="blank">
+                  <button className="member-button">Detailed Biography</button>
+                </a>
+              ) : null}
             </Card.Text>
           </Card.Body>
         </Card>

@@ -1,4 +1,4 @@
-import React, { useState, setState } from "react";
+import React, { useState, setState, useEffect } from "react";
 import { Alert, Container, Form, Row, Col } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
@@ -11,16 +11,22 @@ const Login = (props) => {
   const history = useHistory();
   const [error, setError] = useState("");
   const [status, setStatus] = useState("");
-
+  useEffect(() => {
+    if (localStorage.getItem("token") != null || localStorage.getItem("token") != undefined) {
+      history.goBack();
+    }
+  }, []);
   const valueChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const { email, password } = formData;
   const loginClicked = async (e) => {
     e.preventDefault();
+    let email1=email.trim();
+    let password1=password.trim();
     let data = {
-      email,
-      password,
+      email1,
+      password1
     };
     let config = {
       headers: {
@@ -55,9 +61,9 @@ const Login = (props) => {
         <div className="form-box w3-panel w3-border w3-border-white boxshadow">
           <div className="member-header">Login</div>
           <br></br>
-          <div class="member-form">
+          <div className="member-form">
             <form onSubmit={loginClicked}>
-              <Form.Group controlID="login_email">
+              <Form.Group controlId="login_email">
                 <Row>
                   <Col sm="4">
                     <label>Email</label>
@@ -74,7 +80,7 @@ const Login = (props) => {
                   </Col>
                 </Row>
               </Form.Group>
-              <Form.Group controlID="login_password">
+              <Form.Group controlId="login_password">
                 <Row>
                   <Col sm="4">
                     <label>Password</label>
@@ -116,7 +122,7 @@ const Login = (props) => {
                 style={{
                   width: "100%",
                   padding: "14px 28px",
-                  "font-size": "20px",
+                  fontSize: "20px",
                   cursor: "pointer",
                 }}
               >

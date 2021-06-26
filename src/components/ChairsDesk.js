@@ -22,7 +22,7 @@ const ChairsDesk = () => {
           <div className="w3-panel w3-border w3-border-white boxshadow">
             <div className="header-1">Chair's Address</div>
             <div className="content col-md-12 my-5">
-              <div class="wrap">
+              <div className="wrap">
                 <img
                   className="member-img"
                   src={shivmohan}

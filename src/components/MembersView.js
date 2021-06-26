@@ -23,7 +23,10 @@ const MembersView = (props) => {
 
   useEffect(async () => {
     try {
-      response = await axios.get(`https://grssprojectserver.herokuapp.com/user/getrole`, config);
+      response = await axios.get(
+        `https://grssprojectserver.herokuapp.com/user/getrole`,
+        config
+      );
       if (response.data && response.statusText === "OK") {
         if (response.data.role != "Admin") {
         } else if (response.data.role.includes("Admin")) {
@@ -47,37 +50,33 @@ const MembersView = (props) => {
         },
       };
       let response = axios
-        .delete(`https://grssprojectserver.herokuapp.com/user/${props.email}`, config)
+        .delete(
+          `https://grssprojectserver.herokuapp.com/user/${props.email}`,
+          config
+        )
         .then(window.location.reload(false));
       console.log(response.data);
       if (response.data.msg === "Deleted" && response.statusText === "OK") {
         history.push("/members");
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
   return (
     <Styles>
       <Row>
-        <Col className="member-content" sm="9">
+        <Col className="member-content mx-3">
           Name : {props.first_name} {props.last_name}
-          <br></br>
-          Contact : {props.contact}
           <br></br>
           Member Id : {props.memberid}
           <br></br>
           Email : {props.email}
           <br></br>
-          Workplace : {props.workplace}
-          <br></br>
-          Grade : {props.designation}
-          <br></br>
-          Role : {props.role}
         </Col>
-        {admin === "Admin" ? (
-          <Col>
+        {props.role != "Admin" ? (
+          <Col md="auto">
             <div>
               <button className="member-button" onClick={deleteuser}>
                 <i class="fa fa-trash" aria-hidden="true"></i>
@@ -87,8 +86,8 @@ const MembersView = (props) => {
         ) : (
           ""
         )}
-        {admin === "Admin" ? (
-          <Col>
+        {props.role != "Admin" ? (
+          <Col md="auto">
             <div>
               <button onClick={updateuser} className="member-button">
                 <i class="fa fa-edit" aria-hidden="true"></i>

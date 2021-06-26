@@ -25,7 +25,7 @@ const MeetingView = () => {
           "x-auth-token": token,
         },
       };
-      if (token != null) {
+      if (token != null && token!= undefined) {
         let response = await axios.get(
           `https://grssprojectserver.herokuapp.com/user/getrole`,
           config

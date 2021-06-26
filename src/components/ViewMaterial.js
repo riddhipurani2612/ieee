@@ -37,7 +37,6 @@ const ViewMaterial = (props) => {
         config
       );
       console.log(response.data);
-      window.location.reload(false);
     } catch (err) {
       console.log(err);
     }
@@ -74,22 +73,21 @@ const ViewMaterial = (props) => {
       <div className="material-content">
         <Row>
           <Col>
-            <b>{props.title}</b>
+            <a href="" onClick={viewdetails}>
+              <b>{props.title}</b>
+            </a>
           </Col>
           <Col xs lg="3">
-            {role==="Admin" ? (
+            {role === "Admin" ? (
               <button className="material-button" onClick={updatedetails}>
                 <i class="fa fa-edit" aria-hidden="true"></i>
               </button>
             ) : null}
-            {role==="Admin" ? (
-                <button onClick={deletedetails} className="material-button">
-                  <i class="fa fa-trash" aria-hidden="true"></i>
-                </button>
-              ) : null}
-            <button onClick={viewdetails} className="material-button">
-              <i class="fa fa-eye" aria-hidden="true"></i>
-            </button>
+            {role === "Admin" ? (
+              <button onClick={deletedetails} className="material-button">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </button>
+            ) : null}
           </Col>
         </Row>
       </div>

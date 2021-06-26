@@ -76,7 +76,7 @@ const Dashboard = () => {
                               variant="outline-light"
                               style={{
                                 padding: "7px 7px",
-                                "font-size": "20px",
+                                fontSize: "20px",
                                 cursor: "pointer",
                               }}
                             >
@@ -90,7 +90,7 @@ const Dashboard = () => {
                               variant="outline-light"
                               style={{
                                 padding: "7px 7px",
-                                "font-size": "20px",
+                                fontSize: "20px",
                                 cursor: "pointer",
                               }}
                             >
@@ -124,7 +124,7 @@ const Dashboard = () => {
                               variant="outline-light"
                               style={{
                                 padding: "7px 7px",
-                                "font-size": "20px",
+                                fontSize: "20px",
                                 cursor: "pointer",
                               }}
                             >View
@@ -158,7 +158,7 @@ const Dashboard = () => {
                               variant="outline-light"
                               style={{
                                 padding: "7px 7px",
-                                "font-size": "20px",
+                                fontSize: "20px",
                                 cursor: "pointer",
                               }}
                             >
@@ -206,7 +206,7 @@ const Dashboard = () => {
                               variant="outline-light"
                               style={{
                                 padding: "7px 7px",
-                                "font-size": "20px",
+                                fontSize: "20px",
                                 cursor: "pointer",
                               }}
                             >
@@ -220,7 +220,7 @@ const Dashboard = () => {
                               variant="outline-light"
                               style={{
                                 padding: "7px 7px",
-                                "font-size": "20px",
+                                fontSize: "20px",
                                 cursor: "pointer",
                               }}
                             >
@@ -252,7 +252,7 @@ const Dashboard = () => {
                               variant="outline-light"
                               style={{
                                 padding: "7px 7px",
-                                "font-size": "20px",
+                                fontSize: "20px",
                                 cursor: "pointer",
                               }}
                             >

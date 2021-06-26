@@ -25,7 +25,7 @@ const Feedbacks = () => {
           "x-auth-token": token,
         },
       };
-      if (token === null) {
+      if (token === null || token=== undefined) {
         history.goBack();
       }
       let response = await axios.get(

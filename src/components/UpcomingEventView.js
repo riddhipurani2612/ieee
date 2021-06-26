@@ -38,7 +38,7 @@ const UpcomingEventView = (props) => {
       setViewReadMore(true);
     }
     const token = localStorage.getItem("token");
-    if (token != null || token != undefined) {
+    if (token != null && token!= undefined || token != undefined) {
       try {
         let config = {
           headers: {

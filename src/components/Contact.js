@@ -31,7 +31,7 @@ const ContactUs = (props) => {
                 <Col
                   xs={{ span: 6, order: 1 }}
                   md={{ span: 6, order: 2 }}
-                  class="col-sm-4"
+                  className="col-sm-4"
                 >
                   <img
                     className="member-img"
@@ -41,7 +41,7 @@ const ContactUs = (props) => {
                 <Col
                   xs={{ span: 12, order: 2 }}
                   md={{ span: 6, order: 1 }}
-                  class="col-sm-8"
+                  className="col-sm-8"
                 >
                   <p className="wrap custom-text ">
                     Dr. Shiv Mohan<br></br>

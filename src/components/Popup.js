@@ -32,7 +32,7 @@ const Popup = (props) => {
       ) : (
         <Modal.Header closeButton>
           <i
-            class="fa fa-exclamation-circle fa-4x"
+            className="fa fa-exclamation-circle fa-4x"
             style={{ color: "#d32f2f" }}
           ></i>
           <div>

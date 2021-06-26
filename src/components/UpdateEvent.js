@@ -283,7 +283,7 @@ const UpdateEvent = (props) => {
                   style={{
                     width: "100%",
                     padding: "14px 28px",
-                    "font-size": "3rem",
+                    fontSize: "3rem",
                     cursor: "pointer",
                   }}
                 >

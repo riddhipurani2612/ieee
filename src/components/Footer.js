@@ -33,8 +33,6 @@ const Footer = (props) => {
     navigator.geolocation.getCurrentPosition(async function(position){
       const longitude = position.coords.longitude;
       const latitude = position.coords.latitude;
-      console.log("Longitude : ",position.coords.longitude);
-      console.log("Latitude : ",position.coords.latitude);
       const config = {
         'latitude': position.coords.longitude,
         'longitude': position.coords.latitude
@@ -66,7 +64,7 @@ const Footer = (props) => {
               </div>
             </Col>
             <Col xs={2} className="my-3">
-              <span style={{ color: "white", "font-size": "1rem" }}>
+              <span style={{ color: "white", fontSize: "1rem" }}>
                 <b>IEEE-GRSS</b>
               </span>
               <a
@@ -74,20 +72,20 @@ const Footer = (props) => {
                 target="blank"
                 style={{ color: "white" }}
               >
-                <div className="mt-2" style={{ "font-size": "0.8rem" }}>
+                <div className="mt-2" style={{ fontSize: "0.8rem" }}>
                   FAQs
                 </div>
               </a>
             </Col>
             <Col xs={2} className="my-3">
-              <span style={{ color: "white", "font-size": "1rem" }}>
+              <span style={{ color: "white", fontSize: "1rem" }}>
                 <b>Legal</b>
               </span>
               <div className="mt-2" style={{ color: "white" }}>
                 <a
                   href="https://www.grss-ieee.org/about/membership/benefits-of-membership/"
                   target="blank"
-                  style={{ color: "white", "font-size": "0.8rem" }}
+                  style={{ color: "white", fontSize: "0.8rem" }}
                 >
                   Terms and Conditions
                 </a>
@@ -95,23 +93,23 @@ const Footer = (props) => {
                 <a
                   href="https://www.ieee.org/security-privacy.html"
                   target="blank"
-                  style={{ color: "white", "font-size": "0.8rem" }}
+                  style={{ color: "white", fontSize: "0.8rem" }}
                 >
                   Privacy policy
                 </a>
                 <br></br>
               </div>
-              <div class="main_container" id="id_main_container">
-                <div class="container_inner" id="display_div_id"></div>
+              <div className="main_container" id="id_main_container">
+                <div className="container_inner" id="display_div_id"></div>
               </div>
             </Col>
             <Col xs={1} className="my-3">
-              <span style={{ color: "white", "font-size": "1rem" }}>
+              <span style={{ color: "white", fontSize: "1rem" }}>
                 <b>Visitors</b>
               </span>
               <div
                 className="mt-2"
-                style={{ color: "white", "font-size": "0.8rem" }}
+                style={{ color: "white", fontSize: "0.8rem" }}
               >
                 {count}
                 <br></br>
