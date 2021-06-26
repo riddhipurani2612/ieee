@@ -4,7 +4,7 @@ import styled from "styled-components";
 import axios from "axios";
 import MemberView from "../components/MemberView";
 import MembersView from "./MembersView";
-
+import { useHistory } from "react-router";
 const Styles = styled.div``;
 const Members = () => {
   const [members, setMembers] = useState([]);
@@ -19,6 +19,7 @@ const Members = () => {
     designation,
     about,
   } = members;
+  const history = useHistory();
   useEffect(async () => {
     let response;
     let config = {
