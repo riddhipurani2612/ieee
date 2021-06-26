@@ -22,11 +22,9 @@ const Login = (props) => {
   const { email, password } = formData;
   const loginClicked = async (e) => {
     e.preventDefault();
-    let email1=email.trim();
-    let password1=password.trim();
     let data = {
-      email1,
-      password1
+      email,
+      password
     };
     let config = {
       headers: {
